@@ -1,13 +1,63 @@
 {
   "repo": {
-    "timestamp": 1784979327196
+    "timestamp": 1785078198098
   },
   "packages": {
     "com.tristinbaker.idlefantasy": {
       "metadata": {
-        "lastUpdated": 1784979294726
+        "lastUpdated": 1785078164995
       },
       "versions": {
+        "4e99d521a476fa6bc61f3fd9fa446d5b0750602b95445e98d01b31505b4f98e5": {
+          "added": 1785078164995,
+          "file": {
+            "name": "/com.tristinbaker.idlefantasy_122.apk",
+            "sha256": "4e99d521a476fa6bc61f3fd9fa446d5b0750602b95445e98d01b31505b4f98e5",
+            "size": 7967211
+          },
+          "manifest": {
+            "nativecode": [
+              "arm64-v8a",
+              "armeabi-v7a",
+              "x86",
+              "x86_64"
+            ],
+            "versionName": "1.12.10",
+            "versionCode": 122,
+            "usesSdk": {
+              "minSdkVersion": 26,
+              "targetSdkVersion": 35
+            },
+            "signer": {
+              "sha256": [
+                "99a980a934cb0149bfbdd5f4358471ffe69302e0467bae4d8574d4feeda34010"
+              ]
+            },
+            "usesPermission": [
+              {
+                "name": "android.permission.POST_NOTIFICATIONS"
+              },
+              {
+                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
+              },
+              {
+                "name": "android.permission.WAKE_LOCK"
+              },
+              {
+                "name": "android.permission.USE_EXACT_ALARM"
+              },
+              {
+                "name": "android.permission.SCHEDULE_EXACT_ALARM"
+              },
+              {
+                "name": "com.tristinbaker.idlefantasy.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+              }
+            ]
+          },
+          "whatsNew": {
+            "en-US": "• Fixed the Infinite Tower queue flickering/jumping around when a floor finished while others were still queued behind it\n• Infinite Tower now keeps climbing automatically after each floor you win, instead of stopping to wait for you to collect the reward first\n• Fixed dying in the Infinite Tower and collecting from the home screen resetting you all the way to floor 1 instead of your last checkpoint\n• Fixed the Ranged Cape, Archers Guild Cape, Magic Cape, and Mages Guild Cape not granting their "
+          }
+        },
         "d263431aa02a9bdc07995d6aef6ce5633f3161de2569268cf41485b67e715698": {
           "added": 1784979294726,
           "file": {
