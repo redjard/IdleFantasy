@@ -57,56 +57,6 @@
           "whatsNew": {
             "en-US": "• Boss fights now end right after the killing blow instead of hanging at 0 HP for up to a minute\n• Final hits of a fight play at normal speed instead of slowing to one hit every 10+ seconds\n• Combat log lines now appear one at a time instead of clumping up every couple of seconds\n• Kill announcements and the defeated-so-far count now show at the moment the kill happens\n• Your character no longer keeps attacking after dropping to 0 HP in a dungeon\n• Dying during a queued dungeon repeat now ends t"
           }
-        },
-        "4e99d521a476fa6bc61f3fd9fa446d5b0750602b95445e98d01b31505b4f98e5": {
-          "added": 1785078164995,
-          "file": {
-            "name": "/com.tristinbaker.idlefantasy_122.apk",
-            "sha256": "4e99d521a476fa6bc61f3fd9fa446d5b0750602b95445e98d01b31505b4f98e5",
-            "size": 7967211
-          },
-          "manifest": {
-            "nativecode": [
-              "arm64-v8a",
-              "armeabi-v7a",
-              "x86",
-              "x86_64"
-            ],
-            "versionName": "1.12.10",
-            "versionCode": 122,
-            "usesSdk": {
-              "minSdkVersion": 26,
-              "targetSdkVersion": 35
-            },
-            "signer": {
-              "sha256": [
-                "99a980a934cb0149bfbdd5f4358471ffe69302e0467bae4d8574d4feeda34010"
-              ]
-            },
-            "usesPermission": [
-              {
-                "name": "android.permission.POST_NOTIFICATIONS"
-              },
-              {
-                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
-              },
-              {
-                "name": "android.permission.WAKE_LOCK"
-              },
-              {
-                "name": "android.permission.USE_EXACT_ALARM"
-              },
-              {
-                "name": "android.permission.SCHEDULE_EXACT_ALARM"
-              },
-              {
-                "name": "com.tristinbaker.idlefantasy.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-              }
-            ]
-          },
-          "whatsNew": {
-            "en-US": "• Fixed the Infinite Tower queue flickering/jumping around when a floor finished while others were still queued behind it\n• Infinite Tower now keeps climbing automatically after each floor you win, instead of stopping to wait for you to collect the reward first\n• Fixed dying in the Infinite Tower and collecting from the home screen resetting you all the way to floor 1 instead of your last checkpoint\n• Fixed the Ranged Cape, Archers Guild Cape, Magic Cape, and Mages Guild Cape not granting their "
-          }
         }
       }
     }

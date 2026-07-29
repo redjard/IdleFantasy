@@ -14,7 +14,7 @@
       }
     },
     "address": "https://idlefantasy.tristinbaker.xyz/fdroid/repo",
-    "timestamp": 1785078198098,
+    "timestamp": 1785328951419,
     "categories": {
       "Games": {
         "name": {
@@ -31,7 +31,7 @@
           "Games"
         ],
         "issueTracker": "https://github.com/tristinbaker/IdleFantasy/issues",
-        "lastUpdated": 1785078164995,
+        "lastUpdated": 1785328918919,
         "license": "GPL-3.0-only",
         "sourceCode": "https://github.com/tristinbaker/IdleFantasy",
         "screenshots": {
@@ -140,6 +140,56 @@
         "preferredSigner": "99a980a934cb0149bfbdd5f4358471ffe69302e0467bae4d8574d4feeda34010"
       },
       "versions": {
+        "ff345a904b238f25b86adc78719818619c620a3e80cd189d3c3a6f7edaeb9a15": {
+          "added": 1785328918919,
+          "file": {
+            "name": "/com.tristinbaker.idlefantasy_123.apk",
+            "sha256": "ff345a904b238f25b86adc78719818619c620a3e80cd189d3c3a6f7edaeb9a15",
+            "size": 7951131
+          },
+          "manifest": {
+            "nativecode": [
+              "arm64-v8a",
+              "armeabi-v7a",
+              "x86",
+              "x86_64"
+            ],
+            "versionName": "1.12.11",
+            "versionCode": 123,
+            "usesSdk": {
+              "minSdkVersion": 26,
+              "targetSdkVersion": 35
+            },
+            "signer": {
+              "sha256": [
+                "99a980a934cb0149bfbdd5f4358471ffe69302e0467bae4d8574d4feeda34010"
+              ]
+            },
+            "usesPermission": [
+              {
+                "name": "android.permission.POST_NOTIFICATIONS"
+              },
+              {
+                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
+              },
+              {
+                "name": "android.permission.WAKE_LOCK"
+              },
+              {
+                "name": "android.permission.USE_EXACT_ALARM"
+              },
+              {
+                "name": "android.permission.SCHEDULE_EXACT_ALARM"
+              },
+              {
+                "name": "com.tristinbaker.idlefantasy.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+              }
+            ]
+          },
+          "whatsNew": {
+            "en-US": "• Boss fights now end right after the killing blow instead of hanging at 0 HP for up to a minute\n• Final hits of a fight play at normal speed instead of slowing to one hit every 10+ seconds\n• Combat log lines now appear one at a time instead of clumping up every couple of seconds\n• Kill announcements and the defeated-so-far count now show at the moment the kill happens\n• Your character no longer keeps attacking after dropping to 0 HP in a dungeon\n• Dying during a queued dungeon repeat now ends t"
+          }
+        },
         "4e99d521a476fa6bc61f3fd9fa446d5b0750602b95445e98d01b31505b4f98e5": {
           "added": 1785078164995,
           "file": {
