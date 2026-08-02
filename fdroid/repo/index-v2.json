@@ -14,7 +14,7 @@
       }
     },
     "address": "https://idlefantasy.tristinbaker.xyz/fdroid/repo",
-    "timestamp": 1785328951419,
+    "timestamp": 1785693742687,
     "categories": {
       "Games": {
         "name": {
@@ -31,7 +31,7 @@
           "Games"
         ],
         "issueTracker": "https://github.com/tristinbaker/IdleFantasy/issues",
-        "lastUpdated": 1785328918919,
+        "lastUpdated": 1785693707190,
         "license": "GPL-3.0-only",
         "sourceCode": "https://github.com/tristinbaker/IdleFantasy",
         "screenshots": {
@@ -39,38 +39,38 @@
             "en-US": [
               {
                 "name": "/com.tristinbaker.idlefantasy/en-US/phoneScreenshots/1.png",
-                "sha256": "e0d6fd0e9a05c8d7e109a20caf56e3a412301705f8fb55202097bf7e64fa020e",
-                "size": 124961
+                "sha256": "79ea633a61c9693abbb5c42d002998ac1a0d2a39b590a2a666737e7dfacec4c6",
+                "size": 189283
               },
               {
                 "name": "/com.tristinbaker.idlefantasy/en-US/phoneScreenshots/10.png",
-                "sha256": "3aac73cf368bcac9edf0115ead7034a17e88e0334482e462f06dae260032a215",
-                "size": 147217
+                "sha256": "0c42f2f2ab9880d3a7ee4d57a06ab67b11fffd97c7a7529de1db33dd491309e7",
+                "size": 164821
               },
               {
                 "name": "/com.tristinbaker.idlefantasy/en-US/phoneScreenshots/11.png",
-                "sha256": "ed8657f6c177ab47ad54cf53d81e2c01c9714088c2bff96f7c6b45de283e85e5",
-                "size": 121652
+                "sha256": "0254fc215d42f51d026700b058e265142500baa3075e04d5c11355871533ad55",
+                "size": 169210
               },
               {
                 "name": "/com.tristinbaker.idlefantasy/en-US/phoneScreenshots/12.png",
-                "sha256": "99f1f5e3eb497cca7f66bb9e767736ca05885ffb01af73ab667ce436f9524c1d",
-                "size": 123712
+                "sha256": "71d0d580906b975252aa12bf8a7cbd0f0441f3faecfe03593ecc33bdaa7e4499",
+                "size": 158883
               },
               {
                 "name": "/com.tristinbaker.idlefantasy/en-US/phoneScreenshots/13.png",
-                "sha256": "b7bb3f8956e7560d5b9d8b09966f94300cebf43c4dc89d59e7dbbf50a2fd2fe0",
-                "size": 108107
+                "sha256": "da4768220443498cc0b06b853c09562513a38d48fc28447c9ff5e4c53cd73d2c",
+                "size": 221197
               },
               {
                 "name": "/com.tristinbaker.idlefantasy/en-US/phoneScreenshots/14.png",
-                "sha256": "2cda1f7f99e8b73a03b378e76f83745aa54fcbc9f5bddb456bc13c9994a85e7e",
-                "size": 106603
+                "sha256": "7c2483daa92e4cc31e3269a61b53c212ce74db0ea828338e0b2e616f5b6a47b3",
+                "size": 199471
               },
               {
                 "name": "/com.tristinbaker.idlefantasy/en-US/phoneScreenshots/15.png",
-                "sha256": "4533c5e9f2fb20ede75603d6e5100d12905180fc94cd3d3864eacfd2705090a3",
-                "size": 143880
+                "sha256": "c8bc07c8be0b62269b7476ea281091cab750689948c791aa29bf55f79e41af48",
+                "size": 204460
               },
               {
                 "name": "/com.tristinbaker.idlefantasy/en-US/phoneScreenshots/16.png",
@@ -79,43 +79,43 @@
               },
               {
                 "name": "/com.tristinbaker.idlefantasy/en-US/phoneScreenshots/2.png",
-                "sha256": "7d26efa8d7673ce82a7ec45fb8090f312d52ca5d7cfd40d4f543f70dfef18f17",
-                "size": 160753
+                "sha256": "62dcad31c05805d789072e520f24a80a29fcf7713b0276ee7f8327ec7e0fee27",
+                "size": 192969
               },
               {
                 "name": "/com.tristinbaker.idlefantasy/en-US/phoneScreenshots/3.png",
-                "sha256": "4c9ffbb6679c53fb9febc5399a8bd34f7d8eb573e6f97d161f2192f667dbde28",
-                "size": 139375
+                "sha256": "869e36797bcb0e09a040de5e7a08d2417e9b598033cd6170c53e2160e753389e",
+                "size": 211064
               },
               {
                 "name": "/com.tristinbaker.idlefantasy/en-US/phoneScreenshots/4.png",
-                "sha256": "424174d2055fd8a1e08e2fdb8aabb239e18661906cfaf539c1ebd7c6db4aab32",
-                "size": 162583
+                "sha256": "011d0035d62be52622df66c26430c0841672468b36ac008956c9f252daad9ec2",
+                "size": 178588
               },
               {
                 "name": "/com.tristinbaker.idlefantasy/en-US/phoneScreenshots/5.png",
-                "sha256": "1a09ada764871178a2627bee46ae5d5815520ea47bcf7c7bde9f37d86d785ca5",
-                "size": 125021
+                "sha256": "7e6323df4d7aedf1ac30ad9f3a817e84b79512be93b00476613343e0de1dc469",
+                "size": 190457
               },
               {
                 "name": "/com.tristinbaker.idlefantasy/en-US/phoneScreenshots/6.png",
-                "sha256": "4b08d3d48035ac69187e74bcb5aa2153ef7c980fea039af59f48568e74dd0762",
-                "size": 118870
+                "sha256": "37b8029503e4b6207591358caa98a73a38502225c7916a2bf44d7137c1ed743d",
+                "size": 175940
               },
               {
                 "name": "/com.tristinbaker.idlefantasy/en-US/phoneScreenshots/7.png",
-                "sha256": "4e3d4466a83a4f973a6b331e1d34a002f6ad1bcf66523781a9c5f4a8e2385813",
-                "size": 79748
+                "sha256": "a429a5128f2f7504e83dbba1213844a78b7dbdd7bd0b68430f5d85e5465a6a45",
+                "size": 132348
               },
               {
                 "name": "/com.tristinbaker.idlefantasy/en-US/phoneScreenshots/8.png",
-                "sha256": "ae52f5e0ef96596a2e283db9cbe7cac7a6a651b70b1482fcda62fc93babd8916",
-                "size": 127467
+                "sha256": "612f3e195f0ca7957e5fedad5c05dbfb4090b62288ac20b7f481fb05b9442d50",
+                "size": 153004
               },
               {
                 "name": "/com.tristinbaker.idlefantasy/en-US/phoneScreenshots/9.png",
-                "sha256": "6f241b52fcfcfcb7253dd8d0aea7fdd25f2ce645d80822a0dd0bbdb9aa3d43db",
-                "size": 154388
+                "sha256": "3428074f24e6991dae538ee2cae12624a685a627c333dfcf0cfa322be8e469e8",
+                "size": 209297
               }
             ]
           }
@@ -128,7 +128,7 @@
           "en-US": "Idle RPG: train skills, fight dungeons, craft gear. No ads, no accounts."
         },
         "description": {
-          "en-US": "Idle Fantasy is a free and open source offline idle RPG inspired by classic MMORPGs. Train skills, fight in dungeons, craft gear, and complete quests. No internet connection, account, or ads required.\n\n<b>Features</b>\n\n• <b>14 trainable skills</b>: Mining, Fishing, Woodcutting, Firemaking, Agility, Runecrafting, Smithing, Cooking, Fletching, Crafting, Prayer, Attack, Strength, Defence, Ranged, Magic, Hitpoints\n\n• <b>Session-based training</b>: Start a session and close the app. Come back up to an hour later to collect your loot and XP. Agility reduces session time.\n\n• <b>12 dungeons</b>: Fight solo bosses and enemies to earn combat XP, coins, and rare drops. Equip weapons and armour to deal more damage.\n\n• <b>Crafting system</b>: Smelt bars, cook fish, fletch bows and arrows, craft jewellery. Consume gathered materials and earn XP and items.\n\n• <b>Prayer</b>: Bury bones collected from combat to earn Prayer XP.\n\n• <b>Equipment system</b>: Equip weapons, armour, tools, and jewellery to boost stats and skill efficiency.\n\n• <b>Quest system</b>: 100+ quests spanning all skills. Earn XP rewards on completion.\n\n• <b>Pet system</b>: Rare pets can drop while training skills. Each pet provides a permanent XP boost to their linked skill.\n\n• <b>Achievements</b>: Track milestones across levelling, combat, quests, and collections.\n\n• <b>NPC Shop</b>: Buy supplies and sell your gathered resources for coins.\n\n• <b>No ads. No accounts. No internet required.</b> Your save data stays on your device.\n\nIdle Fantasy is free software released under the GPL-3.0 licence. Source code is available on the project repository.\n\n<b>Get updates faster</b>\n\nAdd the official Idle Fantasy repository to F-Droid to receive updates as soon as they are released, instead of waiting for the main F-Droid index to catch up.\n\n1. Open F-Droid and go to Settings → Repositories\n2. Tap + and paste: https://idlefantasy.tristinbaker.xyz/fdroid/repo\n3. Search for Idle Fantasy, open the app page, and under Repositories set Idle Fantasy as the preferred source.\n"
+          "en-US": "Idle Fantasy is a free and open source offline idle RPG inspired by classic MMORPGs. Train skills, fight in dungeons, craft gear, and complete quests. No internet connection, account, or ads required.\n\n<b>Features</b>\n\n• <b>24 trainable skills</b>: Mining, Fishing, Woodcutting, Farming, Thieving, Smithing, Cooking, Fletching, Crafting, Firemaking, Runecrafting, Herblore, Construction, Prayer, Mercantile, Agility, Slayer, Attack, Strength, Defense, Ranged, Magic, Hitpoints, and Prayer\n\n• <b>Session-based training</b>: Start a session and close the app. Come back up to an hour later to collect your loot and XP. Agility reduces session time.\n\n• <b>27 dungeons</b>: Fight solo bosses and enemies to earn combat XP, coins, and rare drops. Equip weapons and armour to deal more damage.\n\n• <b>Crafting system</b>: Smelt bars, cook fish, fletch bows and arrows, craft jewellery. Consume gathered materials and earn XP and items.\n\n• <b>Prayer</b>: Bury bones collected from combat to earn Prayer XP.\n\n• <b>Equipment system</b>: Equip weapons, armour, tools, and jewellery to boost stats and skill efficiency.\n\n• <b>Quest system</b>: 189 quests spanning all skills. Earn XP rewards on completion.\n\n• <b>Pet system</b>: Rare pets can drop while training skills. Each pet provides a permanent XP boost to their linked skill.\n\n• <b>Achievements</b>: Track milestones across levelling, combat, quests, and collections.\n\n• <b>NPC Shop</b>: Buy supplies and sell your gathered resources for coins.\n\n• <b>No ads. No accounts. No internet required.</b> Your save data stays on your device.\n\n• <b>Translations</b>: Partial and full translations available for 14 languages.\n\nIdle Fantasy is free software released under the GPL-3.0 licence. Source code is available on the project repository.\n\n<b>Get updates faster</b>\n\nAdd the official Idle Fantasy repository to F-Droid to receive updates as soon as they are released, instead of waiting for the main F-Droid index to catch up.\n\n1. Open F-Droid and go to Settings → Repositories\n2. Tap + and paste: https://idlefantasy.tristinbaker.xyz/fdroid/repo\n3. Search for Idle Fantasy, open the app page, and under Repositories set Idle Fantasy as the preferred source.\n"
         },
         "icon": {
           "en-US": {
@@ -140,12 +140,12 @@
         "preferredSigner": "99a980a934cb0149bfbdd5f4358471ffe69302e0467bae4d8574d4feeda34010"
       },
       "versions": {
-        "ff345a904b238f25b86adc78719818619c620a3e80cd189d3c3a6f7edaeb9a15": {
-          "added": 1785328918919,
+        "dfefdf5d39fb4f55270d6e04d3b220f257a6fa2cc3e112d9af73b99d3b23bb38": {
+          "added": 1785693707190,
           "file": {
-            "name": "/com.tristinbaker.idlefantasy_123.apk",
-            "sha256": "ff345a904b238f25b86adc78719818619c620a3e80cd189d3c3a6f7edaeb9a15",
-            "size": 7951131
+            "name": "/com.tristinbaker.idlefantasy_124.apk",
+            "sha256": "dfefdf5d39fb4f55270d6e04d3b220f257a6fa2cc3e112d9af73b99d3b23bb38",
+            "size": 7962215
           },
           "manifest": {
             "nativecode": [
@@ -154,8 +154,8 @@
               "x86",
               "x86_64"
             ],
-            "versionName": "1.12.11",
-            "versionCode": 123,
+            "versionName": "1.12.12",
+            "versionCode": 124,
             "usesSdk": {
               "minSdkVersion": 26,
               "targetSdkVersion": 35
@@ -187,7 +187,7 @@
             ]
           },
           "whatsNew": {
-            "en-US": "• Boss fights now end right after the killing blow instead of hanging at 0 HP for up to a minute\n• Final hits of a fight play at normal speed instead of slowing to one hit every 10+ seconds\n• Combat log lines now appear one at a time instead of clumping up every couple of seconds\n• Kill announcements and the defeated-so-far count now show at the moment the kill happens\n• Your character no longer keeps attacking after dropping to 0 HP in a dungeon\n• Dying during a queued dungeon repeat now ends t"
+            "en-US": "• The Agility Cape's bonus now shows as an XP bonus in Profile > Bonuses instead of a Yield bonus, matching the Armory\n• The Agility session-time row in Profile > Bonuses no longer wraps mid-word or overlaps its description text\n• The Prayer Cape's bonus now shows as a Boost bonus in Profile > Bonuses instead of a Yield bonus, matching the Armory\n• Fixed the Farming panel opening as a stuck sliver and closing itself on the first tap after a fresh app launch\n• Reorganized Fletching filters: categ"
           }
         },
         "4e99d521a476fa6bc61f3fd9fa446d5b0750602b95445e98d01b31505b4f98e5": {
