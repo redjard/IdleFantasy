@@ -1,11 +1,11 @@
 {
   "repo": {
-    "timestamp": 1785693742687
+    "timestamp": 1785755731807
   },
   "packages": {
     "com.tristinbaker.idlefantasy": {
       "metadata": {
-        "lastUpdated": 1785693707190,
+        "lastUpdated": 1785755695719,
         "screenshots": {
           "phone": {
             "en-US": [
@@ -97,12 +97,12 @@
         }
       },
       "versions": {
-        "dfefdf5d39fb4f55270d6e04d3b220f257a6fa2cc3e112d9af73b99d3b23bb38": {
-          "added": 1785693707190,
+        "1d033c7e4ec3d289aa006413047494058f355bb110f11d6f1cf6caf10abdd955": {
+          "added": 1785755695719,
           "file": {
-            "name": "/com.tristinbaker.idlefantasy_124.apk",
-            "sha256": "dfefdf5d39fb4f55270d6e04d3b220f257a6fa2cc3e112d9af73b99d3b23bb38",
-            "size": 7962215
+            "name": "/com.tristinbaker.idlefantasy_125.apk",
+            "sha256": "1d033c7e4ec3d289aa006413047494058f355bb110f11d6f1cf6caf10abdd955",
+            "size": 7966903
           },
           "manifest": {
             "nativecode": [
@@ -111,8 +111,8 @@
               "x86",
               "x86_64"
             ],
-            "versionName": "1.12.12",
-            "versionCode": 124,
+            "versionName": "1.12.13",
+            "versionCode": 125,
             "usesSdk": {
               "minSdkVersion": 26,
               "targetSdkVersion": 35
@@ -144,7 +144,7 @@
             ]
           },
           "whatsNew": {
-            "en-US": "• The Agility Cape's bonus now shows as an XP bonus in Profile > Bonuses instead of a Yield bonus, matching the Armory\n• The Agility session-time row in Profile > Bonuses no longer wraps mid-word or overlaps its description text\n• The Prayer Cape's bonus now shows as a Boost bonus in Profile > Bonuses instead of a Yield bonus, matching the Armory\n• Fixed the Farming panel opening as a stuck sliver and closing itself on the first tap after a fresh app launch\n• Reorganized Fletching filters: categ"
+            "en-US": "• Fixed Equip Best Gear on a Strength loadout again preferring accuracy-heavy armor like the Sovereign Crown over strength-focused armor like the Tower Helm\n• Fixed starting an Infinite Tower floor leaving the screen scrolled partway down the milestone list after the loadout pickers collapse; the view now returns to the top\n• Fixed the category and tier filter buttons on worker crafting activities (Forge, Fletching, Crafting and others) showing untranslated English instead of the localized names"
           }
         }
       }
