@@ -1,6 +1,6 @@
 {
   "repo": {
-    "timestamp": 1785755731807,
+    "timestamp": 1786012803923,
     "version": 30000,
     "name": "Idle Fantasy",
     "icon": "icon.png",
@@ -20,18 +20,18 @@
       "categories": [
         "Games"
       ],
-      "suggestedVersionName": "1.12.13",
-      "suggestedVersionCode": "125",
+      "suggestedVersionName": "1.12.14",
+      "suggestedVersionCode": "126",
       "issueTracker": "https://github.com/tristinbaker/IdleFantasy/issues",
       "liberapay": "tristinbaker_",
       "license": "GPL-3.0-only",
       "sourceCode": "https://github.com/tristinbaker/IdleFantasy",
       "added": 1781744235667,
       "packageName": "com.tristinbaker.idlefantasy",
-      "lastUpdated": 1785755695719,
+      "lastUpdated": 1786012766752,
       "localized": {
         "en-US": {
-          "description": "Idle Fantasy is a free and open source offline idle RPG inspired by classic MMORPGs. Train skills, fight in dungeons, craft gear, and complete quests. No internet connection, account, or ads required.\n\n<b>Features</b>\n\n\u2022 <b>24 trainable skills</b>: Mining, Fishing, Woodcutting, Farming, Thieving, Smithing, Cooking, Fletching, Crafting, Firemaking, Runecrafting, Herblore, Construction, Prayer, Mercantile, Agility, Slayer, Attack, Strength, Defense, Ranged, Magic, Hitpoints, and Prayer\n\n\u2022 <b>Session-based training</b>: Start a session and close the app. Come back up to an hour later to collect your loot and XP. Agility reduces session time.\n\n\u2022 <b>27 dungeons</b>: Fight solo bosses and enemies to earn combat XP, coins, and rare drops. Equip weapons and armour to deal more damage.\n\n\u2022 <b>Crafting system</b>: Smelt bars, cook fish, fletch bows and arrows, craft jewellery. Consume gathered materials and earn XP and items.\n\n\u2022 <b>Prayer</b>: Bury bones collected from combat to earn Prayer XP.\n\n\u2022 <b>Equipment system</b>: Equip weapons, armour, tools, and jewellery to boost stats and skill efficiency.\n\n\u2022 <b>Quest system</b>: 189 quests spanning all skills. Earn XP rewards on completion.\n\n\u2022 <b>Pet system</b>: Rare pets can drop while training skills. Each pet provides a permanent XP boost to their linked skill.\n\n\u2022 <b>Achievements</b>: Track milestones across levelling, combat, quests, and collections.\n\n\u2022 <b>NPC Shop</b>: Buy supplies and sell your gathered resources for coins.\n\n\u2022 <b>No ads. No accounts. No internet required.</b> Your save data stays on your device.\n\n\u2022 <b>Translations</b>: Partial and full translations available for 14 languages.\n\nIdle Fantasy is free software released under the GPL-3.0 licence. Source code is available on the project repository.\n\n<b>Get updates faster</b>\n\nAdd the official Idle Fantasy repository to F-Droid to receive updates as soon as they are released, instead of waiting for the main F-Droid index to catch up.\n\n1. Open F-Droid and go to Settings \u2192 Repositories\n2. Tap + and paste: https://idlefantasy.tristinbaker.xyz/fdroid/repo\n3. Search for Idle Fantasy, open the app page, and under Repositories set Idle Fantasy as the preferred source.\n",
+          "description": "Idle Fantasy is a free and open source offline idle RPG inspired by classic MMORPGs. Train skills, fight in dungeons, craft gear, and complete quests. No internet connection, account, or ads required.\n\n<b>Features</b>\n\n\u2022 <b>24 trainable skills</b>: Mining, Fishing, Woodcutting, Farming, Thieving, Smithing, Cooking, Fletching, Crafting, Firemaking, Runecrafting, Herblore, Construction, Prayer, Mercantile, Agility, Slayer, Attack, Strength, Defense, Ranged, Magic, Hitpoints, and Prayer\n\n\u2022 <b>Session-based training</b>: Start a session and close the app. Come back up to an hour later to collect your loot and XP. Agility reduces session time.\n\n\u2022 <b>27 dungeons</b>: Fight solo bosses and enemies to earn combat XP, coins, and rare drops. Equip weapons and armour to deal more damage.\n\n\u2022 <b>Crafting system</b>: Smelt bars, cook fish, fletch bows and arrows, craft jewellery. Consume gathered materials and earn XP and items.\n\n\u2022 <b>Prayer</b>: Bury bones collected from combat to earn Prayer XP.\n\n\u2022 <b>Equipment system</b>: Equip weapons, armour, tools, and jewellery to boost stats and skill efficiency.\n\n\u2022 <b>Quest system</b>: 189 quests spanning all skills. Earn XP rewards on completion.\n\n\u2022 <b>Pet system</b>: Rare pets can drop while training skills. Each pet provides a permanent XP boost to their linked skill.\n\n\u2022 <b>Achievements</b>: Track milestones across levelling, combat, quests, and collections.\n\n\u2022 <b>NPC Shop</b>: Buy supplies and sell your gathered resources for coins.\n\n\u2022 <b>No ads. No accounts. No internet required.</b> Your save data stays on your device.\n\n\u2022 <b>Translations</b>: Partial and full translations available for 15 languages.\n\nIdle Fantasy is free software released under the GPL-3.0 licence. Source code is available on the project repository.\n\n<b>Get updates faster</b>\n\nAdd the official Idle Fantasy repository to F-Droid to receive updates as soon as they are released, instead of waiting for the main F-Droid index to catch up.\n\n1. Open F-Droid and go to Settings \u2192 Repositories\n2. Tap + and paste: https://idlefantasy.tristinbaker.xyz/fdroid/repo\n3. Search for Idle Fantasy, open the app page, and under Repositories set Idle Fantasy as the preferred source.\n",
           "icon": "icon_9h1hkNc21_zKDjvAQz13qne2EbIN25vw98yOSUsY0dE=.png",
           "name": "Idle Fantasy",
           "phoneScreenshots": [
@@ -53,7 +53,7 @@
             "9.png"
           ],
           "summary": "Idle RPG: train skills, fight dungeons, craft gear. No ads, no accounts.",
-          "whatsNew": "\u2022 Fixed Equip Best Gear on a Strength loadout again preferring accuracy-heavy armor like the Sovereign Crown over strength-focused armor like the Tower Helm\n\u2022 Fixed starting an Infinite Tower floor leaving the screen scrolled partway down the milestone list after the loadout pickers collapse; the view now returns to the top\n\u2022 Fixed the category and tier filter buttons on worker crafting activities (Forge, Fletching, Crafting and others) showing untranslated English instead of the localized names"
+          "whatsNew": "\u2022 Added the Artisan's Workshop town building (Construction 80/90/99): grants a 5/10/15% chance to preserve secondary crafting materials such as herblore and runecrafting ashes\n\u2022 Added the Chronos Spire town building (Construction 82/92/99): reduces player session durations by 2/4/6% (worker sessions unaffected)\n\u2022 Added a Midnight theme with a higher-contrast AMOLED palette so dark mode stays readable under Night Light\n\u2022 Rebalanced Agility Guild quests and dailies to use higher-level courses at h"
         }
       }
     }
@@ -61,9 +61,9 @@
   "packages": {
     "com.tristinbaker.idlefantasy": [
       {
-        "added": 1785755695719,
-        "apkName": "com.tristinbaker.idlefantasy_125.apk",
-        "hash": "1d033c7e4ec3d289aa006413047494058f355bb110f11d6f1cf6caf10abdd955",
+        "added": 1786012766752,
+        "apkName": "com.tristinbaker.idlefantasy_126.apk",
+        "hash": "775a7d678a166e301916e47670c9679538c3d49d4e5e4c401e2cb8f3bdd0541b",
         "hashType": "sha256",
         "minSdkVersion": 26,
         "nativecode": [
@@ -75,7 +75,7 @@
         "packageName": "com.tristinbaker.idlefantasy",
         "sig": "e83cc5b410f2aca2b487e5af7883d581",
         "signer": "99a980a934cb0149bfbdd5f4358471ffe69302e0467bae4d8574d4feeda34010",
-        "size": 7966903,
+        "size": 7975615,
         "targetSdkVersion": 35,
         "uses-permission": [
           [
@@ -103,8 +103,8 @@
             null
           ]
         ],
-        "versionCode": 125,
-        "versionName": "1.12.13"
+        "versionCode": 126,
+        "versionName": "1.12.14"
       },
       {
         "added": 1785078164995,

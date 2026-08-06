@@ -8,7 +8,7 @@
     "--pretty"
   ],
   "disabled": [],
-  "endTimestamp": 1785755733377,
+  "endTimestamp": 1786012805596,
   "failedBuilds": {
     "com.tristinbaker.idlefantasy": [
       1,
@@ -27,7 +27,8 @@
       27,
       105,
       123,
-      124
+      124,
+      125
     ]
   },
   "jarsigner": "/usr/lib/jvm/java-26-openjdk/bin/jarsigner",
@@ -36,14 +37,14 @@
   "noPackages": [],
   "noUpdateCheck": [],
   "stages": {
-    "delete_disabled_builds": 1785755695728,
-    "index.make repo": 1785755731807,
-    "prepare_apps repo": 1785755729016,
-    "process_apks": 1785755695728,
-    "read_added_date_from_all_apks": 1785755729016,
-    "remove_apks": 1785755729006,
-    "scan_repo_files": 1785755729006
+    "delete_disabled_builds": 1786012766766,
+    "index.make repo": 1786012803923,
+    "prepare_apps repo": 1786012801140,
+    "process_apks": 1786012766766,
+    "read_added_date_from_all_apks": 1786012801139,
+    "remove_apks": 1786012801135,
+    "scan_repo_files": 1786012801135
   },
-  "startTimestamp": 1785773695000,
+  "startTimestamp": 1786030766000,
   "subcommand": "update"
 }
