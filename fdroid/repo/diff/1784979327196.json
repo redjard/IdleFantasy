@@ -1,11 +1,11 @@
 {
   "repo": {
-    "timestamp": 1786366330492
+    "timestamp": 1786495711709
   },
   "packages": {
     "com.tristinbaker.idlefantasy": {
       "metadata": {
-        "lastUpdated": 1786366294840,
+        "lastUpdated": 1786495675079,
         "screenshots": {
           "phone": {
             "en-US": [
@@ -97,12 +97,12 @@
         }
       },
       "versions": {
-        "b59998962ad918628962771105b21ede59170928a30249c1d00a0e87befee138": {
-          "added": 1786366294840,
+        "b019a69ee8b5c08a46b3196781a9701afd9eaa956b4a236d160e31d37c349527": {
+          "added": 1786495675079,
           "file": {
-            "name": "/com.tristinbaker.idlefantasy_129.apk",
-            "sha256": "b59998962ad918628962771105b21ede59170928a30249c1d00a0e87befee138",
-            "size": 8344132
+            "name": "/com.tristinbaker.idlefantasy_130.apk",
+            "sha256": "b019a69ee8b5c08a46b3196781a9701afd9eaa956b4a236d160e31d37c349527",
+            "size": 8408472
           },
           "manifest": {
             "nativecode": [
@@ -111,8 +111,8 @@
               "x86",
               "x86_64"
             ],
-            "versionName": "1.13.2",
-            "versionCode": 129,
+            "versionName": "1.13.3",
+            "versionCode": 130,
             "usesSdk": {
               "minSdkVersion": 26,
               "targetSdkVersion": 35
@@ -144,7 +144,7 @@
             ]
           },
           "whatsNew": {
-            "en-US": "• New in-app theme editor in Settings: recolour any theme with a colour picker, preview it live, save it as your own, and export it as a file to share (importable by others)\n• The guild cape is now awarded when the guild actually reaches level 10, instead of when the final guild quest is claimed at level 9\n• Trade route coin returns on the Mercantile screen now include your cape, prestige, and blessing bonuses, so the shown range matches what sessions actually pay\n• The quest panel's quick-add b"
+            "en-US": "• New save manager under Settings > Characters: up to 3 character slots shown side by side with each character's sprite, levels, coins, and last-played time; create, switch, or delete characters, with the current character saved automatically and inactive characters' sessions paused until you return\n• New Ironman mode, chosen at character creation and permanent: all XP, yield, and coin boosts are inert, the shop only sells (no buying), and Inn workers can't be hired; ironman characters show a ba"
           }
         },
         "4e99d521a476fa6bc61f3fd9fa446d5b0750602b95445e98d01b31505b4f98e5": {
