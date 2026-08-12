@@ -14,7 +14,7 @@
       }
     },
     "address": "https://idlefantasy.tristinbaker.xyz/fdroid/repo",
-    "timestamp": 1786495711709,
+    "timestamp": 1786551940686,
     "categories": {
       "Games": {
         "name": {
@@ -31,7 +31,7 @@
           "Games"
         ],
         "issueTracker": "https://github.com/tristinbaker/IdleFantasy/issues",
-        "lastUpdated": 1786495675079,
+        "lastUpdated": 1786551903787,
         "license": "GPL-3.0-only",
         "sourceCode": "https://github.com/tristinbaker/IdleFantasy",
         "screenshots": {
@@ -140,12 +140,12 @@
         "preferredSigner": "99a980a934cb0149bfbdd5f4358471ffe69302e0467bae4d8574d4feeda34010"
       },
       "versions": {
-        "b019a69ee8b5c08a46b3196781a9701afd9eaa956b4a236d160e31d37c349527": {
-          "added": 1786495675079,
+        "98059affbcbc71361fce7e5d08c7d2e5b249c788b548d83dc307e2702281a61a": {
+          "added": 1786551903787,
           "file": {
-            "name": "/com.tristinbaker.idlefantasy_130.apk",
-            "sha256": "b019a69ee8b5c08a46b3196781a9701afd9eaa956b4a236d160e31d37c349527",
-            "size": 8408472
+            "name": "/com.tristinbaker.idlefantasy_131.apk",
+            "sha256": "98059affbcbc71361fce7e5d08c7d2e5b249c788b548d83dc307e2702281a61a",
+            "size": 8416588
           },
           "manifest": {
             "nativecode": [
@@ -154,8 +154,8 @@
               "x86",
               "x86_64"
             ],
-            "versionName": "1.13.3",
-            "versionCode": 130,
+            "versionName": "1.13.4",
+            "versionCode": 131,
             "usesSdk": {
               "minSdkVersion": 26,
               "targetSdkVersion": 35
@@ -187,7 +187,7 @@
             ]
           },
           "whatsNew": {
-            "en-US": "• New save manager under Settings > Characters: up to 3 character slots shown side by side with each character's sprite, levels, coins, and last-played time; create, switch, or delete characters, with the current character saved automatically and inactive characters' sessions paused until you return\n• New Ironman mode, chosen at character creation and permanent: all XP, yield, and coin boosts are inert, the shop only sells (no buying), and Inn workers can't be hired; ironman characters show a ba"
+            "en-US": "• The 2× XP boost now costs 2.5M coins (down from 25M) but can no longer be stacked: a new boost can't be bought while one is running, and purchases are limited to one per week, resetting Monday 6am alongside weekly quests; previously stockpiled boost time is unaffected\n• Fixed the quest icons legend flashing over the home screen when tapping Settings quickly after returning from the Skills page: taps no longer register on a page that is still animating out, which could also open Settings uninte"
           }
         },
         "4e99d521a476fa6bc61f3fd9fa446d5b0750602b95445e98d01b31505b4f98e5": {
