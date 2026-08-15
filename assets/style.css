@@ -401,6 +401,17 @@ table.summary {
   font-weight: 600;
 }
 
+.content .footer-links .footer-image-link {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 1ex;
+}
+
+.content .footer-links .footer-image-link img {
+  height: 1.5em;
+  margin-right: 0.5ex;
+}
+
 /* Images */
 
 .text {
