@@ -1,0 +1,65 @@
+{
+  "repo": {
+    "timestamp": 1786793619012
+  },
+  "packages": {
+    "com.tristinbaker.idlefantasy": {
+      "metadata": {
+        "lastUpdated": 1786793581787
+      },
+      "versions": {
+        "db6c64be71c2a7e1cf3cd638d96df61d0aa056909023a4f4757817f7bddbb41a": null,
+        "022762735a7849c6d52c41669c5e5eac54e12c98c21106b29855040ee03ce98a": {
+          "added": 1786793581787,
+          "file": {
+            "name": "/com.tristinbaker.idlefantasy_133.apk",
+            "sha256": "022762735a7849c6d52c41669c5e5eac54e12c98c21106b29855040ee03ce98a",
+            "size": 9111682
+          },
+          "manifest": {
+            "nativecode": [
+              "arm64-v8a",
+              "armeabi-v7a",
+              "x86",
+              "x86_64"
+            ],
+            "versionName": "1.13.6",
+            "versionCode": 133,
+            "usesSdk": {
+              "minSdkVersion": 26,
+              "targetSdkVersion": 35
+            },
+            "signer": {
+              "sha256": [
+                "99a980a934cb0149bfbdd5f4358471ffe69302e0467bae4d8574d4feeda34010"
+              ]
+            },
+            "usesPermission": [
+              {
+                "name": "android.permission.POST_NOTIFICATIONS"
+              },
+              {
+                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
+              },
+              {
+                "name": "android.permission.WAKE_LOCK"
+              },
+              {
+                "name": "android.permission.USE_EXACT_ALARM"
+              },
+              {
+                "name": "android.permission.SCHEDULE_EXACT_ALARM"
+              },
+              {
+                "name": "com.tristinbaker.idlefantasy.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+              }
+            ]
+          },
+          "whatsNew": {
+            "en-US": "• XP lamps now preview the level each skill would reach and warn when XP would be wasted past 99, with the skill picker organised into sections with icons (thanks Michaelomh!)\n• The foretell next slayer task button is disabled while no task is active so bones can't be wasted (thanks Michaelomh!)\n• Restored the official themes' intended colours that shifted after the Material 3 update (thanks CiaranGruber!)\n• Large community translation batches for French, Russian, Italian, Simplified Chinese, an"
+          }
+        }
+      }
+    }
+  }
+}
