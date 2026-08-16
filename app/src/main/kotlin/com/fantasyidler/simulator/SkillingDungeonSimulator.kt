@@ -21,7 +21,7 @@ object SkillingDungeonSimulator {
         dungeon: SkillingDungeonData,
         startXp: Long,
         agilityLevel: Int = 1,
-        agilityPrestige: Int = 0,
+        floorReductionMin: Double = 0.0,
         toolEfficiency: Float = 1.0f,
         petBoostPct: Int = 0,
         chronosMultiplier: Float = 1.0f,
@@ -69,7 +69,7 @@ object SkillingDungeonSimulator {
             )
         }
 
-        return SkillSimulator.Result(frames, SkillSimulator.sessionDurationMs(agilityLevel, agilityPrestige, chronosMultiplier))
+        return SkillSimulator.Result(frames, SkillSimulator.sessionDurationMs(agilityLevel, floorReductionMin, chronosMultiplier))
     }
 
     private fun <T> getTierData(tiers: Map<String, T>, currentLevel: Int): T {

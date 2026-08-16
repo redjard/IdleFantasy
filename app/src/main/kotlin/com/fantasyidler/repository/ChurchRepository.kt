@@ -22,7 +22,12 @@ class ChurchRepository @Inject constructor(
     private val playerRepo: PlayerRepository,
     private val townRepoProvider: Provider<TownRepository>,
     private val buffNotifScheduler: BuffNotificationScheduler,
+    private val boostRepo: BoostRepository,
 ) {
+    /** Bone cost after the gnome Trickster's Favor prestige discount. */
+    fun discountedBoneCost(blessing: BlessingData, flags: PlayerFlags): Int =
+        discountedBoneCost(blessing, boostRepo.blessingCostMultiplier(flags))
+
     companion object {
         val ALL_BLESSINGS: List<BlessingData> = listOf(
             BlessingData("blessed_focus",      1,  BlessingType.XP,      1.05f),
@@ -80,6 +85,10 @@ class ChurchRepository @Inject constructor(
             return if (b.type == BlessingType.COINS) 1f + b.magnitude else 1f
         }
 
+        /** Pure variant for UI display; [costMult] from BoostRepository.blessingCostMultiplier. */
+        fun discountedBoneCost(blessing: BlessingData, costMult: Double): Int =
+            (boneCostFor(blessing) * costMult + 0.5).toInt().coerceAtLeast(1)
+
         fun boneCostFor(blessing: BlessingData): Int = when {
             blessing.prayerLevelRequired >= 99 -> 300
             blessing.prayerLevelRequired >= 90 -> 265
@@ -133,7 +142,7 @@ class ChurchRepository @Inject constructor(
         if (prayerLevel < blessing.prayerLevelRequired) {
             return@withLock BlessingActivateResult.LevelTooLow(blessing.prayerLevelRequired)
         }
-        val cost      = boneCostFor(blessing)
+        val cost      = discountedBoneCost(blessing, flags)
         val inventory: Map<String, Int> = kotlinx.serialization.json.Json.decodeFromString(player.inventory)
         if (totalBoneXp(inventory) < cost * BASE_BONE_XP) return@withLock BlessingActivateResult.NotEnoughBones(cost)
 
@@ -153,7 +162,8 @@ class ChurchRepository @Inject constructor(
         playerRepo.consumeItemsUnlocked(toConsume)
 
         val now = System.currentTimeMillis()
-        val durationMs = townRepoProvider.get().blessingDurationMs(flags)
+        val durationMs = (townRepoProvider.get().blessingDurationMs(flags) *
+            boostRepo.blessingDurationMultiplier(flags)).toLong()
         val newExpiresAt = if (active != null && active.key == key) {
             flags.activeBlessingExpiresAt + durationMs
         } else {

@@ -10,6 +10,7 @@ import com.fantasyidler.data.model.QueuedAction
 import com.fantasyidler.data.model.Skills
 import com.fantasyidler.data.model.SlayerTask
 import com.fantasyidler.simulator.SkillSimulator
+import com.fantasyidler.repository.BoostRepository
 import com.fantasyidler.repository.ForetelResult
 import com.fantasyidler.repository.GameDataRepository
 import com.fantasyidler.repository.PlayerRepository
@@ -72,6 +73,7 @@ data class SlayerUiState(
 
 @HiltViewModel
 class SlayerViewModel @Inject constructor(
+    private val boostRepo: BoostRepository,
     private val playerRepo: PlayerRepository,
     private val slayerRepo: SlayerRepository,
     val gameData: GameDataRepository,
@@ -204,7 +206,7 @@ class SlayerViewModel @Inject constructor(
                     snackbarMessage = if (result.success) {
                         val b = result.breakdown!!
                         val skillDisplay = GameStrings.skillName(context, skillKey)
-                        val suffix = xpMultiplierBreakdown(b.baseXp, b.boostActive, b.blessingMult, b.prestigeLevel)?.let { s -> " $s" } ?: ""
+                        val suffix = xpMultiplierBreakdown(b.baseXp, b.boostActive, b.blessingMult, b.prestigeXpPct)?.let { s -> " $s" } ?: ""
                         context.withAppLocale().getString(R.string.slayer_lamp_purchased, b.finalXp.formatXp(), skillDisplay) + suffix
                     } else context.withAppLocale().getString(R.string.slayer_not_enough_points)
                 )
@@ -272,7 +274,7 @@ class SlayerViewModel @Inject constructor(
                     skillName           = "combat",
                     activityKey         = dungeonKey,
                     skillDisplayName    = dungeonName,
-                    estimatedDurationMs = SkillSimulator.sessionDurationMs(agility, flags.skillPrestige[Skills.AGILITY] ?: 0, townRepo.playerSessionDurationMultiplier(flags)),
+                    estimatedDurationMs = SkillSimulator.sessionDurationMs(agility, boostRepo.sessionFloorReductionMin(flags), townRepo.playerSessionDurationMultiplier(flags)),
                     equippedSnapshot    = player.equipped,
                     arrowsKey           = flags.equippedArrows,
                     spellName           = flags.activeSpell,

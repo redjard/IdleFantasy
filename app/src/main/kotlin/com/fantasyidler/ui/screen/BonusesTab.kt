@@ -30,6 +30,7 @@ import com.fantasyidler.data.model.Skills
 import com.fantasyidler.simulator.SkillSimulator
 import com.fantasyidler.ui.viewmodel.InventoryViewModel
 import com.fantasyidler.repository.TownRepository
+import com.fantasyidler.repository.PrestigeBoosts
 import com.fantasyidler.repository.resolveCapeMultiplier
 import com.fantasyidler.repository.isGuildCapeForSkill
 import com.fantasyidler.repository.resolveOwnedCapeKeysForSkill
@@ -66,8 +67,9 @@ internal fun BonusesTab(
     val context = LocalContext.current
     val now     = System.currentTimeMillis()
 
-    // Ironman: every XP/yield/coin multiplier is inert, so there is nothing to list.
-    if (state.ironman) {
+    // Ironman: purchased multipliers are inert, but earned prestige effects apply,
+    // so show the notice only when no prestige nodes are active either.
+    if (state.ironman && state.prestigeEffects.isEmpty()) {
         Box(
             modifier         = Modifier.fillMaxSize().padding(32.dp),
             contentAlignment = Alignment.Center,
@@ -87,7 +89,7 @@ internal fun BonusesTab(
     val capeKey        = state.equipped[EquipSlot.CAPE]
     val cape           = capeKey?.let { allEquipment[it] }?.takeIf { it.capeBonus > 0f }
     val bonusPets      = allPets.values.filter { it.id in state.ownedPetIds && it.boostPercent > 0 }
-    val prestigeEntries = state.skillPrestige.entries.filter { it.value > 0 }
+    val prestigeEffects = state.prestigeEffects
 
     val isGatheringCape = cape != null && (cape.capeSkill ?: "") !in COMBAT_CAPE_SKILLS
     val isCombatCape    = cape != null && !isGatheringCape
@@ -101,8 +103,9 @@ internal fun BonusesTab(
             equippedCape = cape,
             inventoryKeys = state.inventory.keys,
             townBuildingTiers = state.townBuildingTiers,
-            skillPrestige = state.skillPrestige,
-            allEquipment = allEquipment
+            capeScaling = state.capeScalingBySkill,
+            allEquipment = allEquipment,
+            ironman = state.ironman,
         )
         mult > 1.0f
     }
@@ -110,18 +113,18 @@ internal fun BonusesTab(
     val specificSkillKeys = buildSet<String> {
         addAll(activeCapeSkills)
         specificBonusPets.forEach { add(it.boostedSkill) }
-        prestigeEntries.forEach { add(it.key) }
+        addAll(prestigeEffects.keys)
     }
 
     val skillEntries: List<SkillBonusEntry> = specificSkillKeys.sorted().map { skillKey ->
-        val capePrestige   = state.skillPrestige[skillKey] ?: 0
         val capeMult = resolveCapeMultiplier(
             skillName = skillKey,
             equippedCape = cape,
             inventoryKeys = state.inventory.keys,
             townBuildingTiers = state.townBuildingTiers,
-            skillPrestige = state.skillPrestige,
-            allEquipment = allEquipment
+            capeScaling = state.capeScalingBySkill,
+            allEquipment = allEquipment,
+            ironman = state.ironman,
         )
         val isCombatStat = skillKey in COMBAT_STAT_SKILLS
         // Agility's cape boosts XP, not yield (agility produces no items)
@@ -131,9 +134,10 @@ internal fun BonusesTab(
 
         val specificPetPct = specificBonusPets.filter { it.boostedSkill == skillKey }.sumOf { it.boostPercent }
         val totalPetPct    = specificPetPct + allPetBoostPct
-        val prestigeLevel  = state.skillPrestige[skillKey] ?: 0
-        val prestigePct    = if (isCombatStat) 0 else prestigeLevel * 10
-        val statBonus      = if (isCombatStat) prestigeLevel * 5 else 0
+        val effects        = prestigeEffects[skillKey].orEmpty()
+        val prestigePct    = (effects[PrestigeBoosts.XP_PCT] ?: 0.0).toInt()
+        val statBonus      = (effects[PrestigeBoosts.COMBAT_STAT_FLAT] ?: 0.0).toInt()
+        val prestigeYieldPct = (effects[PrestigeBoosts.YIELD_PCT] ?: 0.0).toInt()
 
         val activeCapeName = run {
             if (capeMult <= 1.0f) return@run null
@@ -174,21 +178,35 @@ internal fun BonusesTab(
             skillKey    = skillKey,
             skillName   = GameStrings.skillName(context, skillKey),
             xpPct       = totalPetPct + prestigePct + capeXpPct,
-            yieldPct    = yieldPct,
+            yieldPct    = yieldPct + prestigeYieldPct,
             statBonus   = statBonus,
             xpSources   = xpSources,
-            yieldSource = if (yieldPct > 0) activeCapeName else null,
+            yieldSource = listOfNotNull(
+                activeCapeName.takeIf { yieldPct > 0 },
+                context.getString(R.string.prestige).takeIf { prestigeYieldPct > 0 },
+            ).joinToString(" + ").ifEmpty { null },
         )
     }
 
-    val agilityPrestige    = state.skillPrestige[Skills.AGILITY] ?: 0
-    val mercantilePrestige = state.skillPrestige[Skills.MERCANTILE] ?: 0
+    val agilityFloorMin  = prestigeEffects[Skills.AGILITY].orEmpty()[PrestigeBoosts.SESSION_FLOOR_MIN] ?: 0.0
+    val coinPctBySkill   = prestigeEffects.mapNotNull { (skill, eff) ->
+        (eff[PrestigeBoosts.COIN_PCT] ?: 0.0).toInt().takeIf { it > 0 }?.let { skill to it }
+    }
+    // Effects with dedicated sections above; everything else gets a generic row below.
+    val coveredEffects = setOf(
+        PrestigeBoosts.XP_PCT, PrestigeBoosts.YIELD_PCT, PrestigeBoosts.COMBAT_STAT_FLAT,
+        PrestigeBoosts.SESSION_FLOOR_MIN, PrestigeBoosts.COIN_PCT, PrestigeBoosts.CAPE_SCALING,
+    )
+    val otherPrestigeRows = prestigeEffects.flatMap { (skill, eff) ->
+        eff.filterKeys { it !in coveredEffects }.filterValues { it > 0.0 }
+            .map { (effect, value) -> Triple(skill, effect, value) }
+    }.sortedBy { it.first }
     val builderDiscountPct = (TownRepository.builderDiscount(state.skillLevels[Skills.CONSTRUCTION] ?: 1) * 100).toInt()
 
     // "all" pets with no skill-specific rows: surface them in the Boosts section
     val showAllPetsInBoosts = allPetBoostPct > 0 && specificSkillKeys.isEmpty()
 
-    if (!boostActive && !blessingActive && cape == null && bonusPets.isEmpty() && prestigeEntries.isEmpty() && builderDiscountPct <= 0) {
+    if (!boostActive && !blessingActive && cape == null && bonusPets.isEmpty() && prestigeEffects.isEmpty() && builderDiscountPct <= 0) {
         Box(
             modifier         = Modifier.fillMaxSize().padding(32.dp),
             contentAlignment = Alignment.Center,
@@ -268,7 +286,7 @@ internal fun BonusesTab(
             }
         }
 
-        if (skillEntries.isNotEmpty() || agilityPrestige > 0 || mercantilePrestige > 0 || builderDiscountPct > 0) {
+        if (skillEntries.isNotEmpty() || agilityFloorMin > 0.0 || coinPctBySkill.isNotEmpty() || builderDiscountPct > 0) {
             item { SlotSectionHeader(stringResource(R.string.bonus_section_skills)) }
             items(skillEntries, key = { it.skillKey }) { entry ->
                 if (entry.xpPct > 0) {
@@ -299,11 +317,11 @@ internal fun BonusesTab(
                     )
                 }
             }
-            if (agilityPrestige > 0) {
+            if (agilityFloorMin > 0.0) {
                 item {
                     val agilityLevel = state.skillLevels[Skills.AGILITY] ?: 1
-                    val baseMinutes     = (SkillSimulator.sessionDurationMs(agilityLevel, 0) / 60_000L).toInt()
-                    val prestigeMinutes = (SkillSimulator.sessionDurationMs(agilityLevel, agilityPrestige) / 60_000L).toInt()
+                    val baseMinutes     = (SkillSimulator.sessionDurationMs(agilityLevel, 0.0) / 60_000L).toInt()
+                    val prestigeMinutes = (SkillSimulator.sessionDurationMs(agilityLevel, agilityFloorMin) / 60_000L).toInt()
                     val savedMinutes    = baseMinutes - prestigeMinutes
                     if (savedMinutes > 0) {
                         BonusRow(
@@ -318,14 +336,20 @@ internal fun BonusesTab(
                     }
                 }
             }
-            if (mercantilePrestige > 0) {
-                item {
-                    BonusRow(
-                        name  = GameStrings.skillName(context, Skills.MERCANTILE),
-                        pct   = stringResource(R.string.bonus_coin_return, mercantilePrestige * 10),
-                        scope = "",
-                    )
-                }
+            items(coinPctBySkill, key = { "coin_${it.first}" }) { (skill, pct) ->
+                BonusRow(
+                    name  = GameStrings.skillName(context, skill),
+                    pct   = stringResource(R.string.bonus_coin_return, pct),
+                    scope = "",
+                )
+            }
+            items(otherPrestigeRows, key = { "fx_${it.first}_${it.second}" }) { (skill, effect, value) ->
+                BonusRow(
+                    name   = GameStrings.skillName(context, skill),
+                    pct    = prestigeEffectValueLabel(effect, value),
+                    scope  = "",
+                    detail = prestigeEffectDetail(effect, value),
+                )
             }
             if (builderDiscountPct > 0) {
                 item {
@@ -414,4 +438,37 @@ private fun BonusRow(
         }
     }
     HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+}
+
+/** Compact value label for a generic prestige-effect row (e.g. "+15%", "+1"). */
+@Composable
+internal fun prestigeEffectValueLabel(effect: String, value: Double): String = when (effect) {
+    PrestigeBoosts.POTION_BONUS_FLAT, PrestigeBoosts.QUEUE_SLOT -> "+${value.toInt()}"
+    PrestigeBoosts.BLESSING_COST_PCT, PrestigeBoosts.BUILDER_DISCOUNT_PCT, PrestigeBoosts.INPUT_SAVE_PCT -> "-${value.toInt()}%"
+    PrestigeBoosts.FLOW_INTERVAL_REDUCTION -> "-${value.toInt()}m"
+    else -> "+${value.toInt()}%"
+}
+
+/** One-line description for a generic prestige-effect row. */
+@Composable
+internal fun prestigeEffectDetail(effect: String, value: Double): String? = when (effect) {
+    PrestigeBoosts.FLOW_RATE         -> stringResource(R.string.prestige_effect_flow_rate, if (value % 1.0 == 0.0) value.toInt().toString() else value.toString())
+    PrestigeBoosts.FLOW_INTERVAL_REDUCTION -> stringResource(R.string.prestige_effect_flow_interval, value.toInt())
+    PrestigeBoosts.BONUS_ROLL_PCT    -> stringResource(R.string.prestige_effect_bonus_roll, value.toInt())
+    PrestigeBoosts.CROP_ROTATION_PCT -> stringResource(R.string.prestige_effect_crop_rotation, value.toInt())
+    PrestigeBoosts.CROP_ROTATION_ALWAYS -> stringResource(R.string.prestige_effect_crop_rotation_always)
+    PrestigeBoosts.TOOL_EFF_PCT      -> stringResource(R.string.prestige_effect_tool_eff, value.toInt())
+    PrestigeBoosts.SUCCESS_CHANCE_PCT -> stringResource(R.string.prestige_effect_success_chance, value.toInt())
+    PrestigeBoosts.RECLAIM_PCT       -> stringResource(R.string.prestige_effect_reclaim, value.toInt())
+    PrestigeBoosts.HEAL_PCT          -> stringResource(R.string.prestige_effect_heal, value.toInt())
+    PrestigeBoosts.DEATH_KEEP_PCT    -> stringResource(R.string.prestige_effect_death_keep, value.toInt())
+    PrestigeBoosts.QUEUE_SLOT        -> stringResource(R.string.prestige_effect_queue_slot, value.toInt())
+    PrestigeBoosts.PET_BOOST_PCT     -> stringResource(R.string.prestige_effect_pet_boost, value.toInt())
+    PrestigeBoosts.BLESSING_DURATION_PCT -> stringResource(R.string.prestige_effect_blessing_duration, value.toInt())
+    PrestigeBoosts.BLESSING_COST_PCT -> stringResource(R.string.prestige_effect_blessing_cost, value.toInt())
+    PrestigeBoosts.POTION_BONUS_FLAT -> stringResource(R.string.prestige_effect_potion_bonus, value.toInt())
+    PrestigeBoosts.INPUT_SAVE_PCT    -> stringResource(R.string.prestige_effect_input_save, value.toInt())
+    PrestigeBoosts.BUILDER_DISCOUNT_PCT -> stringResource(R.string.prestige_effect_builder_discount, value.toInt())
+    PrestigeBoosts.SELL_PRICE_PCT    -> stringResource(R.string.prestige_effect_sell_price, value.toInt())
+    else -> null
 }

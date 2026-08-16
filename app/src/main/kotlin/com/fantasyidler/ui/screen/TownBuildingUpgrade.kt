@@ -32,6 +32,7 @@ fun BuildingUpgradeCard(
     buildingDef: TownBuildingData?,
     townRepository: TownRepository,
     constructionLevel: Int,
+    extraDiscountPerMille: Int = 0,
     coins: Long,
     inventory: Map<String, Int>,
     onUpgrade: () -> Unit,
@@ -42,9 +43,9 @@ fun BuildingUpgradeCard(
     val isMaxed = currentTier >= def.tiers.size
     val nextTier = if (!isMaxed) def.tiers[currentTier] else null
 
-    val nextCoinCost  = nextTier?.let { TownRepository.discountedCoins(it.coinCost, constructionLevel) } ?: 0L
-    val nextMaterials = nextTier?.let { TownRepository.discountedMaterials(it.materials, constructionLevel) } ?: emptyMap()
-    val discountPct   = (TownRepository.builderDiscount(constructionLevel) * 100).toInt()
+    val nextCoinCost  = nextTier?.let { TownRepository.discountedCoins(it.coinCost, constructionLevel, extraDiscountPerMille) } ?: 0L
+    val nextMaterials = nextTier?.let { TownRepository.discountedMaterials(it.materials, constructionLevel, extraDiscountPerMille) } ?: emptyMap()
+    val discountPct   = (TownRepository.builderDiscount(constructionLevel, extraDiscountPerMille) * 100).toInt()
 
     val canUpgrade = nextTier != null &&
         constructionLevel >= nextTier.constructionLevelRequired &&

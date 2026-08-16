@@ -127,7 +127,7 @@ internal fun CombatSessionBanner(
     enemies: Map<String, EnemyData>,
     skillLevels: Map<String, Int>,
     modifier: Modifier = Modifier,
-    skillPrestige: Map<String, Int> = emptyMap(),
+    hpPrestigeBonus: Int = 0,
     towerHpBonus: Int = 0,
     attackBonus: Int,
     strengthBonus: Int,
@@ -291,7 +291,7 @@ internal fun CombatSessionBanner(
                 // don't shift an in-flight run's display (issue #1411); live stats are
                 // the fallback for sessions recorded before the snapshot existed.
                 val maxHp = frames.firstOrNull { it.maxHp > 0 }?.maxHp
-                    ?: ((skillLevels[Skills.HITPOINTS] ?: 1) + (skillPrestige[Skills.HITPOINTS] ?: 0) * 5 + towerHpBonus) * 10
+                    ?: ((skillLevels[Skills.HITPOINTS] ?: 1) + hpPrestigeBonus + towerHpBonus) * 10
                 val enemyTicksShown = tickInFrame + if (halfTickInFrame >= 2 * tickInFrame + 1) 1 else 0
                 val currentPlayerHp = if (currentFrame?.enemyHits?.isNotEmpty() == true) {
                     val base = frames.getOrNull(currentFrameIdx - 1)?.hpAfter ?: maxHp

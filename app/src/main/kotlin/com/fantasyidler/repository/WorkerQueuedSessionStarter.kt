@@ -31,6 +31,7 @@ private val GATHERING_SKILLS = setOf(
  */
 @Singleton
 class WorkerQueuedSessionStarter @Inject constructor(
+    private val boostRepo: BoostRepository,
     private val playerRepo: PlayerRepository,
     private val sessionRepo: SessionRepository,
     private val gameData: GameDataRepository,
@@ -66,12 +67,12 @@ class WorkerQueuedSessionStarter @Inject constructor(
         val tier = worker.tier
         val agilityLevel = levels[Skills.AGILITY] ?: 1
         val equippedCapeData = equipped[EquipSlot.CAPE]?.let { gameData.equipment[it] }
-        val attackCapeMult   = resolveCapeMultiplier("attack", equippedCapeData, inventory.keys, flags.townBuildingTiers, flags.skillPrestige, gameData.equipment, flags.ironman)
-        val strengthCapeMult = resolveCapeMultiplier("strength", equippedCapeData, inventory.keys, flags.townBuildingTiers, flags.skillPrestige, gameData.equipment, flags.ironman)
-        val defenseCapeMult  = resolveCapeMultiplier("defense", equippedCapeData, inventory.keys, flags.townBuildingTiers, flags.skillPrestige, gameData.equipment, flags.ironman)
-        val rangedCapeMult   = resolveCapeMultiplier("ranged", equippedCapeData, inventory.keys, flags.townBuildingTiers, flags.skillPrestige, gameData.equipment, flags.ironman)
-        val magicCapeMult    = resolveCapeMultiplier("magic", equippedCapeData, inventory.keys, flags.townBuildingTiers, flags.skillPrestige, gameData.equipment, flags.ironman)
-        val prayerCapeMult   = resolveCapeMultiplier("prayer", equippedCapeData, inventory.keys, flags.townBuildingTiers, flags.skillPrestige, gameData.equipment, flags.ironman)
+        val attackCapeMult   = resolveCapeMultiplier("attack", equippedCapeData, inventory.keys, flags.townBuildingTiers, boostRepo.capeScalingBySkill(flags), gameData.equipment, flags.ironman)
+        val strengthCapeMult = resolveCapeMultiplier("strength", equippedCapeData, inventory.keys, flags.townBuildingTiers, boostRepo.capeScalingBySkill(flags), gameData.equipment, flags.ironman)
+        val defenseCapeMult  = resolveCapeMultiplier("defense", equippedCapeData, inventory.keys, flags.townBuildingTiers, boostRepo.capeScalingBySkill(flags), gameData.equipment, flags.ironman)
+        val rangedCapeMult   = resolveCapeMultiplier("ranged", equippedCapeData, inventory.keys, flags.townBuildingTiers, boostRepo.capeScalingBySkill(flags), gameData.equipment, flags.ironman)
+        val magicCapeMult    = resolveCapeMultiplier("magic", equippedCapeData, inventory.keys, flags.townBuildingTiers, boostRepo.capeScalingBySkill(flags), gameData.equipment, flags.ironman)
+        val prayerCapeMult   = resolveCapeMultiplier("prayer", equippedCapeData, inventory.keys, flags.townBuildingTiers, boostRepo.capeScalingBySkill(flags), gameData.equipment, flags.ironman)
         val levelAtStart = when (action.skillName) {
             "boss", "combat" -> combatLevelFrom(levels)
             else -> levels[action.skillName] ?: 1
@@ -93,9 +94,10 @@ class WorkerQueuedSessionStarter @Inject constructor(
                     startXp        = xpMap[Skills.MINING] ?: 0L,
                     agilityLevel   = agilityLevel,
                     petBoostPct    = 0,
-                    toolEfficiency = gameData.toolEfficiency(equipped[EquipSlot.PICKAXE], EquipSlot.PICKAXE, oreData.levelRequired),
+                    toolEfficiency = gameData.toolEfficiency(equipped[EquipSlot.PICKAXE], EquipSlot.PICKAXE, oreData.levelRequired) * boostRepo.toolEffMultiplier(Skills.MINING, flags),
                     petDropKey     = null,
                     petDropChance  = 0.0,
+                    gemChanceMult  = boostRepo.bonusRollMultiplier(Skills.MINING, flags),
                 )
                 startSession(slot, action, result.frames, durationMs, efficiencyMultiplier, levelAtStart)
             }
@@ -107,7 +109,7 @@ class WorkerQueuedSessionStarter @Inject constructor(
                     startXp        = xpMap[Skills.WOODCUTTING] ?: 0L,
                     agilityLevel   = agilityLevel,
                     petBoostPct    = 0,
-                    toolEfficiency = gameData.toolEfficiency(equipped[EquipSlot.AXE], EquipSlot.AXE, treeData.levelRequired),
+                    toolEfficiency = gameData.toolEfficiency(equipped[EquipSlot.AXE], EquipSlot.AXE, treeData.levelRequired) * boostRepo.toolEffMultiplier(Skills.WOODCUTTING, flags),
                     petDropKey     = null,
                     petDropChance  = 0.0,
                 )
@@ -122,7 +124,7 @@ class WorkerQueuedSessionStarter @Inject constructor(
                     startXp        = xpMap[Skills.FISHING] ?: 0L,
                     agilityLevel   = agilityLevel,
                     petBoostPct    = 0,
-                    rodEfficiency  = gameData.toolEfficiency(equipped[EquipSlot.FISHING_ROD], EquipSlot.FISHING_ROD, fishData.levelRequired),
+                    rodEfficiency  = gameData.toolEfficiency(equipped[EquipSlot.FISHING_ROD], EquipSlot.FISHING_ROD, fishData.levelRequired) * boostRepo.toolEffMultiplier(Skills.FISHING, flags),
                     petDropKey     = null,
                     petDropChance  = 0.0,
                 )
@@ -243,6 +245,7 @@ class WorkerQueuedSessionStarter @Inject constructor(
                     thievingLevel  = levels[Skills.THIEVING] ?: 1,
                     agilityLevel   = agilityLevel,
                     toolEfficiency = gameData.toolEfficiency(equipped[EquipSlot.LOCKPICK], EquipSlot.LOCKPICK, npc.levelRequired),
+                    successBonus = boostRepo.thievingSuccessBonus(flags),
                 )
                 startSession(slot, action, result.frames, durationMs, efficiencyMultiplier, levelAtStart)
             }
@@ -289,7 +292,7 @@ class WorkerQueuedSessionStarter @Inject constructor(
                     spellMaxHit        = (spell?.maxHit ?: 0) + totalMagicDmgBonus,
                     availableArrows    = availableArrows,
                     equippedFood       = availableFood,
-                    foodHealValues     = gameData.foodHealValues,
+                    foodHealValues     = boostRepo.boostedFoodHeal(flags, gameData.foodHealValues),
                     blessingDefBonus   = (ChurchRepository.defBonus(flags) * prayerCapeMult).toInt(),
                     attackSpeedSec     = bossWeapon?.attackSpeed ?: CombatSimulator.BASE_ATTACK_SPEED_SEC,
                     eatThresholdPct    = flags.foodEatThresholdPct,
@@ -341,10 +344,10 @@ class WorkerQueuedSessionStarter @Inject constructor(
                     arrowStrengthBonuses = ARROW_STRENGTH_BONUS,
                     spellMaxHit         = (spell?.maxHit ?: 0) + totalMagicDmgBonus,
                     agilityLevel        = agilityLevel,
-                    agilityPrestige     = flags.skillPrestige[Skills.AGILITY] ?: 0,
+                    floorReductionMin     = boostRepo.sessionFloorReductionMin(flags),
                     petBoostPct         = 0,
                     equippedFood        = availableFood,
-                    foodHealValues      = gameData.foodHealValues,
+                    foodHealValues      = boostRepo.boostedFoodHeal(flags, gameData.foodHealValues),
                     availableArrows     = availableArrows,
                     attackSpeedSec      = weapon?.attackSpeed ?: CombatSimulator.BASE_ATTACK_SPEED_SEC,
                     eatThresholdPct     = flags.foodEatThresholdPct,

@@ -471,6 +471,7 @@ fun HomeScreen(
 
     if (!state.isLoading && !state.characterSetupDone) {
         CharacterSetupSheet(
+            raceProficiencies = viewModel.raceProficiencies,
             isFirstTime       = true,
             showIronmanOption = true,
             onSave            = { name, gender, race, ironman -> viewModel.saveCharacterProfile(name, gender, race, ironman) },

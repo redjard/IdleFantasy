@@ -12,6 +12,7 @@ import com.fantasyidler.data.model.PlayerFlags
 import com.fantasyidler.data.model.QueuedAction
 import com.fantasyidler.data.model.Skills
 import com.fantasyidler.simulator.SkillSimulator
+import com.fantasyidler.repository.BoostRepository
 import com.fantasyidler.repository.GameDataRepository
 import com.fantasyidler.repository.PlayerRepository
 import com.fantasyidler.repository.QueuedSessionStarter
@@ -50,6 +51,7 @@ data class ExpeditionsUiState(
 
 @HiltViewModel
 class ExpeditionsViewModel @Inject constructor(
+    private val boostRepo: BoostRepository,
     @ApplicationContext private val context: Context,
     private val playerRepo: PlayerRepository,
     private val sessionRepo: SessionRepository,
@@ -135,7 +137,7 @@ class ExpeditionsViewModel @Inject constructor(
             val levels: Map<String, Int> = json.decodeFromString(player.skillLevels)
             val agilityLevel = levels[Skills.AGILITY] ?: 1
             val flags: PlayerFlags = json.decodeFromString(player.flags)
-            val agilityPrestige = flags.skillPrestige[Skills.AGILITY] ?: 0
+            val floorReductionMin = boostRepo.sessionFloorReductionMin(flags)
 
             if (sessionRepo.getActiveSession()?.completed == false) {
                 val enqueued = playerRepo.enqueueAction(
@@ -143,7 +145,7 @@ class ExpeditionsViewModel @Inject constructor(
                         skillName           = "expedition",
                         activityKey         = key,
                         skillDisplayName    = dungeon.displayName,
-                        estimatedDurationMs = SkillSimulator.sessionDurationMs(agilityLevel, agilityPrestige, townRepo.playerSessionDurationMultiplier(flags)),
+                        estimatedDurationMs = SkillSimulator.sessionDurationMs(agilityLevel, floorReductionMin, townRepo.playerSessionDurationMultiplier(flags)),
                     )
                 )
                 _extra.update {
@@ -165,7 +167,7 @@ class ExpeditionsViewModel @Inject constructor(
                 dungeon         = dungeon,
                 startXp         = xpMap[dungeon.skill] ?: 0L,
                 agilityLevel    = agilityLevel,
-                agilityPrestige = agilityPrestige,
+                floorReductionMin = floorReductionMin,
                 toolEfficiency  = toolEfficiency,
                 chronosMultiplier = townRepo.playerSessionDurationMultiplier(flags),
             )

@@ -27,16 +27,17 @@ object ThievingSimulator {
         startXp: Long,
         thievingLevel: Int,
         agilityLevel: Int = 1,
-        agilityPrestige: Int = 0,
+        floorReductionMin: Double = 0.0,
         petBoostPct: Int = 0,
         petDropKey: String? = null,
         petDropChance: Double = 0.0,
         toolEfficiency: Float = 1.0f,
         chronosMultiplier: Float = 1.0f,
+        successBonus: Double = 0.0,
         random: Random = Random.Default,
     ): Result {
-        val successChance = (0.40 + (thievingLevel - npc.levelRequired) * 0.02 * toolEfficiency)
-            .coerceIn(0.10, 0.95)
+        val successChance = (0.40 + (thievingLevel - npc.levelRequired) * 0.02 * toolEfficiency + successBonus)
+            .coerceIn(0.10, 0.98)
 
         var currentXp = startXp
         val frames = mutableListOf<SessionFrame>()
@@ -122,6 +123,6 @@ object ThievingSimulator {
             )
         }
 
-        return Result(frames, SkillSimulator.sessionDurationMs(agilityLevel, agilityPrestige, chronosMultiplier))
+        return Result(frames, SkillSimulator.sessionDurationMs(agilityLevel, floorReductionMin, chronosMultiplier))
     }
 }

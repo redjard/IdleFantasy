@@ -7,6 +7,7 @@ import com.fantasyidler.data.model.EquipSlot
 import com.fantasyidler.data.model.PlayerFlags
 import com.fantasyidler.data.model.QueuedAction
 import com.fantasyidler.data.model.Skills
+import com.fantasyidler.repository.BoostRepository
 import com.fantasyidler.repository.GameDataRepository
 import com.fantasyidler.repository.PlayerRepository
 import com.fantasyidler.repository.WeeklyQuestRepository
@@ -90,6 +91,8 @@ data class ShopUiState(
     val mercantileLevel: Int = 0,
     val townBuildingTiers: Map<String, Int> = emptyMap(),
     val skillPrestige: Map<String, Int> = emptyMap(),
+    val capeScalingBySkill: Map<String, Int> = emptyMap(),
+    val sellPriceMult: Double = 1.0,
     /** Ironman characters can only sell — every buy path is blocked. */
     val ironman: Boolean = false,
     val compactNumbers: Boolean = false,
@@ -105,6 +108,7 @@ data class ShopUiState(
 
 @HiltViewModel
 class ShopViewModel @Inject constructor(
+    private val boostRepo: BoostRepository,
     @ApplicationContext private val context: Context,
     private val playerRepo: PlayerRepository,
     private val gameData: GameDataRepository,
@@ -135,6 +139,8 @@ class ShopViewModel @Inject constructor(
                 mercantileLevel  = levels[Skills.MERCANTILE] ?: 0,
                 townBuildingTiers = flags.townBuildingTiers,
                 skillPrestige     = flags.skillPrestige,
+                capeScalingBySkill = boostRepo.capeScalingBySkill(flags),
+                sellPriceMult     = boostRepo.sellPriceMultiplier(flags),
                 ironman           = flags.ironman,
                 compactNumbers    = flags.compactNumbers,
                 keepOneOfEach     = flags.shopKeepOneOfEach,
@@ -306,7 +312,7 @@ class ShopViewModel @Inject constructor(
         }
 
         val base = if (marketPrice != null) maxOf(basePrice, maxOf(1, marketPrice / 3)) else basePrice
-        val result = (base * mercantileSellBonus(uiState.value.mercantileLevel)).toInt().coerceAtLeast(1)
+        val result = (base * mercantileSellBonus(uiState.value.mercantileLevel) * uiState.value.sellPriceMult).toInt().coerceAtLeast(1)
         // Clamp to the actual current buy price (not the undiscounted list price), so selling
         // can never turn a profit once Mercantile discounts push the buy price down.
         val buyPrice = marketPrice?.let { (it * mercantileBuyDiscount()).toInt().coerceAtLeast(1) }
@@ -348,7 +354,7 @@ class ShopViewModel @Inject constructor(
             equippedCape = equippedCape,
             inventoryKeys = uiState.value.inventory.keys,
             townBuildingTiers = uiState.value.townBuildingTiers,
-            skillPrestige = uiState.value.skillPrestige,
+            capeScaling = uiState.value.capeScalingBySkill,
             allEquipment = gameData.equipment,
             ironman = uiState.value.ironman,
         )

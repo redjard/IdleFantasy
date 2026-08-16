@@ -8,6 +8,7 @@ import com.fantasyidler.data.json.CarnivalPrize
 import com.fantasyidler.data.model.PlayerFlags
 import com.fantasyidler.data.model.QueuedAction
 import com.fantasyidler.data.model.Skills
+import com.fantasyidler.repository.BoostRepository
 import com.fantasyidler.repository.CarnivalRepository
 import com.fantasyidler.repository.GameDataRepository
 import com.fantasyidler.repository.PlayerRepository
@@ -84,6 +85,7 @@ data class CarnivalUiState(
 
 @HiltViewModel
 class CarnivalViewModel @Inject constructor(
+    private val boostRepo: BoostRepository,
     private val playerRepo: PlayerRepository,
     private val carnivalRepo: CarnivalRepository,
     val gameData: GameDataRepository,
@@ -239,7 +241,7 @@ class CarnivalViewModel @Inject constructor(
                     skillName           = "carnival",
                     activityKey         = activityKey,
                     skillDisplayName    = displayName,
-                    estimatedDurationMs = SkillSimulator.sessionDurationMs(agility, carnivalFlags.skillPrestige[Skills.AGILITY] ?: 0, townRepo.playerSessionDurationMultiplier(carnivalFlags)),
+                    estimatedDurationMs = SkillSimulator.sessionDurationMs(agility, boostRepo.sessionFloorReductionMin(carnivalFlags), townRepo.playerSessionDurationMultiplier(carnivalFlags)),
                 )
             )
             if (enqueued) queuedSessionStarter.startNextQueued()
@@ -631,7 +633,7 @@ class CarnivalViewModel @Inject constructor(
                 it.copy(snackbarMessage = if (result.success) {
                     val b = result.breakdown!!
                     val skillDisplay = GameStrings.skillName(context, skillKey)
-                    val suffix = xpMultiplierBreakdown(b.baseXp, b.boostActive, b.blessingMult, b.prestigeLevel)?.let { s -> " $s" } ?: ""
+                    val suffix = xpMultiplierBreakdown(b.baseXp, b.boostActive, b.blessingMult, b.prestigeXpPct)?.let { s -> " $s" } ?: ""
                     context.withAppLocale().getString(R.string.carnival_lamp_redeemed, b.finalXp.formatXp(), skillDisplay) + suffix
                 } else
                     context.withAppLocale().getString(R.string.carnival_not_enough_tickets))

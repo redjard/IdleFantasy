@@ -37,6 +37,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.fantasyidler.R
+import androidx.compose.ui.platform.LocalContext
+import com.fantasyidler.util.GameStrings
 import com.fantasyidler.ui.theme.ScaledSheetContent
 
 internal val CHARACTER_GENDERS = listOf("Male", "Female", "Other")
@@ -54,6 +56,7 @@ data class TitleOption(
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun CharacterSetupSheet(
+    raceProficiencies: Map<String, List<String>> = emptyMap(),
     isFirstTime: Boolean,
     initialName: String = "",
     initialGender: String = "",
@@ -156,6 +159,32 @@ fun CharacterSetupSheet(
                             label    = { Text(raceLabels[race] ?: race) },
                         )
                     }
+                }
+                val setupContext = LocalContext.current
+                val draftKey = draftRace.lowercase()
+                val proficiencyText = when {
+                    draftKey == "human" -> stringResource(R.string.race_proficiency_human)
+                    draftKey.isNotBlank() -> raceProficiencies[draftKey]?.takeIf { it.isNotEmpty() }?.let { skills ->
+                        stringResource(
+                            R.string.race_proficiency_label,
+                            skills.joinToString(", ") { GameStrings.skillName(setupContext, it) },
+                        )
+                    }
+                    else -> null
+                }
+                if (proficiencyText != null) {
+                    Text(
+                        text  = proficiencyText,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.tertiary,
+                    )
+                }
+                if (draftIronman) {
+                    Text(
+                        text  = stringResource(R.string.ironman_race_permanent_note),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.error,
+                    )
                 }
             }
 

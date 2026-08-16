@@ -26,6 +26,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.BottomSheetDefaults
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
@@ -34,6 +35,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -50,6 +52,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.platform.LocalContext
+import com.fantasyidler.util.GameStrings
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.IntOffset
@@ -241,18 +244,25 @@ private fun raceName(key: String) = when (key) {
 @Composable
 fun CharacterCustomizationSheet(
     race:             String,
+    ironman:          Boolean = false,
+    ironmanRaceLocked: Boolean = false,
+    raceChangeTokens: Int = 0,
+    coins:            Long = 0L,
+    raceProficiencies: Map<String, List<String>> = emptyMap(),
     initialSkin:      Int,
     initialHair:      Int,
     initialHairColor: String,
     initialEye:       Int,
     initialBeard:     Int,
     initialBeardColor: String,
-    onSave:   (skin: Int, hair: Int, hairColor: String, eye: Int, beard: Int, beardColor: String, race: String) -> Unit,
+    onSave:   (skin: Int, hair: Int, hairColor: String, eye: Int, beard: Int, beardColor: String, race: String, useToken: Boolean) -> Unit,
     onDismiss: () -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
-    var selectedRace   by remember { mutableStateOf(race.lowercase().ifBlank { "human" }) }
+    val originalRace = race.lowercase().ifBlank { "human" }
+    var selectedRace   by remember { mutableStateOf(originalRace) }
+    var showRaceConfirm by remember { mutableStateOf(false) }
     var skin           by remember { mutableIntStateOf(initialSkin) }
     var hair           by remember { mutableIntStateOf(initialHair) }
     var hairColor      by remember { mutableStateOf(initialHairColor) }
@@ -329,6 +339,7 @@ fun CharacterCustomizationSheet(
             Spacer(Modifier.height(14.dp))
 
             // ── Race ─────────────────────────────────────────────────────────
+            val raceLocked = ironman && ironmanRaceLocked
             AppearanceSection(stringResource(R.string.character_race)) {
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -337,7 +348,9 @@ fun CharacterCustomizationSheet(
                     items(RACES) { r ->
                         FilterChip(
                             selected = selectedRace == r,
+                            enabled  = !raceLocked || selectedRace == r,
                             onClick  = {
+                                if (raceLocked) return@FilterChip
                                 selectedRace = r
                                 val range = skinToneRange(r)
                                 if (skin !in range) skin = range.first
@@ -345,6 +358,33 @@ fun CharacterCustomizationSheet(
                             label    = { Text(raceName(r)) },
                         )
                     }
+                }
+                val proficiencyContext = LocalContext.current
+                val proficiencyText = if (selectedRace == "human") {
+                    stringResource(R.string.race_proficiency_human)
+                } else {
+                    raceProficiencies[selectedRace]?.takeIf { it.isNotEmpty() }?.let { skills ->
+                        stringResource(
+                            R.string.race_proficiency_label,
+                            skills.joinToString(", ") { GameStrings.skillName(proficiencyContext, it) },
+                        )
+                    }
+                }
+                if (proficiencyText != null) {
+                    Text(
+                        text     = proficiencyText,
+                        style    = MaterialTheme.typography.bodySmall,
+                        color    = MaterialTheme.colorScheme.tertiary,
+                        modifier = Modifier.padding(start = 4.dp, top = 6.dp),
+                    )
+                }
+                if (raceLocked) {
+                    Text(
+                        text     = stringResource(R.string.race_change_ironman_locked),
+                        style    = MaterialTheme.typography.bodySmall,
+                        color    = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(start = 4.dp, top = 4.dp),
+                    )
                 }
             }
 
@@ -478,10 +518,67 @@ fun CharacterCustomizationSheet(
             Spacer(Modifier.height(20.dp))
 
             Button(
-                onClick  = { onSave(skin, hair, hairColor, eye, beard, beardColor, selectedRace) },
+                onClick  = {
+                    if (selectedRace != originalRace && !raceLocked) showRaceConfirm = true
+                    else onSave(skin, hair, hairColor, eye, beard, beardColor, selectedRace, false)
+                },
                 modifier = Modifier.fillMaxWidth(),
             ) {
                 Text(stringResource(R.string.appearance_save))
+            }
+
+            if (showRaceConfirm) {
+                val canToken = raceChangeTokens > 0
+                val canCoins = coins >= 10_000_000L
+                AlertDialog(
+                    onDismissRequest = { showRaceConfirm = false },
+                    title = { Text(stringResource(R.string.race_change_confirm_title)) },
+                    text  = {
+                        Column {
+                            Text(stringResource(R.string.race_change_confirm_message))
+                            if (ironman) {
+                                Spacer(Modifier.height(8.dp))
+                                Text(
+                                    text  = stringResource(R.string.race_change_ironman_once),
+                                    color = MaterialTheme.colorScheme.tertiary,
+                                )
+                            } else if (!canToken && !canCoins) {
+                                Spacer(Modifier.height(8.dp))
+                                Text(
+                                    text  = stringResource(R.string.race_change_cannot_afford),
+                                    color = MaterialTheme.colorScheme.error,
+                                )
+                            }
+                        }
+                    },
+                    confirmButton = {
+                        when {
+                            ironman -> TextButton(onClick = {
+                                showRaceConfirm = false
+                                onSave(skin, hair, hairColor, eye, beard, beardColor, selectedRace, false)
+                            }) { Text(stringResource(R.string.appearance_save)) }
+                            else -> Column(horizontalAlignment = Alignment.End) {
+                                if (canToken) {
+                                    TextButton(onClick = {
+                                        showRaceConfirm = false
+                                        onSave(skin, hair, hairColor, eye, beard, beardColor, selectedRace, true)
+                                    }) { Text(stringResource(R.string.race_change_pay_token, raceChangeTokens)) }
+                                }
+                                if (canCoins) {
+                                    TextButton(onClick = {
+                                        showRaceConfirm = false
+                                        onSave(skin, hair, hairColor, eye, beard, beardColor, selectedRace, false)
+                                    }) { Text(stringResource(R.string.race_change_pay_coins)) }
+                                }
+                            }
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { showRaceConfirm = false }) {
+                            Text(stringResource(R.string.btn_cancel))
+                        }
+                    },
+                )
             }
 
             Spacer(Modifier.height(8.dp))

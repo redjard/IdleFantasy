@@ -19,6 +19,7 @@ import com.fantasyidler.data.model.PlayerFlags
 import com.fantasyidler.data.model.SessionFrame
 import com.fantasyidler.data.model.Skills
 import com.fantasyidler.data.model.QueuedAction
+import com.fantasyidler.repository.BoostRepository
 import com.fantasyidler.repository.ChurchRepository
 import com.fantasyidler.repository.GameDataRepository
 import com.fantasyidler.repository.GuildRepository
@@ -76,6 +77,7 @@ data class TowerMilestone(
 
 @HiltViewModel
 class TowerViewModel @Inject constructor(
+    private val boostRepo: BoostRepository,
     @ApplicationContext private val context: Context,
     private val playerRepo: PlayerRepository,
     private val sessionRepo: SessionRepository,
@@ -291,7 +293,7 @@ class TowerViewModel @Inject constructor(
                         skillName           = "tower",
                         activityKey         = "tower_floor_$nextFloor",
                         skillDisplayName    = "Infinite Tower: Floor $nextFloor",
-                        estimatedDurationMs = SkillSimulator.sessionDurationMs(agility, flags.skillPrestige[Skills.AGILITY] ?: 0, townRepo.playerSessionDurationMultiplier(flags)),
+                        estimatedDurationMs = SkillSimulator.sessionDurationMs(agility, boostRepo.sessionFloorReductionMin(flags), townRepo.playerSessionDurationMultiplier(flags)),
                     )
                 )
                 if (enqueued) queuedSessionStarter.startNextQueued()
@@ -358,12 +360,11 @@ class TowerViewModel @Inject constructor(
                     gameData.potionEffects[potionKey] ?: emptyMap()
                 } else emptyMap()
 
-                val prestigeMap  = flags.skillPrestige
                 val towerHpBonus = flags.towerHpBonus
 
                 val dungeon    = buildFloorDungeon(floor)
                 val enemies    = scaledEnemies(floor)
-                val foodHeal   = gameData.foodHealValues
+                val foodHeal   = boostRepo.boostedFoodHeal(flags, gameData.foodHealValues)
                 val availableFood   = inventory.filterKeys { it in flags.equippedFood.keys }
                 val orderedTowerArrowKeys = if (preferredArrow != null)
                     listOf(preferredArrow) + ARROW_TIERS.reversed().filter { it != preferredArrow && (inventory[it] ?: 0) > 0 }
@@ -388,20 +389,20 @@ class TowerViewModel @Inject constructor(
                 val result = CombatSimulator.simulateDungeon(
                     dungeon             = dungeon,
                     enemies             = enemies,
-                    playerAttack        = (levels[Skills.ATTACK]    ?: 1) + (prestigeMap[Skills.ATTACK]    ?: 0) * 5,
-                    playerStrength      = (levels[Skills.STRENGTH]  ?: 1) + (prestigeMap[Skills.STRENGTH]  ?: 0) * 5,
-                    playerDefence       = (levels[Skills.DEFENSE]   ?: 1) + totalDefenseBonus + (prestigeMap[Skills.DEFENSE] ?: 0) * 5,
+                    playerAttack        = (levels[Skills.ATTACK]    ?: 1) + boostRepo.combatStatBonus(Skills.ATTACK, flags),
+                    playerStrength      = (levels[Skills.STRENGTH]  ?: 1) + boostRepo.combatStatBonus(Skills.STRENGTH, flags),
+                    playerDefence       = (levels[Skills.DEFENSE]   ?: 1) + totalDefenseBonus + boostRepo.combatStatBonus(Skills.DEFENSE, flags),
                     blessingDefBonus    = ChurchRepository.defBonus(flags),
-                    playerHp            = (levels[Skills.HITPOINTS] ?: 1) + (prestigeMap[Skills.HITPOINTS] ?: 0) * 5 + towerHpBonus,
+                    playerHp            = (levels[Skills.HITPOINTS] ?: 1) + boostRepo.combatStatBonus(Skills.HITPOINTS, flags) + towerHpBonus,
                     weaponAttackBonus   = totalAttackBonus,
                     weaponStrengthBonus = totalStrengthBonus,
                     combatStyle         = combatStyle,
-                    playerRanged        = (levels[Skills.RANGED] ?: 1) + (prestigeMap[Skills.RANGED] ?: 0) * 5,
-                    playerMagic         = (levels[Skills.MAGIC]  ?: 1) + (prestigeMap[Skills.MAGIC]  ?: 0) * 5,
+                    playerRanged        = (levels[Skills.RANGED] ?: 1) + boostRepo.combatStatBonus(Skills.RANGED, flags),
+                    playerMagic         = (levels[Skills.MAGIC]  ?: 1) + boostRepo.combatStatBonus(Skills.MAGIC, flags),
                     rangedGearStrengthBonus = totalRangedStrBonus,
                     spellMaxHit         = (selectedSpell?.maxHit ?: 0) + totalMagicDmgBonus,
                     agilityLevel        = levels[Skills.AGILITY] ?: 1,
-                    agilityPrestige     = prestigeMap[Skills.AGILITY] ?: 0,
+                    floorReductionMin     = boostRepo.sessionFloorReductionMin(flags),
                     petBoostPct         = petBoostFor(player.pets, flags.ironman),
                     equippedFood        = availableFood,
                     foodHealValues      = foodHeal,
@@ -537,8 +538,9 @@ class TowerViewModel @Inject constructor(
             }
 
             if (playerDied) {
-                totalXpPerSkill.replaceAll { _, xp -> maxOf(1L, (xp * 0.1).toLong()) }
-                allItems.replaceAll { _, qty -> maxOf(0, (qty * 0.1).toInt()) }
+                val keep = boostRepo.deathKeepFraction(playerRepo.getFlags())
+                totalXpPerSkill.replaceAll { _, xp -> maxOf(1L, (xp * keep).toLong()) }
+                allItems.replaceAll { _, qty -> maxOf(0, (qty * keep).toInt()) }
                 allItems.entries.removeIf { it.value == 0 }
             }
 
@@ -558,8 +560,8 @@ class TowerViewModel @Inject constructor(
             val rangedLevel = skillLevels[Skills.RANGED] ?: 1
             val magicLevel  = skillLevels[Skills.MAGIC] ?: 1
 
-            val arrowsReclaimed = allArrowsConsumed.mapValues { (_, qty) -> (qty * reclaimChance(rangedLevel)).toInt() }.filterValues { it > 0 }
-            val runesReclaimed  = allRunesConsumed.mapValues { (_, qty) -> (qty * reclaimChance(magicLevel)).toInt() }.filterValues { it > 0 }
+            val arrowsReclaimed = allArrowsConsumed.mapValues { (_, qty) -> (qty * (reclaimChance(rangedLevel) + boostRepo.arrowReclaimBonus(flags)).coerceAtMost(0.95)).toInt() }.filterValues { it > 0 }
+            val runesReclaimed  = allRunesConsumed.mapValues { (_, qty) -> (qty * (reclaimChance(magicLevel) + boostRepo.runeReclaimBonus(flags)).coerceAtMost(0.95)).toInt() }.filterValues { it > 0 }
 
             val finalArrowsConsumed = allArrowsConsumed.mapValues { (k, v) -> v - (arrowsReclaimed[k] ?: 0) }.filterValues { it > 0 }
             val finalRunesConsumed  = allRunesConsumed.mapValues { (k, v) -> v - (runesReclaimed[k] ?: 0) }.filterValues { it > 0 }

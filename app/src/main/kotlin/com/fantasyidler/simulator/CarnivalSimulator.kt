@@ -34,7 +34,7 @@ object CarnivalSimulator {
         relevantSkillLevel: Int,
         petBoostPct: Int,
         agilityLevel: Int,
-        agilityPrestige: Int = 0,
+        floorReductionMin: Double = 0.0,
         tierBonus: Float = 0f,
         chronosMultiplier: Float = 1.0f,
     ): SkillSimulator.Result {
@@ -61,7 +61,7 @@ object CarnivalSimulator {
 
         return SkillSimulator.Result(
             frames     = frames,
-            durationMs = SkillSimulator.sessionDurationMs(agilityLevel, agilityPrestige, chronosMultiplier),
+            durationMs = SkillSimulator.sessionDurationMs(agilityLevel, floorReductionMin, chronosMultiplier),
         )
     }
 

@@ -1955,4 +1955,151 @@
     <string name="carnival_potion_letter_cyan">C</string>
     <string name="farming_crop_picker_stats">Lv. %1$d  •  %2$s  •  %3$d XP/crop</string>
     <string name="farming_seeds_owned">Seeds: %1$d  •  Owned: %2$d</string>
+    <!-- ============ Prestige overhaul (v1.14.0) ============ -->
+    <string name="prestige_title">Prestige</string>
+    <string name="prestige_open_tree">View tree</string>
+    <!-- Translator note: %1$d = unspent prestige points -->
+    <string name="prestige_points_available">%1$d points available</string>
+    <!-- Translator note: %1$d = lifetime points earned, %2$d = maximum points for this skill -->
+    <string name="prestige_points_lifetime">%1$d of %2$d lifetime points earned</string>
+    <!-- Translator note: %1$d = points the reset would award right now -->
+    <string name="prestige_button_with_points">Prestige now for +%1$d points</string>
+    <!-- Translator note: %1$d = current skill level -->
+    <string name="prestige_requires_99">Reach level 99 to prestige (currently %1$d).</string>
+    <string name="prestige_maxed_cap">Maximum prestige reached. Every point this skill can earn is yours.</string>
+    <!-- Translator note: %1$s = skill name, %2$d = points awarded -->
+    <string name="prestige_confirm_message_points">Your %1$s level will reset to 1 and you\'ll earn %2$d prestige points to spend in this skill\'s tree. Equipment that no longer meets its requirements will be swapped out.</string>
+    <string name="prestige_respec">Reset points</string>
+    <!-- Translator note: %1$s = formatted remaining cooldown -->
+    <string name="prestige_respec_available_in">Reset available in %1$s</string>
+    <string name="prestige_respec_confirm_title">Reset prestige points?</string>
+    <!-- Translator note: %1$s = skill name -->
+    <string name="prestige_respec_confirm_message">All purchased %1$s upgrades will be refunded for their full point cost. You can reset this skill\'s points again in 24 hours.</string>
+    <!-- Translator note: %1$s = skill name -->
+    <string name="prestige_respec_done">%1$s prestige points refunded.</string>
+    <string name="prestige_respec_on_cooldown">Points were reset recently. Try again later.</string>
+    <!-- Translator note: %1$d = node cost in points -->
+    <string name="prestige_node_cost">Cost: %1$d points</string>
+    <string name="prestige_node_owned">Purchased</string>
+    <!-- Translator note: %1$s = race name -->
+    <string name="prestige_node_race_only">%1$s only</string>
+    <string name="prestige_node_prereq_locked">Requires the previous tier in this path.</string>
+    <string name="prestige_node_not_enough">Not enough points</string>
+    <!-- Translator note: %1$s = node name -->
+    <string name="prestige_node_purchased">%1$s purchased!</string>
+    <!-- Translator note: %1$d = node cost in points -->
+    <string name="prestige_buy">Purchase for %1$d points</string>
+
+    <!-- Prestige effect descriptions -->
+    <string name="prestige_effect_xp_pct">+%1$d%% XP in this skill.</string>
+    <string name="prestige_effect_yield_pct">+%1$d%% items from this skill\'s sessions.</string>
+    <!-- Translator note: %1$s = yield percent per interval (may be fractional) -->
+    <string name="prestige_effect_flow_rate">Flow-state: +%1$s%% yield per interval of continuous activity, up to +100%%.</string>
+    <!-- Translator note: %1$d = minutes removed from the flow interval -->
+    <string name="prestige_effect_flow_interval">Flow-state interval shortened by %1$d minutes.</string>
+    <string name="prestige_effect_combat_stat">+%1$d effective levels in combat.</string>
+    <!-- Translator note: %1$s = minutes (may be fractional) -->
+    <string name="prestige_effect_session_floor">Sessions up to %1$s minutes shorter at level 99.</string>
+    <string name="prestige_effect_cape_scaling">Cape bonuses for this skill multiplied ×%1$d.</string>
+    <string name="prestige_effect_bonus_roll">+%1$d%% gem find chance while mining.</string>
+    <string name="prestige_effect_coin_pct">+%1$d%% coins from this skill.</string>
+    <string name="prestige_effect_crop_rotation">+%1$d%% yield when planting a different crop than the last harvest.</string>
+    <string name="prestige_effect_crop_rotation_always">The rotation bonus applies to every crop, no rotation needed.</string>
+    <string name="prestige_effect_tool_eff">Tool efficiency +%1$d%%.</string>
+    <string name="prestige_effect_success_chance">Pickpocket success chance +%1$d%%.</string>
+    <string name="prestige_effect_reclaim">+%1$d%% chance to recover spent arrows and runes after combat.</string>
+    <string name="prestige_effect_heal">Food heals +%1$d%% more in combat.</string>
+    <string name="prestige_effect_death_keep">Keep an extra %1$d%% of XP and loot when defeated.</string>
+    <string name="prestige_effect_queue_slot">+%1$d session queue slot.</string>
+    <string name="prestige_effect_pet_boost">Pet boosts for this skill are %1$d%% stronger.</string>
+    <string name="prestige_effect_blessing_duration">Church blessings last %1$d%% longer.</string>
+    <string name="prestige_effect_blessing_cost">Church blessings cost %1$d%% fewer bones.</string>
+    <string name="prestige_effect_potion_bonus">Combat potions grant +%1$d more to their stats.</string>
+    <string name="prestige_effect_input_save">%1$d%% of crafting materials are refunded.</string>
+    <string name="prestige_effect_builder_discount">Town building upgrades cost %1$d%% less.</string>
+    <string name="prestige_effect_sell_price">Shop sell prices +%1$d%%.</string>
+
+    <!-- New distinctive base path names (variety pass) -->
+    <string name="prestige_path_fishing_rod">Sturdy Rod</string>
+    <string name="prestige_path_woodcutting_axe">Honed Edge</string>
+    <string name="prestige_path_cooking_hearty">Hearty Meals</string>
+    <string name="prestige_path_smithing_thrift">Careful Smith</string>
+    <string name="prestige_path_crafting_thrift">Steady Hands</string>
+    <string name="prestige_path_herblore_potency">Potent Potions</string>
+    <string name="prestige_path_runecrafting_runethrift">Essence Bond</string>
+    <string name="prestige_path_magic_runethrift">Rune Thrift</string>
+    <string name="prestige_path_construction_efficient">Efficient Builder</string>
+    <string name="prestige_path_prayer_devotion">Devotion</string>
+    <string name="prestige_path_mercantile_trade">Trade Baron</string>
+    <string name="prestige_path_slayer_bounty">Bounty Hunter</string>
+    <string name="prestige_path_ranged_quiver">Quiver Care</string>
+    <string name="prestige_path_defense_laststand">Last Stand</string>
+    <string name="prestige_path_hitpoints_constitution">Constitution</string>
+
+    <!-- Prestige path names (generic) -->
+    <string name="prestige_path_xp">XP Boost</string>
+    <string name="prestige_path_yield">Yield</string>
+    <string name="prestige_path_cape">Cape Mastery</string>
+    <string name="prestige_path_flow">Flow-state</string>
+    <string name="prestige_path_endurance">Endurance</string>
+    <string name="prestige_path_gem">Gem Hunter</string>
+    <string name="prestige_path_rotation">Crop Rotation</string>
+
+    <!-- Prestige path names (skill flavored) -->
+    <string name="prestige_path_mining_yield">Purer Ore</string>
+    <string name="prestige_path_fishing_yield">More Fish</string>
+    <string name="prestige_path_woodcutting_yield">Sharper Axe</string>
+    <string name="prestige_path_thieving_yield">Faster Picking</string>
+    <string name="prestige_path_slayer_yield">Hunter\'s Instinct</string>
+    <string name="prestige_path_attack_prowess">Precision</string>
+    <string name="prestige_path_strength_prowess">Might</string>
+    <string name="prestige_path_defense_prowess">Bulwark</string>
+    <string name="prestige_path_ranged_prowess">Deadeye</string>
+    <string name="prestige_path_magic_prowess">Attunement</string>
+    <string name="prestige_path_hitpoints_prowess">Vitality</string>
+    <string name="prestige_path_thieving_coin">Silver Tongue</string>
+    <string name="prestige_path_mercantile_coin">Haggler</string>
+
+    <!-- Prestige race branch names -->
+    <string name="prestige_path_fishing_race_elf">Keen Eyes</string>
+    <string name="prestige_path_thieving_race_elf">Shadow Step</string>
+    <string name="prestige_path_crafting_race_elf">Elven Artistry</string>
+    <string name="prestige_path_ranged_race_elf">Eagle Eye</string>
+    <string name="prestige_path_prayer_race_elf">Forest Grace</string>
+    <string name="prestige_path_mining_race_dwarf">Deep Veins</string>
+    <string name="prestige_path_smithing_race_dwarf">Forge Born</string>
+    <string name="prestige_path_firemaking_race_dwarf">Ember Heart</string>
+    <string name="prestige_path_construction_race_dwarf">Master Mason</string>
+    <string name="prestige_path_mercantile_race_dwarf">Gold Sense</string>
+    <string name="prestige_path_fishing_race_halfling">Patient Angler</string>
+    <string name="prestige_path_woodcutting_race_halfling">Forest Kin</string>
+    <string name="prestige_path_farming_race_halfling">Bountiful Harvest</string>
+    <string name="prestige_path_cooking_race_halfling">Home Cook</string>
+    <string name="prestige_path_construction_race_halfling">Cozy Builder</string>
+    <string name="prestige_path_fishing_race_gnome">Clever Lures</string>
+    <string name="prestige_path_fletching_race_gnome">Tinker\'s Touch</string>
+    <string name="prestige_path_firemaking_race_gnome">Spark Wright</string>
+    <string name="prestige_path_construction_race_gnome">Gadget Works</string>
+    <string name="prestige_path_prayer_race_gnome">Trickster\'s Favor</string>
+    <string name="prestige_path_attack_race_orc">Bloodlust</string>
+    <string name="prestige_path_strength_race_orc">Brute Force</string>
+    <string name="prestige_path_hitpoints_race_orc">Thick Hide</string>
+    <string name="prestige_path_cooking_race_orc">Feast Master</string>
+    <string name="prestige_path_slayer_race_orc">Headhunter</string>
+
+    <!-- Race change -->
+    <string name="race_change_confirm_title">Change race?</string>
+    <string name="item_race_change_token_name">Race Change Token</string>
+    <string name="item_race_change_token_desc">A rare boss drop that lets you change your character\'s race once.</string>
+    <!-- Translator note: %1$d = number of tokens owned -->
+    <string name="race_change_pay_token">Use Race Change Token (%1$d)</string>
+    <string name="race_change_pay_coins">Pay 10,000,000 coins</string>
+    <string name="race_change_cannot_afford">You need a Race Change Token (rare boss drop) or 10,000,000 coins to change race.</string>
+    <string name="race_change_ironman_locked">Ironman characters cannot change their race.</string>
+    <string name="race_change_ironman_once">As an ironman, this is your one and only race change. Afterwards your race is locked forever.</string>
+    <string name="ironman_race_permanent_note">Ironman characters cannot change their race later. Choose carefully!</string>
+    <!-- Translator note: %1$s = comma-separated list of skill names -->
+    <string name="race_proficiency_label">Racial skill trees: %1$s</string>
+    <string name="race_proficiency_human">Racial bonus: an exclusive XP mastery tier in every skill</string>
+    <string name="race_change_confirm_message">Your race grants race-locked prestige upgrades. Changing race refunds any points spent in other races\' branches, and you can only change race once every 24 hours.</string>
 </resources>

@@ -15,10 +15,12 @@ import com.fantasyidler.data.model.QueuedAction
 import com.fantasyidler.data.model.SessionFrame
 import com.fantasyidler.data.model.SkillSession
 import com.fantasyidler.data.model.Skills
+import com.fantasyidler.repository.BoostRepository
 import com.fantasyidler.repository.ChurchRepository
 import com.fantasyidler.repository.GameDataRepository
 import com.fantasyidler.repository.GuildRepository
 import com.fantasyidler.repository.PlayerRepository
+import com.fantasyidler.repository.PrestigeBoosts
 import com.fantasyidler.repository.QuestRepository
 import com.fantasyidler.repository.QueuedSessionStarter
 import com.fantasyidler.repository.SeasonalEventRepository
@@ -218,6 +220,7 @@ data class HomeUiState(
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+    private val boostRepo: BoostRepository,
     @ApplicationContext private val context: Context,
     private val playerRepo: PlayerRepository,
     private val sessionRepo: SessionRepository,
@@ -244,6 +247,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch { playerRepo.migratePetsFromInventory(gameData.pets.keys) }
         viewModelScope.launch { playerRepo.ensureCharacterCreatedAt() }
         viewModelScope.launch { guildRepo.migrateLegacyGuildReputation() }
+        viewModelScope.launch { playerRepo.migrateLegacyPrestigePointsIfNeeded() }
         // AlarmManager delivery can be deferred by Doze for hours (issue 517: overnight
         // sessions frozen until their late alarms fire). While the app is open this
         // ticker completes overdue sessions and workers within a second.
@@ -288,9 +292,9 @@ class HomeViewModel @Inject constructor(
             val levels: Map<String, Int> = json.decodeFromString(player.skillLevels)
             val equipped: Map<String, String?> = json.decodeFromString(player.equipped)
             val agilityLevel    = levels[Skills.AGILITY] ?: 1
-            val agilityPrestige = flags.skillPrestige[Skills.AGILITY] ?: 0
+            val floorReductionMin = boostRepo.sessionFloorReductionMin(flags)
             val chronosMult     = townRepo.playerSessionDurationMultiplier(flags)
-            val sessionMs       = SkillSimulator.sessionDurationMs(agilityLevel, agilityPrestige, chronosMult)
+            val sessionMs       = SkillSimulator.sessionDurationMs(agilityLevel, floorReductionMin, chronosMult)
             val perItemMs    = sessionMs / 60
             val queueStart   = session?.takeIf { !it.completed }?.endsAt ?: System.currentTimeMillis()
             // Recomputed live from current agility/gear rather than the frozen value stored at
@@ -434,6 +438,40 @@ class HomeViewModel @Inject constructor(
     // Session actions
     // ------------------------------------------------------------------
 
+    /** Read-only inputs shared by the per-session collect helpers. */
+    private class CollectContext(
+        val flags: PlayerFlags,
+        val inventory: Map<String, Int>,
+        val equippedCape: com.fantasyidler.data.json.EquipmentData?,
+        val capeScalingBySkill: Map<String, Int>,
+        val blessingCoinMult: Float,
+        val petIds: Set<String>,
+        val player: com.fantasyidler.data.model.Player,
+    )
+
+    /** Mutable totals accumulated across one collect batch (for the summary popup). */
+    private class CollectAcc {
+        val combinedXpBySkill       = mutableMapOf<String, Long>()
+        val combinedItems           = mutableMapOf<String, Int>()
+        val combinedKills           = mutableMapOf<String, Int>()
+        val combinedFood            = mutableMapOf<String, Int>()
+        val combinedArrows          = mutableMapOf<String, Int>()
+        val combinedArrowsReclaimed = mutableMapOf<String, Int>()
+        val combinedRunes           = mutableMapOf<String, Int>()
+        val combinedRunesReclaimed  = mutableMapOf<String, Int>()
+        val dailyKills              = mutableMapOf<String, Int>()
+        val combinedBones           = mutableMapOf<String, Int>() // boneName -> count
+        var combinedCoins           = 0L
+        var anyDied                 = false
+        var petFoundName: String?   = null
+        var bossWon: Boolean?       = null  // set when a session is a boss fight
+        var bossCoinsReduced        = false
+        val voidedSessionIds        = mutableSetOf<String>()
+        val awardedCapes            = mutableListOf<String>()
+        var expeditionNoteLines: List<String> = emptyList()
+        var expeditionUnlockMessage: String?  = null
+    }
+
     fun collectSession() {
         if (_extra.value.isCollecting) return
         _extra.update { it.copy(isCollecting = true) }
@@ -456,8 +494,9 @@ class HomeViewModel @Inject constructor(
             val petIds = gameData.pets.keys
             val player = playerRepo.getOrCreatePlayer()
             val flags: PlayerFlags = json.decodeFromString(player.flags)
-            // Ironman characters play at pure base rates: every XP/yield/coin multiplier is inert.
-            val skillPrestige = if (flags.ironman) emptyMap() else flags.skillPrestige
+            // Ironman characters play at pure base rates: every XP/yield/coin multiplier is inert
+            // (all boostRepo prestige lookups return identity values for them).
+            val capeScalingBySkill = boostRepo.capeScalingBySkill(flags)
             val equipped: Map<String, String?> = json.decodeFromString(player.equipped)
             val inventory: Map<String, Int>    = json.decodeFromString(player.inventory)
             val equippedCape = equipped[EquipSlot.CAPE]?.let { gameData.equipment[it] }
@@ -467,29 +506,8 @@ class HomeViewModel @Inject constructor(
             val blessingCoinMult = if (flags.ironman) 1.0f else ChurchRepository.coinMultiplier(flags) *
                 PlayerRepository.gooseCoinMultiplier(json.decodeFromString<List<OwnedPet>>(player.pets)).toFloat()
 
-            // ── Accumulators ──────────────────────────────────────────────
-            val combinedXpBySkill       = mutableMapOf<String, Long>()
-            val combinedItems           = mutableMapOf<String, Int>()
-            val combinedKills           = mutableMapOf<String, Int>()
-            val combinedFood            = mutableMapOf<String, Int>()
-            val combinedArrows          = mutableMapOf<String, Int>()
-            val combinedArrowsReclaimed = mutableMapOf<String, Int>()
-            val combinedRunes           = mutableMapOf<String, Int>()
-            val combinedRunesReclaimed  = mutableMapOf<String, Int>()
-            val dailyKills              = mutableMapOf<String, Int>()
-            var combinedCoins     = 0L
-            var anyDied           = false
-            val combinedBones     = mutableMapOf<String, Int>() // boneName → count
-            var petFoundName: String? = null
-            var bossWon: Boolean? = null  // set when session is a boss fight
-            var bossCoinsReduced = false
-            val voidedSessionIds = mutableSetOf<String>()
-            val awardedCapes = mutableListOf<String>()
-            var expeditionNoteLines: List<String> = emptyList()
-            var expeditionUnlockMessage: String? = null
-
-            val gatheringSkills = setOf(Skills.MINING, Skills.WOODCUTTING, Skills.FISHING, Skills.AGILITY)
-            val craftingSkills  = setOf(Skills.SMITHING, Skills.COOKING, Skills.FLETCHING, Skills.CRAFTING, Skills.HERBLORE, Skills.FIREMAKING, Skills.RUNECRAFTING, Skills.CONSTRUCTION)
+            val ctx = CollectContext(flags, inventory, equippedCape, capeScalingBySkill, blessingCoinMult, petIds, player)
+            val acc = CollectAcc()
 
             val currentLevelsForVoidCheck = playerRepo.getSkillLevels()
             for (session in sessions) {
@@ -498,356 +516,33 @@ class HomeViewModel @Inject constructor(
                 // kills, and quest progress still pay out. Zeroing happens at each branch's XP
                 // application point because combat style detection needs the raw per-skill XP.
                 val grantXp = isSkillSessionStillEligible(session, currentLevelsForVoidCheck, gameData)
-                if (!grantXp) voidedSessionIds += session.sessionId
+                if (!grantXp) acc.voidedSessionIds += session.sessionId
                 when (session.skillName) {
-                    "tower" -> {
-                        val playerDied = frames.any { it.died }
-                        if (playerDied) anyDied = true
-                        val towerXpPerSkill = mutableMapOf<String, Long>()
-                        val towerAllItems   = mutableMapOf<String, Int>()
-                        val towerFood       = mutableMapOf<String, Int>()
-                        val towerKills      = mutableMapOf<String, Int>()
-                        val towerArrows     = mutableMapOf<String, Int>()
-                        val towerRunes      = mutableMapOf<String, Int>()
-                        for (frame in frames) {
-                            for ((skill, xp) in frame.xpBySkill)    towerXpPerSkill[skill] = (towerXpPerSkill[skill] ?: 0L) + xp
-                            for ((item,  qty) in frame.items)        towerAllItems[item]     = (towerAllItems[item] ?: 0) + qty
-                            for ((food,  qty) in frame.foodConsumed) towerFood[food]         = (towerFood[food] ?: 0) + qty
-                            for ((e,     k)   in frame.killsByEnemy) towerKills[e]           = (towerKills[e] ?: 0) + k
-                            for ((arrow, qty) in frame.arrowsConsumed) towerArrows[arrow]    = (towerArrows[arrow] ?: 0) + qty
-                            for ((rune,  qty) in frame.runesConsumed) towerRunes[rune]       = (towerRunes[rune] ?: 0) + qty
-                        }
-                        if (playerDied) {
-                            towerXpPerSkill.replaceAll { _, xp -> maxOf(1L, (xp * 0.1).toLong()) }
-                            towerAllItems.replaceAll { _, qty -> maxOf(0, (qty * 0.1).toInt()) }
-                            towerAllItems.entries.removeIf { it.value == 0 }
-                        }
-                        
-                        if (!playerDied && towerKills.isNotEmpty()) {
-                            val style = detectCombatStyle(towerXpPerSkill)
-                            questRepo.recordCombat(
-                                dungeonKey        = session.activityKey,
-                                killsByEnemy      = towerKills,
-                                loot              = towerAllItems,
-                                combatStyle       = style,
-                                foodConsumedTotal = towerFood.values.sum(),
-                            )
-                            for ((e, k) in towerKills) dailyKills[e] = (dailyKills[e] ?: 0) + k
-                            guildRepo.recordGuildCombat(towerKills, style)
-                            var towerSlayerXp = 0L
-                            for ((enemy, k) in towerKills) towerSlayerXp += slayerRepo.recordKills(enemy, k)
-                            if (towerSlayerXp > 0L) towerXpPerSkill[Skills.SLAYER] = (towerXpPerSkill[Skills.SLAYER] ?: 0L) + towerSlayerXp
-                        }
-
-                        val towerCoinsRaw    = towerAllItems.remove("coins")?.toLong() ?: 0L
-                        val towerFlags       = playerRepo.getFlags()
-                        val towerXpMult      = if (towerFlags.ironman) 1.0 else 1.0 + towerFlags.towerXpBonusPct / 100.0
-                        val towerCoinMult    = if (towerFlags.ironman) 1.0 else 1.0 + towerFlags.towerCoinBonusPct / 100.0
-                        val towerXpForRepo   = if (grantXp) towerXpPerSkill.mapValues { (_, xp) -> (xp * towerXpMult).toLong() } else emptyMap()
-                        val towerCoinsGained = (towerCoinsRaw * towerCoinMult).toLong()
-
-                        playerRepo.applyMultiSkillResults(towerXpForRepo, towerAllItems, towerCoinsGained)
-
-                        val skillLvls = playerRepo.getSkillLevels()
-                        val arrowsReclaimed = towerArrows.mapValues { (_, qty) -> (qty * reclaimChance(skillLvls[Skills.RANGED] ?: 1)).toInt() }.filterValues { it > 0 }
-                        val runesReclaimed  = towerRunes.mapValues { (_, qty) -> (qty * reclaimChance(skillLvls[Skills.MAGIC] ?: 1)).toInt() }.filterValues { it > 0 }
-                        val finalTowerArrows = towerArrows.mapValues { (k, v) -> v - (arrowsReclaimed[k] ?: 0) }.filterValues { it > 0 }
-                        val finalTowerRunes  = towerRunes.mapValues { (k, v) -> v - (runesReclaimed[k] ?: 0) }.filterValues { it > 0 }
-
-                        val totalConsumables = towerFood + finalTowerArrows + finalTowerRunes
-                        if (totalConsumables.isNotEmpty()) playerRepo.consumeItems(totalConsumables)
-                        val floor = session.activityKey.removePrefix("tower_floor_").toIntOrNull() ?: 1
-                        val updatedTowerFlags = playerRepo.getFlags()
-                        if (playerDied) {
-                            // Death drops you back to your last checkpoint (every 25 floors of
-                            // your best-ever progress), matching TowerViewModel.collectFloor() --
-                            // this path had drifted to a flat reset to 0 (issue #1183).
-                            val checkpointFloor = (updatedTowerFlags.towerBestFloor / TowerViewModel.TOWER_CHECKPOINT_INTERVAL) * TowerViewModel.TOWER_CHECKPOINT_INTERVAL
-                            playerRepo.updateFlags(updatedTowerFlags.copy(towerCurrentFloor = checkpointFloor))
-                        } else {
-                            playerRepo.updateFlags(updatedTowerFlags.copy(
-                                towerCurrentFloor = floor,
-                                towerBestFloor    = maxOf(updatedTowerFlags.towerBestFloor, floor),
-                            ))
-                        }
-                        for ((skill, xp) in towerXpForRepo) combinedXpBySkill[skill] = (combinedXpBySkill[skill] ?: 0L) + xp
-                        for ((item, qty) in towerAllItems)  combinedItems[item] = (combinedItems[item] ?: 0) + qty
-                        combinedCoins += towerCoinsGained
-                    }
-                    "boss" -> {
-                        val frame = frames.lastOrNull() ?: continue
-                        val won = frame.kills > 0
-                        bossWon = won
-                        val its   = frame.items.toMutableMap()
-                        val coins = if (won) {
-                            val base = its.remove("coins")?.toLong() ?: 0L
-                            val mult = playerRepo.rollBossCoinSoftCap(session.activityKey)
-                            if (mult < 1.0 && base > 0L) bossCoinsReduced = true
-                            (base * mult).toLong()
-                        } else 0L
-                        val pets  = its.filterKeys { it in petIds }
-                        val loot  = if (won) its.filterKeys { it !in petIds } else emptyMap()
-                        val allFoodConsumed   = mutableMapOf<String, Int>()
-                        val allArrowsConsumed = mutableMapOf<String, Int>()
-                        val allRunesConsumed  = mutableMapOf<String, Int>()
-                        val bossXpBySkill     = mutableMapOf<String, Long>()
-                        for (f in frames) {
-                            f.foodConsumed.forEach   { (k, v) -> allFoodConsumed[k]   = (allFoodConsumed[k] ?: 0) + v }
-                            f.arrowsConsumed.forEach { (k, v) -> allArrowsConsumed[k] = (allArrowsConsumed[k] ?: 0) + v }
-                            f.runesConsumed.forEach  { (k, v) -> allRunesConsumed[k]  = (allRunesConsumed[k] ?: 0) + v }
-                            f.xpBySkill.forEach      { (k, v) -> bossXpBySkill[k]     = (bossXpBySkill[k] ?: 0L) + v }
-                        }
-                        for (skill in bossXpBySkill.keys) {
-                            val mult = resolveCapeMultiplier(skill, equippedCape, inventory.keys, flags.townBuildingTiers, skillPrestige, gameData.equipment, flags.ironman)
-                            if (mult > 1f) {
-                                bossXpBySkill[skill] = (bossXpBySkill[skill]!! * mult.toDouble()).toLong()
-                            }
-                        }
-                        if (!grantXp) bossXpBySkill.clear()
-                        val bossSkillLvls    = playerRepo.getSkillLevels()
-                        val bossArrowsRec    = allArrowsConsumed.mapValues { (_, qty) -> (qty * reclaimChance(bossSkillLvls[Skills.RANGED] ?: 1)).toInt() }.filterValues { it > 0 }
-                        val bossRunesRec     = allRunesConsumed.mapValues  { (_, qty) -> (qty * reclaimChance(bossSkillLvls[Skills.MAGIC]  ?: 1)).toInt() }.filterValues { it > 0 }
-                        val ownedPets: List<OwnedPet> = if (flags.ironman) emptyList()
-                            else try { json.decodeFromString(player.pets) } catch (_: Exception) { emptyList() }
-                        val perSkillPetBoostPct = bossXpBySkill.keys.associateWith { skill ->
-                            ownedPets.sumOf { ownedPet ->
-                                val pd = gameData.pets[ownedPet.id]
-                                if (pd == null) 0
-                                else when {
-                                    pd.boostedSkill == "all" -> pd.boostPercent
-                                    pd.boostedSkill == skill -> pd.boostPercent
-                                    pd.boostedSkill == "combat" && skill in Skills.COMBAT -> pd.boostPercent
-                                    else -> 0
-                                }
-                            }
-                        }.filterValues { it > 0 }
-                        awardedCapes += playerRepo.applyMultiSkillResults(bossXpBySkill, loot, coins, perSkillPetBoostPct = perSkillPetBoostPct)
-                        if (allFoodConsumed.isNotEmpty())   playerRepo.consumeItems(allFoodConsumed)
-                        if (allArrowsConsumed.isNotEmpty()) playerRepo.consumeItems(allArrowsConsumed)
-                        if (bossArrowsRec.isNotEmpty())     playerRepo.addItems(bossArrowsRec)
-                        if (bossRunesRec.isNotEmpty())      playerRepo.addItems(bossRunesRec)
-                        for ((f, q) in allFoodConsumed)    combinedFood[f]             = (combinedFood[f] ?: 0) + q
-                        for ((a, q) in allArrowsConsumed)  combinedArrows[a]           = (combinedArrows[a] ?: 0) + q
-                        for ((a, q) in bossArrowsRec)      combinedArrowsReclaimed[a]  = (combinedArrowsReclaimed[a] ?: 0) + q
-                        for ((r, q) in allRunesConsumed)   combinedRunes[r]            = (combinedRunes[r] ?: 0) + q
-                        for ((r, q) in bossRunesRec)       combinedRunesReclaimed[r]   = (combinedRunesReclaimed[r] ?: 0) + q
-                        if (won) {
-                            for ((id, _) in pets) {
-                                val pd = gameData.pets[id] ?: continue
-                                if (playerRepo.addPetIfNew(id, pd.boostPercent))
-                                    petFoundName = GameStrings.petName(context, pd.id)
-                            }
-                            questRepo.recordCombat(
-                                dungeonKey   = session.activityKey,
-                                killsByEnemy = mapOf(session.activityKey to 1),
-                                loot         = loot,
-                            )
-                            dailyKills[session.activityKey] = (dailyKills[session.activityKey] ?: 0) + 1
-                            playerRepo.recordWeeklyProgress("boss", session.activityKey, 1)
-                            guildRepo.recordGuildCombat(mapOf(session.activityKey to 1), frames.lastOrNull()?.combatStyle?.ifEmpty { "melee" } ?: "melee")
-                            seasonalEventRepo.recordCombat(mapOf(session.activityKey to 1))
-                            seasonalEventRepo.recordBossDefeat(session.activityKey)
-                            for ((item, qty) in loot) combinedItems[item] = (combinedItems[item] ?: 0) + qty
-                            combinedCoins += coins
-                        }
-                        for ((skill, xp) in bossXpBySkill) {
-                            val petPct = perSkillPetBoostPct[skill] ?: 0
-                            val withPet = if (petPct > 0) (xp * (1.0 + petPct / 100.0)).toLong() else xp
-                            val prestigeLevel = skillPrestige[skill] ?: 0
-                            val withPrestige = if (prestigeLevel > 0) (withPet * (1.0 + prestigeLevel * 0.10)).toLong() else withPet
-                            combinedXpBySkill[skill] = (combinedXpBySkill[skill] ?: 0L) + withPrestige
-                        }
-                    }
-                    "combat" -> {
-                        val xpPerSkill = mutableMapOf<String, Long>()
-                        val its        = mutableMapOf<String, Int>()
-                        val kills      = mutableMapOf<String, Int>()
-                        val food   = mutableMapOf<String, Int>()
-                        val arrows = mutableMapOf<String, Int>()
-                        val runes  = mutableMapOf<String, Int>()
-                        val died   = frames.any { it.died }
-                        if (died) anyDied = true
-                        for (frame in frames) {
-                            for ((skill, xp) in frame.xpBySkill)      xpPerSkill[skill] = (xpPerSkill[skill] ?: 0L) + xp
-                            for ((item, qty) in frame.items)           its[item]         = (its[item] ?: 0) + qty
-                            for ((e, k) in frame.killsByEnemy)         kills[e]          = (kills[e] ?: 0) + k
-                            for ((f, q) in frame.foodConsumed)         food[f]           = (food[f] ?: 0) + q
-                            for ((a, q) in frame.arrowsConsumed)       arrows[a]         = (arrows[a] ?: 0) + q
-                            for ((r, q) in frame.runesConsumed)        runes[r]          = (runes[r] ?: 0) + q
-                        }
-                        for (skill in xpPerSkill.keys) {
-                            val mult = resolveCapeMultiplier(skill, equippedCape, inventory.keys, flags.townBuildingTiers, skillPrestige, gameData.equipment, flags.ironman)
-                            if (mult > 1f) {
-                                xpPerSkill[skill] = (xpPerSkill[skill]!! * mult.toDouble()).toLong()
-                            }
-                        }
-                        if (died) {
-                            xpPerSkill.replaceAll { _, xp -> maxOf(1L, (xp * 0.1).toLong()) }
-                            its.replaceAll { _, qty -> maxOf(0, (qty * 0.1).toInt()) }
-                            its.entries.removeIf { it.value == 0 }
-                        }
-                        val coins = its.remove("coins")?.toLong() ?: 0L
-                        val pets  = its.filterKeys { it in petIds }
-                        val loot  = its.filterKeys { it !in petIds }
-                        var slayerXp = 0L
-                        for ((enemy, k) in kills) slayerXp += slayerRepo.recordKills(enemy, k)
-                        if (slayerXp > 0L) xpPerSkill[Skills.SLAYER] = (xpPerSkill[Skills.SLAYER] ?: 0L) + slayerXp
-                        val combatStyle = detectCombatStyle(xpPerSkill)
-                        if (!grantXp) xpPerSkill.clear()
-                        awardedCapes += playerRepo.applyMultiSkillResults(xpPerSkill, loot, coins)
-                        for ((id, _) in pets) {
-                            val pd = gameData.pets[id] ?: continue
-                            if (playerRepo.addPetIfNew(id, pd.boostPercent))
-                                petFoundName = GameStrings.petName(context, pd.id)
-                        }
-                        if (!died) {
-                            questRepo.recordCombat(
-                                dungeonKey         = session.activityKey,
-                                killsByEnemy       = kills,
-                                loot               = loot,
-                                combatStyle        = combatStyle,
-                                foodConsumedTotal  = food.values.sum(),
-                            )
-                            playerRepo.incrementDungeonRun(session.activityKey)
-                            if (kills.isNotEmpty()) {
-                                for ((e, k) in kills) dailyKills[e] = (dailyKills[e] ?: 0) + k
-                                guildRepo.recordGuildCombat(kills, combatStyle)
-                                seasonalEventRepo.recordCombat(kills)
-                            }
-                            seasonalEventRepo.recordExpeditionCompletion(session.activityKey)
-                        }
-                        val skillLvls      = playerRepo.getSkillLevels()
-                        val arrowsReclaimed = arrows.mapValues { (_, qty) -> (qty * reclaimChance(skillLvls[Skills.RANGED] ?: 1)).toInt() }.filterValues { it > 0 }
-                        val runesReclaimed  = runes.mapValues  { (_, qty) -> (qty * reclaimChance(skillLvls[Skills.MAGIC]  ?: 1)).toInt() }.filterValues { it > 0 }
-                        if (food.isNotEmpty())          playerRepo.consumeItems(food)
-                        if (arrows.isNotEmpty())        playerRepo.consumeItems(arrows)
-                        if (arrowsReclaimed.isNotEmpty()) playerRepo.addItems(arrowsReclaimed)
-                        if (runesReclaimed.isNotEmpty())  playerRepo.addItems(runesReclaimed)
-                        val dungeonRunFlags = playerRepo.getFlags()
-                        playerRepo.updateFlags(dungeonRunFlags.copy(
-                            dungeonLastRunStats = dungeonRunFlags.dungeonLastRunStats + (session.activityKey to DungeonRunStats(
-                                foodConsumed = food.values.sum(),
-                                killCount    = kills.values.sum(),
-                                survived     = !died,
-                            ))
-                        ))
-                        for ((skill, xp) in xpPerSkill) {
-                            val prestigeLevel = skillPrestige[skill] ?: 0
-                            val withPrestige = if (prestigeLevel > 0) (xp * (1.0 + prestigeLevel * 0.10)).toLong() else xp
-                            combinedXpBySkill[skill] = (combinedXpBySkill[skill] ?: 0L) + withPrestige
-                        }
-                        for ((item, qty) in loot)        combinedItems[item]      = (combinedItems[item] ?: 0) + qty
-                        for ((e, k) in kills)            combinedKills[e]         = (combinedKills[e] ?: 0) + k
-                        for ((f, q) in food)             combinedFood[f]          = (combinedFood[f] ?: 0) + q
-                        for ((a, q) in arrows)           combinedArrows[a]         = (combinedArrows[a] ?: 0) + q
-                        for ((a, q) in arrowsReclaimed)  combinedArrowsReclaimed[a] = (combinedArrowsReclaimed[a] ?: 0) + q
-                        for ((r, q) in runes)            combinedRunes[r]          = (combinedRunes[r] ?: 0) + q
-                        for ((r, q) in runesReclaimed)   combinedRunesReclaimed[r] = (combinedRunesReclaimed[r] ?: 0) + q
-                        combinedCoins += coins
-                    }
+                    "tower"  -> collectTowerSession(session, frames, grantXp, ctx, acc)
+                    "boss"   -> collectBossSession(session, frames, grantXp, ctx, acc)
+                    "combat" -> collectDungeonSession(session, frames, grantXp, ctx, acc)
                     "expedition" -> {
                         val result = collectExpeditionSession(
                             session = session,
                             frames = if (grantXp) frames else frames.map { it.copy(xpGain = 0, xpBySkill = emptyMap()) },
-                            petIds = petIds,
-                            awardedCapes = awardedCapes,
-                            combinedXpBySkill = combinedXpBySkill,
-                            combinedItems = combinedItems
+                            petIds = ctx.petIds,
+                            awardedCapes = acc.awardedCapes,
+                            combinedXpBySkill = acc.combinedXpBySkill,
+                            combinedItems = acc.combinedItems
                         )
-                        if (result.petFoundName != null) petFoundName = result.petFoundName
-                        expeditionNoteLines = result.noteLines
-                        expeditionUnlockMessage = result.unlockMessage
+                        if (result.petFoundName != null) acc.petFoundName = result.petFoundName
+                        acc.expeditionNoteLines = result.noteLines
+                        acc.expeditionUnlockMessage = result.unlockMessage
                     }
-                    Skills.MERCANTILE -> {
-                        val totalXp    = if (grantXp) frames.sumOf { it.xpGain.toLong() } else 0L
-                        val coinReturn = frames.sumOf { (it.items["_coins"] ?: 0).toLong() }
-                        val mercantileCapeMult    = resolveCapeMultiplier(Skills.MERCANTILE, equippedCape, inventory.keys, flags.townBuildingTiers, skillPrestige, gameData.equipment, flags.ironman)
-                        val mercantilePrestigeMult = 1f + (skillPrestige[Skills.MERCANTILE] ?: 0) * 0.10f
-                        // combinedCoins must stay pre-blessing here, like every other skill's coin
-                        // total below -- the summary popup applies blessingCoinMult to combinedCoins
-                        // once already (see displayedCoins), so baking blessing in twice inflated the
-                        // shown total without it ever landing in the real balance (issue #1192).
-                        val coinReturnPreBlessing = (coinReturn.toDouble() * mercantileCapeMult * mercantilePrestigeMult).toLong()
-                        val coinReturnBoosted = (coinReturnPreBlessing * blessingCoinMult).toLong()
-                        awardedCapes += playerRepo.applySessionResults(Skills.MERCANTILE, totalXp, emptyMap())
-                        playerRepo.addCoins(coinReturnBoosted)
-                        guildRepo.recordGuildTrade(session.activityKey, coinReturnBoosted)
-                        playerRepo.recordWeeklyProgress("mercantile", session.activityKey, frames.size)
-                        combinedXpBySkill[Skills.MERCANTILE] = (combinedXpBySkill[Skills.MERCANTILE] ?: 0L) + totalXp
-                        combinedCoins += coinReturnPreBlessing
-                    }
-                    else -> {
-                        val totalXp = if (grantXp) frames.sumOf { it.xpGain.toLong() } else 0L
-                        val its     = mutableMapOf<String, Int>()
-                        for (frame in frames) for ((item, qty) in frame.items) its[item] = (its[item] ?: 0) + qty
-                        val coinsFromItems = (its.remove("coins") ?: 0).toLong()
-                        if (coinsFromItems > 0) {
-                            playerRepo.addCoins(coinsFromItems)
-                            combinedCoins += coinsFromItems
-                        }
-                        val pets       = its.filterKeys { it in petIds }
-                        val rawRegular = its.filterKeys { it !in petIds }
-                        val prestige   = skillPrestige[session.skillName] ?: 0
-                        val capeMult   = resolveCapeMultiplier(session.skillName, equippedCape, inventory.keys, flags.townBuildingTiers, skillPrestige, gameData.equipment, flags.ironman)
-                        val effectiveXp = if (capeMult > 1f && rawRegular.isEmpty()) (totalXp.toDouble() * capeMult).toLong() else totalXp
-                        val regular     = if (capeMult > 1f && rawRegular.isNotEmpty()) rawRegular.mapValues { (_, qty) -> (qty.toFloat() * capeMult).roundToInt() } else rawRegular
-                        awardedCapes += playerRepo.applySessionResults(session.skillName, effectiveXp, regular)
-                        when (session.skillName) {
-                            in gatheringSkills -> {
-                                questRepo.recordGathering(session.skillName, regular)
-                                playerRepo.recordDailyGathering(regular)
-                                seasonalEventRepo.recordGathering(regular)
-                                when (session.skillName) {
-                                    Skills.AGILITY      -> {
-                                        guildRepo.recordGuildSessions(session.activityKey)
-                                        playerRepo.recordWeeklyProgress("agility", session.activityKey, frames.size)
-                                    }
-                                    Skills.RUNECRAFTING -> guildRepo.recordGuildCrafting(session.skillName, regular)
-                                    else                -> guildRepo.recordGuildGathering(session.skillName, regular)
-                                }
-                            }
-                            in craftingSkills  -> {
-                                questRepo.recordCrafting(session.skillName, regular)
-                                playerRepo.recordDailyCrafting(regular)
-                                guildRepo.recordGuildCrafting(session.skillName, regular)
-                                seasonalEventRepo.recordCrafting(regular)
-                            }
-                            Skills.THIEVING    -> {
-                                val successCount = frames.count { it.success }
-                                questRepo.recordThieving(session.activityKey, successCount, regular.filterKeys { it != "coins" })
-                                guildRepo.recordGuildThieving(session.activityKey, successCount)
-                            }
-                            Skills.PRAYER      -> {
-                                val buried = frames.sumOf { it.kills }
-                                val isAshSession = gameData.bones[session.activityKey]?.isAsh == true
-                                if (!isAshSession) {
-                                    questRepo.recordBuried(buried)
-                                    guildRepo.recordGuildPrayer(buried)
-                                    playerRepo.recordDailyPrayer(buried)
-                                }
-                            }
-                            Skills.FARMING     -> guildRepo.recordGuildGathering(Skills.FARMING, regular)
-                        }
-                        for ((id, _) in pets) {
-                            val pd = gameData.pets[id] ?: continue
-                            if (playerRepo.addPetIfNew(id, pd.boostPercent))
-                                petFoundName = GameStrings.petName(context, pd.id)
-                        }
-                        combinedXpBySkill[session.skillName] = (combinedXpBySkill[session.skillName] ?: 0L) + totalXp
-                        for ((item, qty) in regular) combinedItems[item] = (combinedItems[item] ?: 0) + qty
-                        if (session.skillName == Skills.PRAYER) {
-                            val count = frames.sumOf { it.kills }
-                            val name  = GameStrings.itemName(context, session.activityKey)
-                            combinedBones[name] = (combinedBones[name] ?: 0) + count
-                        }
-                    }
+                    Skills.MERCANTILE -> collectMercantileSession(session, frames, grantXp, ctx, acc)
+                    else -> collectGenericSkillSession(session, frames, grantXp, ctx, acc)
                 }
             }
 
             for (session in sessions) sessionRepo.deleteSession(session.sessionId)
             queuedSessionStarter.startNextQueued()
             reconcileTowerQueue()
-            if (dailyKills.isNotEmpty()) playerRepo.recordDailyKills(dailyKills)
+            if (acc.dailyKills.isNotEmpty()) playerRepo.recordDailyKills(acc.dailyKills)
 
             val rareItemsDisplayNames = mutableSetOf<String>()
             for (session in sessions) {
@@ -901,15 +596,15 @@ class HomeViewModel @Inject constructor(
 
             val title = when {
                 n > 1 -> context.withAppLocale().getString(R.string.home_sessions_complete_title, n)
-                last.sessionId in voidedSessionIds -> context.withAppLocale().getString(R.string.home_session_voided)
+                last.sessionId in acc.voidedSessionIds -> context.withAppLocale().getString(R.string.home_session_voided)
                 last.skillName == "boss" -> {
                     val bossName = GameStrings.bossName(context, last.activityKey)
-                    if (bossWon == true) context.withAppLocale().getString(R.string.home_boss_defeated_title, bossName)
+                    if (acc.bossWon == true) context.withAppLocale().getString(R.string.home_boss_defeated_title, bossName)
                     else context.withAppLocale().getString(R.string.home_boss_defeated_by_title, bossName)
                 }
                 last.skillName == "combat" -> {
                     val dungeonName = GameStrings.dungeonName(context, last.activityKey)
-                    if (anyDied) context.withAppLocale().getString(R.string.home_dungeon_died_title, dungeonName)
+                    if (acc.anyDied) context.withAppLocale().getString(R.string.home_dungeon_died_title, dungeonName)
                     else context.withAppLocale().getString(R.string.home_dungeon_complete_title, dungeonName)
                 }
                 last.skillName == "expedition" -> {
@@ -924,16 +619,16 @@ class HomeViewModel @Inject constructor(
             }
 
             // For single-skill non-combat sessions use the compact totalXpLabel
-            val useTotalLabel = n == 1 && combinedXpBySkill.size == 1 && combinedKills.isEmpty()
-            val singleXp      = combinedXpBySkill.values.firstOrNull() ?: 0L
-            val totalRawXp    = combinedXpBySkill.values.sum()
-            val boneBuriedLines = combinedBones.entries.map { (name, count) ->
+            val useTotalLabel = n == 1 && acc.combinedXpBySkill.size == 1 && acc.combinedKills.isEmpty()
+            val singleXp      = acc.combinedXpBySkill.values.firstOrNull() ?: 0L
+            val totalRawXp    = acc.combinedXpBySkill.values.sum()
+            val boneBuriedLines = acc.combinedBones.entries.map { (name, count) ->
                 Pair(context.withAppLocale().getString(R.string.home_bones_buried_row, name), "×$count")
             }
 
-            val displayedCoins    = (combinedCoins.toDouble() * blessingCoinMult).toLong()
-            val coinBlessingBonus = displayedCoins - combinedCoins
-            val sortedXpEntries   = combinedXpBySkill.entries.sortedByDescending { it.value }
+            val displayedCoins    = (acc.combinedCoins.toDouble() * blessingCoinMult).toLong()
+            val coinBlessingBonus = displayedCoins - acc.combinedCoins
+            val sortedXpEntries   = acc.combinedXpBySkill.entries.sortedByDescending { it.value }
             val xpLineBonuses     = sortedXpEntries.map { (_, xp) ->
                 val base = xp * xpMult
                 ((base.toDouble() * blessingXpMult).toLong() - base).coerceAtLeast(0L)
@@ -945,7 +640,7 @@ class HomeViewModel @Inject constructor(
 
             val summary = SessionSummary(
                 title          = title,
-                died           = anyDied,
+                died           = acc.anyDied,
                 xpLines        = if (useTotalLabel) emptyList()
                                  else sortedXpEntries
                                      .map { (skill, xp) -> Pair(GameStrings.skillName(context, skill), "+${((xp * xpMult).toDouble() * blessingXpMult).toLong().formatXp()} XP") },
@@ -955,45 +650,386 @@ class HomeViewModel @Inject constructor(
                 totalXpLabel      = if (useTotalLabel) "+${((singleXp * xpMult).toDouble() * blessingXpMult).toLong().formatXp()} XP" else "",
                 totalXpLabelBonus = if (useTotalLabel) singleXpBonus else 0L,
                 totalXpValue      = if (useTotalLabel) ((singleXp * xpMult).toDouble() * blessingXpMult).toLong() else 0L,
-                itemLines      = combinedItems.entries.sortedByDescending { it.value }
+                itemLines      = acc.combinedItems.entries.sortedByDescending { it.value }
                                      .map { (key, qty) -> Pair(GameStrings.itemName(context,key), "×$qty") },
                 coinsGained    = displayedCoins,
-                killLines      = combinedKills.entries.sortedByDescending { it.value }
+                killLines      = acc.combinedKills.entries.sortedByDescending { it.value }
                                      .map { (enemy, kills) -> Pair(enemy, "×$kills") },
-                foodConsumedLines = combinedFood.entries.sortedByDescending { it.value }
+                foodConsumedLines = acc.combinedFood.entries.sortedByDescending { it.value }
                                      .map { (food, qty) -> Pair(GameStrings.itemName(context,food), "×$qty") },
-                arrowsConsumedLines  = combinedArrows.entries.sortedByDescending { it.value }
+                arrowsConsumedLines  = acc.combinedArrows.entries.sortedByDescending { it.value }
                                          .map { (key, qty) -> Pair(GameStrings.itemName(context,key), "×$qty") },
-                arrowsReclaimedLines = combinedArrowsReclaimed.entries.sortedByDescending { it.value }
+                arrowsReclaimedLines = acc.combinedArrowsReclaimed.entries.sortedByDescending { it.value }
                                          .map { (key, qty) -> Pair(GameStrings.itemName(context,key), "+$qty") },
-                runesConsumedLines   = combinedRunes.entries.sortedByDescending { it.value }
+                runesConsumedLines   = acc.combinedRunes.entries.sortedByDescending { it.value }
                                          .map { (key, qty) -> Pair(GameStrings.itemName(context,key), "×$qty") },
-                runesReclaimedLines  = combinedRunesReclaimed.entries.sortedByDescending { it.value }
+                runesReclaimedLines  = acc.combinedRunesReclaimed.entries.sortedByDescending { it.value }
                                          .map { (key, qty) -> Pair(GameStrings.itemName(context,key), "+$qty") },
                 boneBuriedLines  = boneBuriedLines,
                 boostWasActive   = boostActive,
                 xpLineBonuses    = xpLineBonuses,
                 coinBlessingBonus = coinBlessingBonus,
-                noteLines        = expeditionNoteLines +
-                                     (if (bossCoinsReduced) listOf(context.withAppLocale().getString(R.string.session_note_boss_coin_cap)) else emptyList()),
-                unlockMessage    = expeditionUnlockMessage,
+                noteLines        = acc.expeditionNoteLines +
+                                     (if (acc.bossCoinsReduced) listOf(context.withAppLocale().getString(R.string.session_note_boss_coin_cap)) else emptyList()),
+                unlockMessage    = acc.expeditionUnlockMessage,
                 rareItems        = rareItemsDisplayNames,
             )
 
-            val capeMessage = if (awardedCapes.isNotEmpty()) {
-                val names = awardedCapes.joinToString(", ") { GameStrings.itemName(context,it) }
+            val capeMessage = if (acc.awardedCapes.isNotEmpty()) {
+                val names = acc.awardedCapes.joinToString(", ") { GameStrings.itemName(context,it) }
                 context.withAppLocale().getString(R.string.home_congratulations_received, names)
             } else null
             _extra.update { it.copy(
                 sessionSummary  = summary,
                 snackbarMessage = capeMessage,
-                petFoundName    = petFoundName,
+                petFoundName    = acc.petFoundName,
             ) }
           } finally {
             _extra.update { it.copy(isCollecting = false) }
           }
         }
     }
+
+    private suspend fun collectTowerSession(session: SkillSession, frames: List<SessionFrame>, grantXp: Boolean, ctx: CollectContext, acc: CollectAcc) {
+        val playerDied = frames.any { it.died }
+        if (playerDied) acc.anyDied = true
+        val towerXpPerSkill = mutableMapOf<String, Long>()
+        val towerAllItems   = mutableMapOf<String, Int>()
+        val towerFood       = mutableMapOf<String, Int>()
+        val towerKills      = mutableMapOf<String, Int>()
+        val towerArrows     = mutableMapOf<String, Int>()
+        val towerRunes      = mutableMapOf<String, Int>()
+        for (frame in frames) {
+            for ((skill, xp) in frame.xpBySkill)    towerXpPerSkill[skill] = (towerXpPerSkill[skill] ?: 0L) + xp
+            for ((item,  qty) in frame.items)        towerAllItems[item]     = (towerAllItems[item] ?: 0) + qty
+            for ((food,  qty) in frame.foodConsumed) towerFood[food]         = (towerFood[food] ?: 0) + qty
+            for ((e,     k)   in frame.killsByEnemy) towerKills[e]           = (towerKills[e] ?: 0) + k
+            for ((arrow, qty) in frame.arrowsConsumed) towerArrows[arrow]    = (towerArrows[arrow] ?: 0) + qty
+            for ((rune,  qty) in frame.runesConsumed) towerRunes[rune]       = (towerRunes[rune] ?: 0) + qty
+        }
+        if (playerDied) {
+            val keep = boostRepo.deathKeepFraction(ctx.flags)
+            towerXpPerSkill.replaceAll { _, xp -> maxOf(1L, (xp * keep).toLong()) }
+            towerAllItems.replaceAll { _, qty -> maxOf(0, (qty * keep).toInt()) }
+            towerAllItems.entries.removeIf { it.value == 0 }
+        }
+        
+        if (!playerDied && towerKills.isNotEmpty()) {
+            val style = detectCombatStyle(towerXpPerSkill)
+            questRepo.recordCombat(
+                dungeonKey        = session.activityKey,
+                killsByEnemy      = towerKills,
+                loot              = towerAllItems,
+                combatStyle       = style,
+                foodConsumedTotal = towerFood.values.sum(),
+            )
+            for ((e, k) in towerKills) acc.dailyKills[e] = (acc.dailyKills[e] ?: 0) + k
+            guildRepo.recordGuildCombat(towerKills, style)
+            var towerSlayerXp = 0L
+            for ((enemy, k) in towerKills) towerSlayerXp += slayerRepo.recordKills(enemy, k)
+            if (towerSlayerXp > 0L) towerXpPerSkill[Skills.SLAYER] = (towerXpPerSkill[Skills.SLAYER] ?: 0L) + towerSlayerXp
+        }
+
+        val towerCoinsRaw    = towerAllItems.remove("coins")?.toLong() ?: 0L
+        val towerFlags       = playerRepo.getFlags()
+        val towerXpMult      = if (towerFlags.ironman) 1.0 else 1.0 + towerFlags.towerXpBonusPct / 100.0
+        val towerCoinMult    = if (towerFlags.ironman) 1.0 else 1.0 + towerFlags.towerCoinBonusPct / 100.0
+        val towerXpForRepo   = if (grantXp) towerXpPerSkill.mapValues { (_, xp) -> (xp * towerXpMult).toLong() } else emptyMap()
+        val towerCoinsGained = (towerCoinsRaw * towerCoinMult).toLong()
+
+        playerRepo.applyMultiSkillResults(towerXpForRepo, towerAllItems, towerCoinsGained)
+
+        val skillLvls = playerRepo.getSkillLevels()
+        val arrowsReclaimed = towerArrows.mapValues { (_, qty) -> (qty * (reclaimChance(skillLvls[Skills.RANGED] ?: 1) + boostRepo.arrowReclaimBonus(ctx.flags)).coerceAtMost(0.95)).toInt() }.filterValues { it > 0 }
+        val runesReclaimed  = towerRunes.mapValues { (_, qty) -> (qty * (reclaimChance(skillLvls[Skills.MAGIC] ?: 1) + boostRepo.runeReclaimBonus(ctx.flags)).coerceAtMost(0.95)).toInt() }.filterValues { it > 0 }
+        val finalTowerArrows = towerArrows.mapValues { (k, v) -> v - (arrowsReclaimed[k] ?: 0) }.filterValues { it > 0 }
+        val finalTowerRunes  = towerRunes.mapValues { (k, v) -> v - (runesReclaimed[k] ?: 0) }.filterValues { it > 0 }
+
+        val totalConsumables = towerFood + finalTowerArrows + finalTowerRunes
+        if (totalConsumables.isNotEmpty()) playerRepo.consumeItems(totalConsumables)
+        val floor = session.activityKey.removePrefix("tower_floor_").toIntOrNull() ?: 1
+        val updatedTowerFlags = playerRepo.getFlags()
+        if (playerDied) {
+            // Death drops you back to your last checkpoint (every 25 floors of
+            // your best-ever progress), matching TowerViewModel.collectFloor() --
+            // this path had drifted to a flat reset to 0 (issue #1183).
+            val checkpointFloor = (updatedTowerFlags.towerBestFloor / TowerViewModel.TOWER_CHECKPOINT_INTERVAL) * TowerViewModel.TOWER_CHECKPOINT_INTERVAL
+            playerRepo.updateFlags(updatedTowerFlags.copy(towerCurrentFloor = checkpointFloor))
+        } else {
+            playerRepo.updateFlags(updatedTowerFlags.copy(
+                towerCurrentFloor = floor,
+                towerBestFloor    = maxOf(updatedTowerFlags.towerBestFloor, floor),
+            ))
+        }
+        for ((skill, xp) in towerXpForRepo) acc.combinedXpBySkill[skill] = (acc.combinedXpBySkill[skill] ?: 0L) + xp
+        for ((item, qty) in towerAllItems)  acc.combinedItems[item] = (acc.combinedItems[item] ?: 0) + qty
+        acc.combinedCoins += towerCoinsGained
+    }
+
+    private suspend fun collectBossSession(session: SkillSession, frames: List<SessionFrame>, grantXp: Boolean, ctx: CollectContext, acc: CollectAcc) {
+        val frame = frames.lastOrNull() ?: return
+        val won = frame.kills > 0
+        acc.bossWon = won
+        val its   = frame.items.toMutableMap()
+        val coins = if (won) {
+            val base = its.remove("coins")?.toLong() ?: 0L
+            val mult = playerRepo.rollBossCoinSoftCap(session.activityKey)
+            if (mult < 1.0 && base > 0L) acc.bossCoinsReduced = true
+            (base * mult).toLong()
+        } else 0L
+        val pets  = its.filterKeys { it in ctx.petIds }
+        val loot  = if (won) its.filterKeys { it !in ctx.petIds } else emptyMap()
+        val allFoodConsumed   = mutableMapOf<String, Int>()
+        val allArrowsConsumed = mutableMapOf<String, Int>()
+        val allRunesConsumed  = mutableMapOf<String, Int>()
+        val bossXpBySkill     = mutableMapOf<String, Long>()
+        for (f in frames) {
+            f.foodConsumed.forEach   { (k, v) -> allFoodConsumed[k]   = (allFoodConsumed[k] ?: 0) + v }
+            f.arrowsConsumed.forEach { (k, v) -> allArrowsConsumed[k] = (allArrowsConsumed[k] ?: 0) + v }
+            f.runesConsumed.forEach  { (k, v) -> allRunesConsumed[k]  = (allRunesConsumed[k] ?: 0) + v }
+            f.xpBySkill.forEach      { (k, v) -> bossXpBySkill[k]     = (bossXpBySkill[k] ?: 0L) + v }
+        }
+        for (skill in bossXpBySkill.keys) {
+            val mult = resolveCapeMultiplier(skill, ctx.equippedCape, ctx.inventory.keys, ctx.flags.townBuildingTiers, ctx.capeScalingBySkill, gameData.equipment, ctx.flags.ironman)
+            if (mult > 1f) {
+                bossXpBySkill[skill] = (bossXpBySkill[skill]!! * mult.toDouble()).toLong()
+            }
+        }
+        if (!grantXp) bossXpBySkill.clear()
+        val bossSkillLvls    = playerRepo.getSkillLevels()
+        val bossArrowsRec    = allArrowsConsumed.mapValues { (_, qty) -> (qty * (reclaimChance(bossSkillLvls[Skills.RANGED] ?: 1) + boostRepo.arrowReclaimBonus(ctx.flags)).coerceAtMost(0.95)).toInt() }.filterValues { it > 0 }
+        val bossRunesRec     = allRunesConsumed.mapValues  { (_, qty) -> (qty * (reclaimChance(bossSkillLvls[Skills.MAGIC] ?: 1) + boostRepo.runeReclaimBonus(ctx.flags)).coerceAtMost(0.95)).toInt() }.filterValues { it > 0 }
+        val ownedPets: List<OwnedPet> = if (ctx.flags.ironman) emptyList()
+            else try { json.decodeFromString(ctx.player.pets) } catch (_: Exception) { emptyList() }
+        val perSkillPetBoostPct = bossXpBySkill.keys.associateWith { skill ->
+            ownedPets.sumOf { ownedPet ->
+                val pd = gameData.pets[ownedPet.id]
+                if (pd == null) 0
+                else when {
+                    pd.boostedSkill == "all" -> pd.boostPercent
+                    pd.boostedSkill == skill -> pd.boostPercent
+                    pd.boostedSkill == "combat" && skill in Skills.COMBAT -> pd.boostPercent
+                    else -> 0
+                }
+            }
+        }.filterValues { it > 0 }
+        acc.awardedCapes += playerRepo.applyMultiSkillResults(bossXpBySkill, loot, coins, perSkillPetBoostPct = perSkillPetBoostPct)
+        if (allFoodConsumed.isNotEmpty())   playerRepo.consumeItems(allFoodConsumed)
+        if (allArrowsConsumed.isNotEmpty()) playerRepo.consumeItems(allArrowsConsumed)
+        if (bossArrowsRec.isNotEmpty())     playerRepo.addItems(bossArrowsRec)
+        if (bossRunesRec.isNotEmpty())      playerRepo.addItems(bossRunesRec)
+        for ((f, q) in allFoodConsumed)    acc.combinedFood[f]             = (acc.combinedFood[f] ?: 0) + q
+        for ((a, q) in allArrowsConsumed)  acc.combinedArrows[a]           = (acc.combinedArrows[a] ?: 0) + q
+        for ((a, q) in bossArrowsRec)      acc.combinedArrowsReclaimed[a]  = (acc.combinedArrowsReclaimed[a] ?: 0) + q
+        for ((r, q) in allRunesConsumed)   acc.combinedRunes[r]            = (acc.combinedRunes[r] ?: 0) + q
+        for ((r, q) in bossRunesRec)       acc.combinedRunesReclaimed[r]   = (acc.combinedRunesReclaimed[r] ?: 0) + q
+        if (won) {
+            for ((id, _) in pets) {
+                val pd = gameData.pets[id] ?: continue
+                if (playerRepo.addPetIfNew(id, pd.boostPercent))
+                    acc.petFoundName = GameStrings.petName(context, pd.id)
+            }
+            questRepo.recordCombat(
+                dungeonKey   = session.activityKey,
+                killsByEnemy = mapOf(session.activityKey to 1),
+                loot         = loot,
+            )
+            acc.dailyKills[session.activityKey] = (acc.dailyKills[session.activityKey] ?: 0) + 1
+            playerRepo.recordWeeklyProgress("boss", session.activityKey, 1)
+            guildRepo.recordGuildCombat(mapOf(session.activityKey to 1), frames.lastOrNull()?.combatStyle?.ifEmpty { "melee" } ?: "melee")
+            seasonalEventRepo.recordCombat(mapOf(session.activityKey to 1))
+            seasonalEventRepo.recordBossDefeat(session.activityKey)
+            for ((item, qty) in loot) acc.combinedItems[item] = (acc.combinedItems[item] ?: 0) + qty
+            acc.combinedCoins += coins
+        }
+        for ((skill, xp) in bossXpBySkill) {
+            val petPct = perSkillPetBoostPct[skill] ?: 0
+            val withPet = if (petPct > 0) (xp * (1.0 + petPct / 100.0)).toLong() else xp
+            val xpPct = boostRepo.prestigeXpPct(skill, ctx.flags)
+            val withPrestige = if (xpPct > 0) (withPet * (1.0 + xpPct / 100.0)).toLong() else withPet
+            acc.combinedXpBySkill[skill] = (acc.combinedXpBySkill[skill] ?: 0L) + withPrestige
+        }
+    }
+
+    private suspend fun collectDungeonSession(session: SkillSession, frames: List<SessionFrame>, grantXp: Boolean, ctx: CollectContext, acc: CollectAcc) {
+        val xpPerSkill = mutableMapOf<String, Long>()
+        val its        = mutableMapOf<String, Int>()
+        val kills      = mutableMapOf<String, Int>()
+        val food   = mutableMapOf<String, Int>()
+        val arrows = mutableMapOf<String, Int>()
+        val runes  = mutableMapOf<String, Int>()
+        val died   = frames.any { it.died }
+        if (died) acc.anyDied = true
+        for (frame in frames) {
+            for ((skill, xp) in frame.xpBySkill)      xpPerSkill[skill] = (xpPerSkill[skill] ?: 0L) + xp
+            for ((item, qty) in frame.items)           its[item]         = (its[item] ?: 0) + qty
+            for ((e, k) in frame.killsByEnemy)         kills[e]          = (kills[e] ?: 0) + k
+            for ((f, q) in frame.foodConsumed)         food[f]           = (food[f] ?: 0) + q
+            for ((a, q) in frame.arrowsConsumed)       arrows[a]         = (arrows[a] ?: 0) + q
+            for ((r, q) in frame.runesConsumed)        runes[r]          = (runes[r] ?: 0) + q
+        }
+        for (skill in xpPerSkill.keys) {
+            val mult = resolveCapeMultiplier(skill, ctx.equippedCape, ctx.inventory.keys, ctx.flags.townBuildingTiers, ctx.capeScalingBySkill, gameData.equipment, ctx.flags.ironman)
+            if (mult > 1f) {
+                xpPerSkill[skill] = (xpPerSkill[skill]!! * mult.toDouble()).toLong()
+            }
+        }
+        if (died) {
+            val keep = boostRepo.deathKeepFraction(ctx.flags)
+            xpPerSkill.replaceAll { _, xp -> maxOf(1L, (xp * keep).toLong()) }
+            its.replaceAll { _, qty -> maxOf(0, (qty * keep).toInt()) }
+            its.entries.removeIf { it.value == 0 }
+        }
+        val coins = its.remove("coins")?.toLong() ?: 0L
+        val pets  = its.filterKeys { it in ctx.petIds }
+        val loot  = its.filterKeys { it !in ctx.petIds }
+        var slayerXp = 0L
+        for ((enemy, k) in kills) slayerXp += slayerRepo.recordKills(enemy, k)
+        if (slayerXp > 0L) xpPerSkill[Skills.SLAYER] = (xpPerSkill[Skills.SLAYER] ?: 0L) + slayerXp
+        val combatStyle = detectCombatStyle(xpPerSkill)
+        if (!grantXp) xpPerSkill.clear()
+        acc.awardedCapes += playerRepo.applyMultiSkillResults(xpPerSkill, loot, coins)
+        for ((id, _) in pets) {
+            val pd = gameData.pets[id] ?: continue
+            if (playerRepo.addPetIfNew(id, pd.boostPercent))
+                acc.petFoundName = GameStrings.petName(context, pd.id)
+        }
+        if (!died) {
+            questRepo.recordCombat(
+                dungeonKey         = session.activityKey,
+                killsByEnemy       = kills,
+                loot               = loot,
+                combatStyle        = combatStyle,
+                foodConsumedTotal  = food.values.sum(),
+            )
+            playerRepo.incrementDungeonRun(session.activityKey)
+            if (kills.isNotEmpty()) {
+                for ((e, k) in kills) acc.dailyKills[e] = (acc.dailyKills[e] ?: 0) + k
+                guildRepo.recordGuildCombat(kills, combatStyle)
+                seasonalEventRepo.recordCombat(kills)
+            }
+            seasonalEventRepo.recordExpeditionCompletion(session.activityKey)
+        }
+        val skillLvls      = playerRepo.getSkillLevels()
+        val arrowsReclaimed = arrows.mapValues { (_, qty) -> (qty * (reclaimChance(skillLvls[Skills.RANGED] ?: 1) + boostRepo.arrowReclaimBonus(ctx.flags)).coerceAtMost(0.95)).toInt() }.filterValues { it > 0 }
+        val runesReclaimed  = runes.mapValues  { (_, qty) -> (qty * (reclaimChance(skillLvls[Skills.MAGIC] ?: 1) + boostRepo.runeReclaimBonus(ctx.flags)).coerceAtMost(0.95)).toInt() }.filterValues { it > 0 }
+        if (food.isNotEmpty())          playerRepo.consumeItems(food)
+        if (arrows.isNotEmpty())        playerRepo.consumeItems(arrows)
+        if (arrowsReclaimed.isNotEmpty()) playerRepo.addItems(arrowsReclaimed)
+        if (runesReclaimed.isNotEmpty())  playerRepo.addItems(runesReclaimed)
+        val dungeonRunFlags = playerRepo.getFlags()
+        playerRepo.updateFlags(dungeonRunFlags.copy(
+            dungeonLastRunStats = dungeonRunFlags.dungeonLastRunStats + (session.activityKey to DungeonRunStats(
+                foodConsumed = food.values.sum(),
+                killCount    = kills.values.sum(),
+                survived     = !died,
+            ))
+        ))
+        for ((skill, xp) in xpPerSkill) {
+            val xpPct = boostRepo.prestigeXpPct(skill, ctx.flags)
+            val withPrestige = if (xpPct > 0) (xp * (1.0 + xpPct / 100.0)).toLong() else xp
+            acc.combinedXpBySkill[skill] = (acc.combinedXpBySkill[skill] ?: 0L) + withPrestige
+        }
+        for ((item, qty) in loot)        acc.combinedItems[item]      = (acc.combinedItems[item] ?: 0) + qty
+        for ((e, k) in kills)            acc.combinedKills[e]         = (acc.combinedKills[e] ?: 0) + k
+        for ((f, q) in food)             acc.combinedFood[f]          = (acc.combinedFood[f] ?: 0) + q
+        for ((a, q) in arrows)           acc.combinedArrows[a]         = (acc.combinedArrows[a] ?: 0) + q
+        for ((a, q) in arrowsReclaimed)  acc.combinedArrowsReclaimed[a] = (acc.combinedArrowsReclaimed[a] ?: 0) + q
+        for ((r, q) in runes)            acc.combinedRunes[r]          = (acc.combinedRunes[r] ?: 0) + q
+        for ((r, q) in runesReclaimed)   acc.combinedRunesReclaimed[r] = (acc.combinedRunesReclaimed[r] ?: 0) + q
+        acc.combinedCoins += coins
+    }
+
+    private suspend fun collectMercantileSession(session: SkillSession, frames: List<SessionFrame>, grantXp: Boolean, ctx: CollectContext, acc: CollectAcc) {
+        val totalXp    = if (grantXp) frames.sumOf { it.xpGain.toLong() } else 0L
+        val coinReturn = frames.sumOf { (it.items["_coins"] ?: 0).toLong() }
+        val mercantileCapeMult    = resolveCapeMultiplier(Skills.MERCANTILE, ctx.equippedCape, ctx.inventory.keys, ctx.flags.townBuildingTiers, ctx.capeScalingBySkill, gameData.equipment, ctx.flags.ironman)
+        val mercantilePrestigeMult = boostRepo.coinMultiplier(Skills.MERCANTILE, ctx.flags).toFloat()
+        // acc.combinedCoins must stay pre-blessing here, like every other skill's coin
+        // total below -- the summary popup applies ctx.blessingCoinMult to acc.combinedCoins
+        // once already (see displayedCoins), so baking blessing in twice inflated the
+        // shown total without it ever landing in the real balance (issue #1192).
+        val coinReturnPreBlessing = (coinReturn.toDouble() * mercantileCapeMult * mercantilePrestigeMult).toLong()
+        val coinReturnBoosted = (coinReturnPreBlessing * ctx.blessingCoinMult).toLong()
+        acc.awardedCapes += playerRepo.applySessionResults(Skills.MERCANTILE, totalXp, emptyMap())
+        playerRepo.addCoins(coinReturnBoosted)
+        guildRepo.recordGuildTrade(session.activityKey, coinReturnBoosted)
+        playerRepo.recordWeeklyProgress("mercantile", session.activityKey, frames.size)
+        acc.combinedXpBySkill[Skills.MERCANTILE] = (acc.combinedXpBySkill[Skills.MERCANTILE] ?: 0L) + totalXp
+        acc.combinedCoins += coinReturnPreBlessing
+    }
+
+    private suspend fun collectGenericSkillSession(session: SkillSession, frames: List<SessionFrame>, grantXp: Boolean, ctx: CollectContext, acc: CollectAcc) {
+        val totalXp = if (grantXp) frames.sumOf { it.xpGain.toLong() } else 0L
+        val its     = mutableMapOf<String, Int>()
+        for (frame in frames) for ((item, qty) in frame.items) its[item] = (its[item] ?: 0) + qty
+        val coinsFromItems = (its.remove("coins") ?: 0).toLong()
+        if (coinsFromItems > 0) {
+            val coinsBoosted = (coinsFromItems * boostRepo.coinMultiplier(session.skillName, ctx.flags)).toLong()
+            playerRepo.addCoins(coinsBoosted)
+            acc.combinedCoins += coinsBoosted
+        }
+        val pets       = its.filterKeys { it in ctx.petIds }
+        val rawRegular = its.filterKeys { it !in ctx.petIds }
+        val capeMult   = resolveCapeMultiplier(session.skillName, ctx.equippedCape, ctx.inventory.keys, ctx.flags.townBuildingTiers, ctx.capeScalingBySkill, gameData.equipment, ctx.flags.ironman)
+        // Prestige yield nodes plus the flow-state ramp scale gathered items (v1.14.0).
+        val sessionDurMs = (session.endsAt - session.startedAt).coerceAtLeast(0L)
+        val prestigeItemMult = boostRepo.yieldMultiplier(session.skillName, ctx.flags) *
+            boostRepo.flowMultiplier(session.skillName, ctx.flags, boostRepo.flowElapsedMs(ctx.flags, session.skillName, sessionDurMs))
+        val itemMult    = (if (capeMult > 1f && rawRegular.isNotEmpty()) capeMult.toDouble() else 1.0) * prestigeItemMult
+        val effectiveXp = if (capeMult > 1f && rawRegular.isEmpty()) (totalXp.toDouble() * capeMult).toLong() else totalXp
+        val regular     = if (itemMult > 1.0 && rawRegular.isNotEmpty()) rawRegular.mapValues { (_, qty) -> (qty * itemMult).roundToInt().coerceAtLeast(qty) } else rawRegular
+        acc.awardedCapes += playerRepo.applySessionResults(session.skillName, effectiveXp, regular)
+        when (session.skillName) {
+            in COLLECT_GATHERING_SKILLS -> {
+                questRepo.recordGathering(session.skillName, regular)
+                playerRepo.recordDailyGathering(regular)
+                seasonalEventRepo.recordGathering(regular)
+                when (session.skillName) {
+                    Skills.AGILITY      -> {
+                        guildRepo.recordGuildSessions(session.activityKey)
+                        playerRepo.recordWeeklyProgress("agility", session.activityKey, frames.size)
+                    }
+                    Skills.RUNECRAFTING -> guildRepo.recordGuildCrafting(session.skillName, regular)
+                    else                -> guildRepo.recordGuildGathering(session.skillName, regular)
+                }
+            }
+            in COLLECT_CRAFTING_SKILLS  -> {
+                questRepo.recordCrafting(session.skillName, regular)
+                playerRepo.recordDailyCrafting(regular)
+                guildRepo.recordGuildCrafting(session.skillName, regular)
+                seasonalEventRepo.recordCrafting(regular)
+            }
+            Skills.THIEVING    -> {
+                val successCount = frames.count { it.success }
+                questRepo.recordThieving(session.activityKey, successCount, regular.filterKeys { it != "coins" })
+                guildRepo.recordGuildThieving(session.activityKey, successCount)
+            }
+            Skills.PRAYER      -> {
+                val buried = frames.sumOf { it.kills }
+                val isAshSession = gameData.bones[session.activityKey]?.isAsh == true
+                if (!isAshSession) {
+                    questRepo.recordBuried(buried)
+                    guildRepo.recordGuildPrayer(buried)
+                    playerRepo.recordDailyPrayer(buried)
+                }
+            }
+            Skills.FARMING     -> guildRepo.recordGuildGathering(Skills.FARMING, regular)
+        }
+        for ((id, _) in pets) {
+            val pd = gameData.pets[id] ?: continue
+            if (playerRepo.addPetIfNew(id, pd.boostPercent))
+                acc.petFoundName = GameStrings.petName(context, pd.id)
+        }
+        acc.combinedXpBySkill[session.skillName] = (acc.combinedXpBySkill[session.skillName] ?: 0L) + totalXp
+        for ((item, qty) in regular) acc.combinedItems[item] = (acc.combinedItems[item] ?: 0) + qty
+        if (session.skillName == Skills.PRAYER) {
+            val count = frames.sumOf { it.kills }
+            val name  = GameStrings.itemName(context, session.activityKey)
+            acc.combinedBones[name] = (acc.combinedBones[name] ?: 0) + count
+        }
+    }
+
 
     fun onSessionExpiredLocally(sessionId: String) {
         viewModelScope.launch {
@@ -1006,6 +1042,11 @@ class HomeViewModel @Inject constructor(
     }
 
     fun bossEmoji(activityKey: String): String? = gameData.bosses[activityKey]?.emoji
+
+    /** Race -> skills with race-locked prestige branches, for the character setup sheet. */
+    val raceProficiencies: Map<String, List<String>> by lazy {
+        PrestigeBoosts.raceProficiencies(gameData.prestigeTrees)
+    }
 
     fun repeatActiveSession() {
         viewModelScope.launch {
@@ -1175,7 +1216,6 @@ class HomeViewModel @Inject constructor(
             val petIds = gameData.pets.keys
             val workerPlayer = playerRepo.getOrCreatePlayer()
             val flags: PlayerFlags = json.decodeFromString(workerPlayer.flags)
-            val workerSkillPrestige = if (flags.ironman) emptyMap() else flags.skillPrestige
             val boostActive      = !flags.ironman && flags.xpBoostExpiresAt > System.currentTimeMillis()
             val xpMult           = if (boostActive) 2L else 1L
             val blessingXpMult   = if (flags.ironman) 1.0f else ChurchRepository.xpMultiplier(flags)
@@ -1237,8 +1277,8 @@ class HomeViewModel @Inject constructor(
                             for ((skill, xp) in workerBossXp) {
                                 val petPct = workerBossPetBoost[skill] ?: 0
                                 val withPet = if (petPct > 0) (xp * (1.0 + petPct / 100.0)).toLong() else xp
-                                val prestigeLevel = workerSkillPrestige[skill] ?: 0
-                                val withPrestige = if (prestigeLevel > 0) (withPet * (1.0 + prestigeLevel * 0.10)).toLong() else withPet
+                                val xpPct = boostRepo.prestigeXpPct(skill, flags)
+                                val withPrestige = if (xpPct > 0) (withPet * (1.0 + xpPct / 100.0)).toLong() else withPet
                                 combinedXpBySkill[skill] = (combinedXpBySkill[skill] ?: 0L) + withPrestige
                             }
                             for ((item, qty) in loot) combinedItems[item] = (combinedItems[item] ?: 0) + qty
@@ -1257,11 +1297,12 @@ class HomeViewModel @Inject constructor(
                             for ((e, k) in frame.killsByEnemy)    kills[e]          = (kills[e] ?: 0) + k
                         }
                         if (died) {
-                            xpPerSkill.replaceAll { _, xp -> maxOf(1L, (xp * 0.1).toLong()) }
-                            its.replaceAll { _, qty -> maxOf(0, (qty * 0.1).toInt()) }
+                            val keep = boostRepo.deathKeepFraction(flags)
+                            xpPerSkill.replaceAll { _, xp -> maxOf(1L, (xp * keep).toLong()) }
+                            its.replaceAll { _, qty -> maxOf(0, (qty * keep).toInt()) }
                             its.entries.removeIf { it.value == 0 }
                         }
-                        val coins = (its.remove("coins")?.toLong() ?: 0L).let { if (died) maxOf(0L, (it * 0.1).toLong()) else it }
+                        val coins = (its.remove("coins")?.toLong() ?: 0L).let { if (died) maxOf(0L, (it * boostRepo.deathKeepFraction(flags)).toLong()) else it }
                         val pets  = its.filterKeys { it in petIds }
                         val loot  = its.filterKeys { it !in petIds }
                         awardedCapes += playerRepo.applyMultiSkillResults(xpPerSkill, loot, coins, mult)
@@ -1274,8 +1315,8 @@ class HomeViewModel @Inject constructor(
                             playerRepo.incrementDungeonRun(session.activityKey)
                         }
                         for ((skill, xp) in xpPerSkill) {
-                            val prestigeLevel = workerSkillPrestige[skill] ?: 0
-                            val withPrestige = if (prestigeLevel > 0) (xp * (1.0 + prestigeLevel * 0.10)).toLong() else xp
+                            val xpPct = boostRepo.prestigeXpPct(skill, flags)
+                            val withPrestige = if (xpPct > 0) (xp * (1.0 + xpPct / 100.0)).toLong() else xp
                             combinedXpBySkill[skill] = (combinedXpBySkill[skill] ?: 0L) + withPrestige
                         }
                         for ((item, qty) in loot)        combinedItems[item]      = (combinedItems[item] ?: 0) + qty
@@ -1309,11 +1350,16 @@ class HomeViewModel @Inject constructor(
                         for (frame in frames) for ((item, qty) in frame.items) its[item] = (its[item] ?: 0) + qty
                         val coinsFromItems = (its.remove("coins") ?: 0).toLong()
                         if (coinsFromItems > 0) {
-                            playerRepo.addCoins(coinsFromItems)
-                            combinedCoins += coinsFromItems
+                            val coinsBoosted = (coinsFromItems * boostRepo.coinMultiplier(session.skillName, flags)).toLong()
+                            playerRepo.addCoins(coinsBoosted)
+                            combinedCoins += coinsBoosted
                         }
-                        val pets    = its.filterKeys { it in petIds }
-                        val regular = its.filterKeys { it !in petIds }
+                        val pets       = its.filterKeys { it in petIds }
+                        val rawRegular = its.filterKeys { it !in petIds }
+                        val sessionDurMs = (session.endsAt - session.startedAt).coerceAtLeast(0L)
+                        val prestigeItemMult = boostRepo.yieldMultiplier(session.skillName, flags) *
+                            boostRepo.flowMultiplier(session.skillName, flags, boostRepo.flowElapsedMs(flags, session.skillName, sessionDurMs))
+                        val regular = if (prestigeItemMult > 1.0) rawRegular.mapValues { (_, qty) -> (qty * prestigeItemMult).roundToInt().coerceAtLeast(qty) } else rawRegular
                         awardedCapes += playerRepo.applySessionResults(session.skillName, totalXp, regular, mult)
                         for ((id, _) in pets) {
                             val pd = gameData.pets[id] ?: continue
@@ -1611,6 +1657,9 @@ fun totalLevelFrom(levels: Map<String, Int>): Int =
     levels.values.sum()
 
 /** Infer the combat style used in a session from XP distribution. */
+private val COLLECT_GATHERING_SKILLS = setOf(Skills.MINING, Skills.WOODCUTTING, Skills.FISHING, Skills.AGILITY)
+private val COLLECT_CRAFTING_SKILLS  = setOf(Skills.SMITHING, Skills.COOKING, Skills.FLETCHING, Skills.CRAFTING, Skills.HERBLORE, Skills.FIREMAKING, Skills.RUNECRAFTING, Skills.CONSTRUCTION)
+
 fun detectCombatStyle(xpPerSkill: Map<String, Long>): String {
     val rangedXp = xpPerSkill[Skills.RANGED]   ?: 0L
     val magicXp  = xpPerSkill[Skills.MAGIC]    ?: 0L

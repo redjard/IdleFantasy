@@ -10,6 +10,7 @@ import com.fantasyidler.data.json.BoneData
 import com.fantasyidler.data.model.EquipSlot
 import com.fantasyidler.data.model.PlayerFlags
 import com.fantasyidler.data.model.Skills
+import com.fantasyidler.repository.BoostRepository
 import com.fantasyidler.repository.ChurchRepository
 import com.fantasyidler.repository.GameDataRepository
 import com.fantasyidler.repository.GuildRepository
@@ -53,6 +54,7 @@ data class BoneAltarUiState(
 
 @HiltViewModel
 class BoneAltarViewModel @Inject constructor(
+    private val boostRepo: BoostRepository,
     private val playerRepo: PlayerRepository,
     private val questRepo: QuestRepository,
     private val guildRepo: GuildRepository,
@@ -104,13 +106,12 @@ class BoneAltarViewModel @Inject constructor(
             equippedCape = equippedCape,
             inventoryKeys = inventory.keys,
             townBuildingTiers = flags.townBuildingTiers,
-            skillPrestige = emptyMap(),
+            capeScaling = emptyMap(),
             allEquipment = gameData.equipment,
             ironman = flags.ironman,
         )
         val churchMult     = if (flags.ironman) 1.0f else ChurchRepository.xpMultiplier(flags)
-        val prestige       = if (flags.ironman) 0 else flags.skillPrestige[Skills.PRAYER] ?: 0
-        val prestigeMult   = if (prestige > 0) (1.0 + prestige * 0.10).toFloat() else 1f
+        val prestigeMult   = (1.0 + boostRepo.prestigeXpPct(Skills.PRAYER, flags) / 100.0).toFloat()
         val petBoostPct    = if (flags.ironman) 0 else petBoostFor(player.pets, Skills.PRAYER)
 
         val selectedKey = extra.selectedBoneKey?.takeIf { (inventory[it] ?: 0) > 0 }

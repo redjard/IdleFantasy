@@ -10,6 +10,7 @@ import com.fantasyidler.data.json.BlessingData
 import com.fantasyidler.data.model.PlayerFlags
 import com.fantasyidler.data.model.Skills
 import com.fantasyidler.repository.BlessingActivateResult
+import com.fantasyidler.repository.BoostRepository
 import com.fantasyidler.repository.ChurchRepository
 import com.fantasyidler.repository.PlayerRepository
 import com.fantasyidler.repository.TownRepository
@@ -40,10 +41,13 @@ data class ChurchUiState(
     val snackbarMessage: String? = null,
     /** Ironman characters can only use defensive blessings. */
     val ironman: Boolean = false,
+    /** Bone-cost multiplier from prestige (gnome Trickster's Favor). */
+    val blessingCostMult: Double = 1.0,
 )
 
 @HiltViewModel
 class ChurchViewModel @Inject constructor(
+    private val boostRepo: BoostRepository,
     val townRepo: TownRepository,
     private val playerRepo: PlayerRepository,
     private val churchRepo: ChurchRepository,
@@ -67,7 +71,8 @@ class ChurchViewModel @Inject constructor(
         extra.copy(
             isLoading                 = false,
             prayerLevel               = prayerLevel,
-            blessingDuration          = townRepo.blessingDurationMs(flags),
+            blessingDuration          = (townRepo.blessingDurationMs(flags) * boostRepo.blessingDurationMultiplier(flags)).toLong(),
+            blessingCostMult          = boostRepo.blessingCostMultiplier(flags),
             allBlessings              = ChurchRepository.ALL_BLESSINGS,
             unlockedBlessingKeys      = churchRepo.blessingsForLevel(prayerLevel).map { it.key }.toSet(),
             activeBlessing            = active,

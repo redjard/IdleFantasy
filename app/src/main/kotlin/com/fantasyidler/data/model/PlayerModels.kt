@@ -175,8 +175,22 @@ data class PlayerFlags(
      *  from their oldest quest completion (sessions are deleted on collect, so quest timestamps
      *  are the oldest surviving record). */
     @SerialName("character_created_at") val characterCreatedAt: Long = 0L,
-    /** Prestige level per skill: skill key → 0–3. */
+    /** Prestige count per skill (uncapped since v1.14.0; 0–3 under the legacy system). */
     @SerialName("skill_prestige") val skillPrestige: Map<String, Int> = emptyMap(),
+    /** Lifetime prestige points earned per skill. Unspent = earned minus the cost of [prestigeNodes]. */
+    @SerialName("prestige_points_earned") val prestigePointsEarned: Map<String, Int> = emptyMap(),
+    /** Purchased prestige tree node ids per skill. */
+    @SerialName("prestige_nodes") val prestigeNodes: Map<String, List<String>> = emptyMap(),
+    /** Epoch ms of the last prestige-point respec per skill (24h cooldown). */
+    @SerialName("prestige_last_respec_at") val prestigeLastRespecAt: Map<String, Long> = emptyMap(),
+    /** Epoch ms of the last race change (record-keeping; changes cost a token or coins). */
+    @SerialName("race_last_changed_at") val raceLastChangedAt: Long = 0L,
+    /** Whether the one-time legacy prestige-to-points migration has run for this save. */
+    @SerialName("prestige_points_migrated") val prestigePointsMigrated: Boolean = false,
+    /** Last crop harvested per farming patch (patchNumber.toString() → crop id), for Crop Rotation nodes. */
+    @SerialName("last_crop_by_patch") val lastCropByPatch: Map<String, String> = emptyMap(),
+    /** Ironman race lock: set at creation for new ironmen; legacy ironmen get one free change, then this locks. */
+    @SerialName("ironman_race_locked") val ironmanRaceLocked: Boolean = false,
     /** Ash fertilizer per farming patch: patchNumber.toString() → ash item key. */
     @SerialName("farming_fertilizer") val farmingFertilizer: Map<String, String> = emptyMap(),
     /** Last-used potion key for combat sessions; persisted across app restarts. */

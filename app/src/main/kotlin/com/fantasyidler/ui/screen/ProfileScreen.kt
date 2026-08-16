@@ -121,6 +121,7 @@ fun ProfileScreen(
     armoryVm:            ArmoryViewModel       = hiltViewModel(),
     settingsVm:          SettingsViewModel     = hiltViewModel(),
     onNavigateToCombat:  () -> Unit            = {},
+    onNavigateToPrestige: (String) -> Unit      = {},
 ) {
     val state         by viewModel.uiState.collectAsState()
     val achState      by achievementsVm.uiState.collectAsState()
@@ -258,7 +259,16 @@ fun ProfileScreen(
 
             val tabContent: @Composable (Int) -> Unit = { tab ->
                 when (tab) {
-                    0    -> SkillsTab(state.skillLevels, state.skillXp, context, viewModel)
+                    0    -> SkillsTab(
+                        skillLevels    = state.skillLevels,
+                        skillXp        = state.skillXp,
+                        context        = context,
+                        viewModel      = viewModel,
+                        skillPrestige  = state.skillPrestige,
+                        prestigeUnspent = state.prestigeUnspentBySkill,
+                        ironman        = state.ironman,
+                        onOpenPrestige = onNavigateToPrestige,
+                    )
                     1    -> InventoryTab(state.inventory, context, viewModel::categoryFor) { showAddItemSheet = true }
                     2    -> EquipmentTab(
                         equipped           = state.equipped,
@@ -326,14 +336,19 @@ fun ProfileScreen(
     if (showAppearanceSheet) {
         CharacterCustomizationSheet(
             race              = state.characterRace,
+            ironman           = state.ironman,
+            ironmanRaceLocked = state.ironmanRaceLocked,
+            raceChangeTokens  = state.raceChangeTokens,
+            coins             = state.coins,
+            raceProficiencies = viewModel.raceProficiencies,
             initialSkin       = state.characterSkinTone,
             initialHair       = state.characterHairStyle,
             initialHairColor  = state.characterHairColor,
             initialEye        = state.characterEyeStyle,
             initialBeard      = state.characterBeardStyle,
             initialBeardColor = state.characterBeardColor,
-            onSave            = { skin, hair, hairColor, eye, beard, beardColor, race ->
-                viewModel.saveAppearance(skin, hair, hairColor, eye, beard, beardColor, race)
+            onSave            = { skin, hair, hairColor, eye, beard, beardColor, race, useToken ->
+                viewModel.saveAppearance(skin, hair, hairColor, eye, beard, beardColor, race, useToken)
                 showAppearanceSheet = false
             },
             onDismiss         = { showAppearanceSheet = false },
@@ -512,6 +527,10 @@ private fun SkillsTab(
     skillXp: Map<String, Long>,
     context: android.content.Context,
     viewModel: InventoryViewModel,
+    skillPrestige: Map<String, Int> = emptyMap(),
+    prestigeUnspent: Map<String, Int> = emptyMap(),
+    ironman: Boolean = false,
+    onOpenPrestige: (String) -> Unit = {},
 ) {
     var selectedSkill by remember { mutableStateOf<String?>(null) }
     val milestones = remember(selectedSkill) {
@@ -570,10 +589,13 @@ private fun SkillsTab(
         ) {
             ScaledSheetContent {
             SkillUnlockSheet(
-                skillKey   = key,
-                level      = skillLevels[key] ?: 1,
-                context    = context,
-                milestones = milestones,
+                skillKey       = key,
+                level          = skillLevels[key] ?: 1,
+                context        = context,
+                milestones     = milestones,
+                prestigeCount  = skillPrestige[key] ?: 0,
+                unspentPoints  = prestigeUnspent[key] ?: 0,
+                onOpenPrestige = { selectedSkill = null; onOpenPrestige(key) },
             )
             }
         }
@@ -699,6 +721,9 @@ private fun SkillUnlockSheet(
     level: Int,
     context: android.content.Context,
     milestones: List<UnlockMilestone>,
+    prestigeCount: Int = 0,
+    unspentPoints: Int = 0,
+    onOpenPrestige: (() -> Unit)? = null,
 ) {
     Column(
         modifier = Modifier
@@ -734,6 +759,42 @@ private fun SkillUnlockSheet(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.primary,
                 )
+            }
+        }
+        if (onOpenPrestige != null) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Column(Modifier.weight(1f)) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            text       = stringResource(R.string.prestige_title),
+                            style      = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.Bold,
+                        )
+                        if (prestigeCount > 0) {
+                            Spacer(Modifier.width(6.dp))
+                            Text(
+                                text  = if (prestigeCount > 3) "★×$prestigeCount" else "★".repeat(prestigeCount),
+                                style = MaterialTheme.typography.labelMedium,
+                                color = MaterialTheme.colorScheme.primary,
+                            )
+                        }
+                    }
+                    if (unspentPoints > 0) {
+                        Text(
+                            text  = stringResource(R.string.prestige_points_available, unspentPoints),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.tertiary,
+                        )
+                    }
+                }
+                TextButton(onClick = onOpenPrestige) {
+                    Text(stringResource(R.string.prestige_open_tree))
+                }
             }
         }
         HorizontalDivider(Modifier.padding(vertical = 8.dp))

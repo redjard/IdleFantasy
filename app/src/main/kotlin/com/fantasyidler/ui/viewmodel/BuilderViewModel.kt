@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.fantasyidler.R
 import com.fantasyidler.data.model.PlayerFlags
 import com.fantasyidler.data.model.Skills
+import com.fantasyidler.repository.BoostRepository
 import com.fantasyidler.repository.GameDataRepository
 import com.fantasyidler.repository.PlayerRepository
 import com.fantasyidler.repository.TownRepository
@@ -27,6 +28,7 @@ import javax.inject.Inject
 data class BuilderUiState(
     val isLoading: Boolean = true,
     val constructionLevel: Int = 1,
+    val extraDiscountPerMille: Int = 0,
     val coins: Long = 0L,
     val inventory: Map<String, Int> = emptyMap(),
     val innTier: Int = 0,
@@ -45,6 +47,7 @@ data class BuilderUiState(
 class BuilderViewModel @Inject constructor(
     val gameData: GameDataRepository,
     val townRepo: TownRepository,
+    private val boostRepo: BoostRepository,
     private val playerRepo: PlayerRepository,
     @ApplicationContext private val context: Context,
     private val json: Json,
@@ -63,6 +66,7 @@ class BuilderViewModel @Inject constructor(
         extra.copy(
             isLoading         = false,
             constructionLevel = levels[Skills.CONSTRUCTION] ?: 1,
+            extraDiscountPerMille = boostRepo.builderDiscountPerMille(flags),
             coins             = player.coins,
             inventory         = inventory,
             innTier           = flags.townBuildingTiers["inn"] ?: 0,

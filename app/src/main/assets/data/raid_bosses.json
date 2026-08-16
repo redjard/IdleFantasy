@@ -2,7 +2,7 @@
   "king_black_dragon": {
     "id": "king_black_dragon",
     "display_name": "King Black Dragon",
-    "emoji": "🐉",
+    "emoji": "\ud83d\udc09",
     "description": "The legendary three-headed dragon, feared across the realm.",
     "combat_level_required": 50,
     "duration_minutes": 45,
@@ -32,10 +32,22 @@
       "coins_min": 10000,
       "coins_max": 20000,
       "items": {
-        "dragon_bone": {"min": 30, "max": 50},
-        "coal": {"min": 100, "max": 200},
-        "mithril_ore": {"min": 50, "max": 100},
-        "adamantite_ore": {"min": 20, "max": 40}
+        "dragon_bone": {
+          "min": 30,
+          "max": 50
+        },
+        "coal": {
+          "min": 100,
+          "max": 200
+        },
+        "mithril_ore": {
+          "min": 50,
+          "max": 100
+        },
+        "adamantite_ore": {
+          "min": 20,
+          "max": 40
+        }
       }
     },
     "rare_drops": [
@@ -58,21 +70,28 @@
         "item": "ring_of_dragons_might",
         "chance": 0.005,
         "comment": "1/200"
+      },
+      {
+        "item": "race_change_token",
+        "chance": 0.004,
+        "comment": "1/250 race change token"
       }
     ],
     "pet": {
       "id": "dragon_whelp",
       "display_name": "Dragon Whelp",
-      "emoji": "🐉",
+      "emoji": "\ud83d\udc09",
       "chance": 0.01,
       "comment": "1/100 per kill"
     },
-    "tags": ["dragon"]
+    "tags": [
+      "dragon"
+    ]
   },
   "demon_lord": {
     "id": "demon_lord",
     "display_name": "Demon Lord",
-    "emoji": "😈",
+    "emoji": "\ud83d\ude08",
     "description": "An ancient demon from the abyss, master of dark magic.",
     "combat_level_required": 70,
     "duration_minutes": 60,
@@ -103,11 +122,26 @@
       "coins_min": 20000,
       "coins_max": 40000,
       "items": {
-        "giant_bones": {"min": 20, "max": 40},
-        "coal": {"min": 150, "max": 300},
-        "adamantite_ore": {"min": 80, "max": 150},
-        "runite_ore": {"min": 30, "max": 60},
-        "fire_rune": {"min": 100, "max": 200}
+        "giant_bones": {
+          "min": 20,
+          "max": 40
+        },
+        "coal": {
+          "min": 150,
+          "max": 300
+        },
+        "adamantite_ore": {
+          "min": 80,
+          "max": 150
+        },
+        "runite_ore": {
+          "min": 30,
+          "max": 60
+        },
+        "fire_rune": {
+          "min": 100,
+          "max": 200
+        }
       }
     },
     "rare_drops": [
@@ -130,21 +164,28 @@
         "item": "berserker_ring",
         "chance": 0.005,
         "comment": "1/200"
+      },
+      {
+        "item": "race_change_token",
+        "chance": 0.004,
+        "comment": "1/250 race change token"
       }
     ],
     "pet": {
       "id": "imp_pet",
       "display_name": "Imp Pet",
-      "emoji": "😈",
+      "emoji": "\ud83d\ude08",
       "chance": 0.01,
       "comment": "1/100 per kill"
     },
-    "tags": ["demon"]
+    "tags": [
+      "demon"
+    ]
   },
   "kraken": {
     "id": "kraken",
     "display_name": "Kraken",
-    "emoji": "🦑",
+    "emoji": "\ud83e\udd91",
     "description": "The terror of the deep seas, a colossal sea monster.",
     "combat_level_required": 90,
     "duration_minutes": 90,
@@ -174,12 +215,30 @@
       "coins_min": 50000,
       "coins_max": 100000,
       "items": {
-        "raw_shark": {"min": 100, "max": 200},
-        "dragon_bone": {"min": 50, "max": 100},
-        "coal": {"min": 200, "max": 400},
-        "runite_ore": {"min": 100, "max": 200},
-        "platinum_ore": {"min": 50, "max": 100},
-        "water_rune": {"min": 200, "max": 400}
+        "raw_shark": {
+          "min": 100,
+          "max": 200
+        },
+        "dragon_bone": {
+          "min": 50,
+          "max": 100
+        },
+        "coal": {
+          "min": 200,
+          "max": 400
+        },
+        "runite_ore": {
+          "min": 100,
+          "max": 200
+        },
+        "platinum_ore": {
+          "min": 50,
+          "max": 100
+        },
+        "water_rune": {
+          "min": 200,
+          "max": 400
+        }
       }
     },
     "rare_drops": [
@@ -202,12 +261,17 @@
         "item": "ring_of_the_seas",
         "chance": 0.005,
         "comment": "1/200"
+      },
+      {
+        "item": "race_change_token",
+        "chance": 0.004,
+        "comment": "1/250 race change token"
       }
     ],
     "pet": {
       "id": "baby_kraken",
       "display_name": "Baby Kraken",
-      "emoji": "🦑",
+      "emoji": "\ud83e\udd91",
       "chance": 0.01,
       "comment": "1/100 per kill"
     }
@@ -215,7 +279,7 @@
   "balrog": {
     "id": "balrog",
     "display_name": "Gothic Ember, Ancient Flame of the Deep",
-    "emoji": "🔥",
+    "emoji": "\ud83d\udd25",
     "description": "An ancient demon of flame and shadow, awakened from its slumber deep beneath the earth.",
     "combat_level_required": 100,
     "duration_minutes": 120,
@@ -246,12 +310,30 @@
       "coins_min": 100000,
       "coins_max": 250000,
       "items": {
-        "dragon_bone": {"min": 100, "max": 200},
-        "coal": {"min": 500, "max": 1000},
-        "runite_ore": {"min": 200, "max": 400},
-        "platinum_ore": {"min": 100, "max": 200},
-        "fire_rune": {"min": 500, "max": 1000},
-        "ancient_treasure": {"min": 5, "max": 10}
+        "dragon_bone": {
+          "min": 100,
+          "max": 200
+        },
+        "coal": {
+          "min": 500,
+          "max": 1000
+        },
+        "runite_ore": {
+          "min": 200,
+          "max": 400
+        },
+        "platinum_ore": {
+          "min": 100,
+          "max": 200
+        },
+        "fire_rune": {
+          "min": 500,
+          "max": 1000
+        },
+        "ancient_treasure": {
+          "min": 5,
+          "max": 10
+        }
       }
     },
     "rare_drops": [
@@ -274,12 +356,17 @@
         "item": "balrog_wings",
         "chance": 0.002,
         "comment": "1/500"
+      },
+      {
+        "item": "race_change_token",
+        "chance": 0.004,
+        "comment": "1/250 race change token"
       }
     ],
     "pet": {
       "id": "baby_balrog",
       "display_name": "Gothic Emberling",
-      "emoji": "🔥",
+      "emoji": "\ud83d\udd25",
       "chance": 0.005,
       "comment": "1/200 per kill"
     }
@@ -287,7 +374,7 @@
   "void_sovereign": {
     "id": "void_sovereign",
     "display_name": "The Void Sovereign",
-    "emoji": "🌑",
+    "emoji": "\ud83c\udf11",
     "description": "The primordial entity behind the void rifts. Ancient beyond reckoning, it regards mortal challengers with contempt.",
     "combat_level_required": 110,
     "duration_minutes": 150,
@@ -318,12 +405,30 @@
       "coins_min": 200000,
       "coins_max": 500000,
       "items": {
-        "dragon_bone": {"min": 150, "max": 300},
-        "platinum_ore": {"min": 200, "max": 400},
-        "runite_ore": {"min": 300, "max": 600},
-        "blood_rune": {"min": 500, "max": 1000},
-        "death_rune": {"min": 500, "max": 1000},
-        "ancient_treasure": {"min": 10, "max": 20}
+        "dragon_bone": {
+          "min": 150,
+          "max": 300
+        },
+        "platinum_ore": {
+          "min": 200,
+          "max": 400
+        },
+        "runite_ore": {
+          "min": 300,
+          "max": 600
+        },
+        "blood_rune": {
+          "min": 500,
+          "max": 1000
+        },
+        "death_rune": {
+          "min": 500,
+          "max": 1000
+        },
+        "ancient_treasure": {
+          "min": 10,
+          "max": 20
+        }
       }
     },
     "rare_drops": [
@@ -341,12 +446,17 @@
         "item": "amulet_of_the_void",
         "chance": 0.002,
         "comment": "1/500"
+      },
+      {
+        "item": "race_change_token",
+        "chance": 0.004,
+        "comment": "1/250 race change token"
       }
     ],
     "pet": {
       "id": "void_wisp",
       "display_name": "Void Wisp",
-      "emoji": "💫",
+      "emoji": "\ud83d\udcab",
       "chance": 0.003,
       "comment": "1/333 per kill"
     }
@@ -354,7 +464,7 @@
   "sol_invictus": {
     "id": "sol_invictus",
     "display_name": "Sol Invictus, the Sundered Flame",
-    "emoji": "☀️",
+    "emoji": "\u2600\ufe0f",
     "description": "A shard of the sun itself, torn loose from the Sunspire ruin. Only the boldest warriors dare approach.",
     "combat_level_required": 65,
     "duration_minutes": 50,
@@ -384,9 +494,18 @@
       "coins_min": 15000,
       "coins_max": 30000,
       "items": {
-        "fire_rune": {"min": 100, "max": 200},
-        "adamantite_ore": {"min": 40, "max": 80},
-        "runite_ore": {"min": 10, "max": 20}
+        "fire_rune": {
+          "min": 100,
+          "max": 200
+        },
+        "adamantite_ore": {
+          "min": 40,
+          "max": 80
+        },
+        "runite_ore": {
+          "min": 10,
+          "max": 20
+        }
       }
     },
     "rare_drops": [
@@ -394,12 +513,17 @@
         "item": "runite_bar",
         "chance": 0.02,
         "comment": "1/50"
+      },
+      {
+        "item": "race_change_token",
+        "chance": 0.004,
+        "comment": "1/250 race change token"
       }
     ],
     "pet": {
       "id": "solstice_sprite",
       "display_name": "Solstice Sprite",
-      "emoji": "🔥",
+      "emoji": "\ud83d\udd25",
       "chance": 0.01,
       "comment": "1/100 per kill"
     },
@@ -408,7 +532,7 @@
   "the_hollow_king": {
     "id": "the_hollow_king",
     "display_name": "The Hollow King",
-    "emoji": "🎃",
+    "emoji": "\ud83c\udf83",
     "description": "The headless sovereign of the Gloomharvest, riding out from the Blightwood to reap what the living have sown.",
     "combat_level_required": 70,
     "duration_minutes": 55,
@@ -457,12 +581,17 @@
         "item": "runite_bar",
         "chance": 0.02,
         "comment": "1/50"
+      },
+      {
+        "item": "race_change_token",
+        "chance": 0.004,
+        "comment": "1/250 race change token"
       }
     ],
     "pet": {
       "id": "lantern_wisp",
       "display_name": "Lantern Wisp",
-      "emoji": "🎃",
+      "emoji": "\ud83c\udf83",
       "chance": 0.01,
       "comment": "1/100 per kill"
     },
@@ -471,7 +600,7 @@
   "the_vault_guardian": {
     "id": "the_vault_guardian",
     "display_name": "The Vault Guardian",
-    "emoji": "🏆",
+    "emoji": "\ud83c\udfc6",
     "description": "A colossus of living gold, woken by the lighting of the Eternal Flame. Only patrons of the Grand Monument may face it.",
     "combat_level_required": 100,
     "duration_minutes": 90,
@@ -526,6 +655,11 @@
         "item": "gilded_kiteshield",
         "chance": 0.04,
         "comment": "1/25"
+      },
+      {
+        "item": "race_change_token",
+        "chance": 0.004,
+        "comment": "1/250 race change token"
       }
     ],
     "requires_monument": true

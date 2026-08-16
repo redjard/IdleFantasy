@@ -1,0 +1,2788 @@
+[
+  {
+    "skill": "mining",
+    "paths": [
+      {
+        "key": "xp",
+        "nodes": [
+          {
+            "id": "mining_xp_1",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 5
+          },
+          {
+            "id": "mining_xp_2",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 10
+          },
+          {
+            "id": "mining_xp_3",
+            "cost": 2,
+            "effect": "xp_pct",
+            "value": 20
+          },
+          {
+            "id": "mining_xp_4",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 30
+          },
+          {
+            "id": "mining_xp_5",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 40,
+            "race": "human"
+          }
+        ]
+      },
+      {
+        "key": "yield",
+        "nodes": [
+          {
+            "id": "mining_yield_1",
+            "cost": 1,
+            "effect": "yield_pct",
+            "value": 5
+          },
+          {
+            "id": "mining_yield_2",
+            "cost": 2,
+            "effect": "yield_pct",
+            "value": 10
+          },
+          {
+            "id": "mining_yield_3",
+            "cost": 4,
+            "effect": "yield_pct",
+            "value": 25
+          }
+        ]
+      },
+      {
+        "key": "gem",
+        "nodes": [
+          {
+            "id": "mining_gem_1",
+            "cost": 1,
+            "effect": "bonus_roll_pct",
+            "value": 50
+          },
+          {
+            "id": "mining_gem_2",
+            "cost": 2,
+            "effect": "bonus_roll_pct",
+            "value": 100
+          },
+          {
+            "id": "mining_gem_3",
+            "cost": 3,
+            "effect": "bonus_roll_pct",
+            "value": 200
+          }
+        ]
+      },
+      {
+        "key": "cape",
+        "nodes": [
+          {
+            "id": "mining_cape_1",
+            "cost": 2,
+            "effect": "cape_scaling",
+            "value": 2
+          },
+          {
+            "id": "mining_cape_2",
+            "cost": 3,
+            "effect": "cape_scaling",
+            "value": 3
+          },
+          {
+            "id": "mining_cape_3",
+            "cost": 4,
+            "effect": "cape_scaling",
+            "value": 4
+          }
+        ]
+      },
+      {
+        "key": "race_dwarf",
+        "nodes": [
+          {
+            "id": "mining_race_dwarf_1",
+            "cost": 3,
+            "effect": "yield_pct",
+            "value": 10,
+            "race": "dwarf"
+          },
+          {
+            "id": "mining_race_dwarf_2",
+            "cost": 4,
+            "effect": "yield_pct",
+            "value": 15,
+            "race": "dwarf"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "fishing",
+    "paths": [
+      {
+        "key": "xp",
+        "nodes": [
+          {
+            "id": "fishing_xp_1",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 5
+          },
+          {
+            "id": "fishing_xp_2",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 10
+          },
+          {
+            "id": "fishing_xp_3",
+            "cost": 2,
+            "effect": "xp_pct",
+            "value": 20
+          },
+          {
+            "id": "fishing_xp_4",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 30
+          },
+          {
+            "id": "fishing_xp_5",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 40,
+            "race": "human"
+          }
+        ]
+      },
+      {
+        "key": "yield",
+        "nodes": [
+          {
+            "id": "fishing_yield_1",
+            "cost": 1,
+            "effect": "yield_pct",
+            "value": 5
+          },
+          {
+            "id": "fishing_yield_2",
+            "cost": 2,
+            "effect": "yield_pct",
+            "value": 10
+          },
+          {
+            "id": "fishing_yield_3",
+            "cost": 4,
+            "effect": "yield_pct",
+            "value": 25
+          }
+        ]
+      },
+      {
+        "key": "rod",
+        "nodes": [
+          {
+            "id": "fishing_rod_1",
+            "cost": 1,
+            "effect": "tool_eff_pct",
+            "value": 5
+          },
+          {
+            "id": "fishing_rod_2",
+            "cost": 2,
+            "effect": "tool_eff_pct",
+            "value": 10
+          },
+          {
+            "id": "fishing_rod_3",
+            "cost": 3,
+            "effect": "tool_eff_pct",
+            "value": 15
+          }
+        ]
+      },
+      {
+        "key": "cape",
+        "nodes": [
+          {
+            "id": "fishing_cape_1",
+            "cost": 2,
+            "effect": "cape_scaling",
+            "value": 2
+          },
+          {
+            "id": "fishing_cape_2",
+            "cost": 3,
+            "effect": "cape_scaling",
+            "value": 3
+          },
+          {
+            "id": "fishing_cape_3",
+            "cost": 4,
+            "effect": "cape_scaling",
+            "value": 4
+          }
+        ]
+      },
+      {
+        "key": "race_elf",
+        "nodes": [
+          {
+            "id": "fishing_race_elf_1",
+            "cost": 3,
+            "effect": "tool_eff_pct",
+            "value": 10,
+            "race": "elf"
+          },
+          {
+            "id": "fishing_race_elf_2",
+            "cost": 4,
+            "effect": "tool_eff_pct",
+            "value": 15,
+            "race": "elf"
+          }
+        ]
+      },
+      {
+        "key": "race_halfling",
+        "nodes": [
+          {
+            "id": "fishing_race_halfling_1",
+            "cost": 3,
+            "effect": "flow_rate",
+            "value": 1.5,
+            "race": "halfling"
+          },
+          {
+            "id": "fishing_race_halfling_2",
+            "cost": 4,
+            "effect": "flow_interval_reduction",
+            "value": 10,
+            "race": "halfling"
+          }
+        ]
+      },
+      {
+        "key": "race_gnome",
+        "nodes": [
+          {
+            "id": "fishing_race_gnome_1",
+            "cost": 3,
+            "effect": "pet_boost_pct",
+            "value": 25,
+            "race": "gnome"
+          },
+          {
+            "id": "fishing_race_gnome_2",
+            "cost": 4,
+            "effect": "pet_boost_pct",
+            "value": 50,
+            "race": "gnome"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "woodcutting",
+    "paths": [
+      {
+        "key": "xp",
+        "nodes": [
+          {
+            "id": "woodcutting_xp_1",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 5
+          },
+          {
+            "id": "woodcutting_xp_2",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 10
+          },
+          {
+            "id": "woodcutting_xp_3",
+            "cost": 2,
+            "effect": "xp_pct",
+            "value": 20
+          },
+          {
+            "id": "woodcutting_xp_4",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 30
+          },
+          {
+            "id": "woodcutting_xp_5",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 40,
+            "race": "human"
+          }
+        ]
+      },
+      {
+        "key": "yield",
+        "nodes": [
+          {
+            "id": "woodcutting_yield_1",
+            "cost": 1,
+            "effect": "yield_pct",
+            "value": 5
+          },
+          {
+            "id": "woodcutting_yield_2",
+            "cost": 2,
+            "effect": "yield_pct",
+            "value": 10
+          },
+          {
+            "id": "woodcutting_yield_3",
+            "cost": 4,
+            "effect": "yield_pct",
+            "value": 25
+          }
+        ]
+      },
+      {
+        "key": "axe",
+        "nodes": [
+          {
+            "id": "woodcutting_axe_1",
+            "cost": 1,
+            "effect": "tool_eff_pct",
+            "value": 5
+          },
+          {
+            "id": "woodcutting_axe_2",
+            "cost": 2,
+            "effect": "tool_eff_pct",
+            "value": 10
+          },
+          {
+            "id": "woodcutting_axe_3",
+            "cost": 3,
+            "effect": "tool_eff_pct",
+            "value": 15
+          }
+        ]
+      },
+      {
+        "key": "cape",
+        "nodes": [
+          {
+            "id": "woodcutting_cape_1",
+            "cost": 2,
+            "effect": "cape_scaling",
+            "value": 2
+          },
+          {
+            "id": "woodcutting_cape_2",
+            "cost": 3,
+            "effect": "cape_scaling",
+            "value": 3
+          },
+          {
+            "id": "woodcutting_cape_3",
+            "cost": 4,
+            "effect": "cape_scaling",
+            "value": 4
+          }
+        ]
+      },
+      {
+        "key": "race_halfling",
+        "nodes": [
+          {
+            "id": "woodcutting_race_halfling_1",
+            "cost": 3,
+            "effect": "pet_boost_pct",
+            "value": 25,
+            "race": "halfling"
+          },
+          {
+            "id": "woodcutting_race_halfling_2",
+            "cost": 4,
+            "effect": "pet_boost_pct",
+            "value": 50,
+            "race": "halfling"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "farming",
+    "paths": [
+      {
+        "key": "xp",
+        "nodes": [
+          {
+            "id": "farming_xp_1",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 5
+          },
+          {
+            "id": "farming_xp_2",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 10
+          },
+          {
+            "id": "farming_xp_3",
+            "cost": 2,
+            "effect": "xp_pct",
+            "value": 20
+          },
+          {
+            "id": "farming_xp_4",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 30
+          },
+          {
+            "id": "farming_xp_5",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 40,
+            "race": "human"
+          }
+        ]
+      },
+      {
+        "key": "rotation",
+        "nodes": [
+          {
+            "id": "farming_rotation_1",
+            "cost": 1,
+            "effect": "crop_rotation_pct",
+            "value": 10
+          },
+          {
+            "id": "farming_rotation_2",
+            "cost": 2,
+            "effect": "crop_rotation_pct",
+            "value": 20
+          },
+          {
+            "id": "farming_rotation_3",
+            "cost": 4,
+            "effect": "crop_rotation_pct",
+            "value": 40
+          },
+          {
+            "id": "farming_rotation_4",
+            "cost": 5,
+            "effect": "crop_rotation_always",
+            "value": 1,
+            "race": "gnome"
+          }
+        ]
+      },
+      {
+        "key": "cape",
+        "nodes": [
+          {
+            "id": "farming_cape_1",
+            "cost": 2,
+            "effect": "cape_scaling",
+            "value": 2
+          },
+          {
+            "id": "farming_cape_2",
+            "cost": 3,
+            "effect": "cape_scaling",
+            "value": 3
+          },
+          {
+            "id": "farming_cape_3",
+            "cost": 4,
+            "effect": "cape_scaling",
+            "value": 4
+          }
+        ]
+      },
+      {
+        "key": "race_halfling",
+        "nodes": [
+          {
+            "id": "farming_race_halfling_1",
+            "cost": 3,
+            "effect": "yield_pct",
+            "value": 10,
+            "race": "halfling"
+          },
+          {
+            "id": "farming_race_halfling_2",
+            "cost": 4,
+            "effect": "yield_pct",
+            "value": 15,
+            "race": "halfling"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "agility",
+    "paths": [
+      {
+        "key": "xp",
+        "nodes": [
+          {
+            "id": "agility_xp_1",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 5
+          },
+          {
+            "id": "agility_xp_2",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 10
+          },
+          {
+            "id": "agility_xp_3",
+            "cost": 2,
+            "effect": "xp_pct",
+            "value": 20
+          },
+          {
+            "id": "agility_xp_4",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 30
+          },
+          {
+            "id": "agility_xp_5",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 40,
+            "race": "human"
+          }
+        ]
+      },
+      {
+        "key": "endurance",
+        "nodes": [
+          {
+            "id": "agility_endurance_1",
+            "cost": 2,
+            "effect": "session_floor_min",
+            "value": 3.5
+          },
+          {
+            "id": "agility_endurance_2",
+            "cost": 3,
+            "effect": "session_floor_min",
+            "value": 7
+          },
+          {
+            "id": "agility_endurance_3",
+            "cost": 4,
+            "effect": "session_floor_min",
+            "value": 10
+          }
+        ]
+      },
+      {
+        "key": "cape",
+        "nodes": [
+          {
+            "id": "agility_cape_1",
+            "cost": 2,
+            "effect": "cape_scaling",
+            "value": 2
+          },
+          {
+            "id": "agility_cape_2",
+            "cost": 3,
+            "effect": "cape_scaling",
+            "value": 3
+          },
+          {
+            "id": "agility_cape_3",
+            "cost": 4,
+            "effect": "cape_scaling",
+            "value": 4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "thieving",
+    "paths": [
+      {
+        "key": "xp",
+        "nodes": [
+          {
+            "id": "thieving_xp_1",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 5
+          },
+          {
+            "id": "thieving_xp_2",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 10
+          },
+          {
+            "id": "thieving_xp_3",
+            "cost": 2,
+            "effect": "xp_pct",
+            "value": 20
+          },
+          {
+            "id": "thieving_xp_4",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 30
+          },
+          {
+            "id": "thieving_xp_5",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 40,
+            "race": "human"
+          }
+        ]
+      },
+      {
+        "key": "yield",
+        "nodes": [
+          {
+            "id": "thieving_yield_1",
+            "cost": 1,
+            "effect": "yield_pct",
+            "value": 5
+          },
+          {
+            "id": "thieving_yield_2",
+            "cost": 2,
+            "effect": "yield_pct",
+            "value": 10
+          },
+          {
+            "id": "thieving_yield_3",
+            "cost": 4,
+            "effect": "yield_pct",
+            "value": 25
+          }
+        ]
+      },
+      {
+        "key": "coin",
+        "nodes": [
+          {
+            "id": "thieving_coin_1",
+            "cost": 1,
+            "effect": "coin_pct",
+            "value": 5
+          },
+          {
+            "id": "thieving_coin_2",
+            "cost": 2,
+            "effect": "coin_pct",
+            "value": 10
+          },
+          {
+            "id": "thieving_coin_3",
+            "cost": 3,
+            "effect": "coin_pct",
+            "value": 20
+          }
+        ]
+      },
+      {
+        "key": "cape",
+        "nodes": [
+          {
+            "id": "thieving_cape_1",
+            "cost": 2,
+            "effect": "cape_scaling",
+            "value": 2
+          },
+          {
+            "id": "thieving_cape_2",
+            "cost": 3,
+            "effect": "cape_scaling",
+            "value": 3
+          },
+          {
+            "id": "thieving_cape_3",
+            "cost": 4,
+            "effect": "cape_scaling",
+            "value": 4
+          }
+        ]
+      },
+      {
+        "key": "race_elf",
+        "nodes": [
+          {
+            "id": "thieving_race_elf_1",
+            "cost": 3,
+            "effect": "success_chance_pct",
+            "value": 5,
+            "race": "elf"
+          },
+          {
+            "id": "thieving_race_elf_2",
+            "cost": 4,
+            "effect": "success_chance_pct",
+            "value": 10,
+            "race": "elf"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "smithing",
+    "paths": [
+      {
+        "key": "xp",
+        "nodes": [
+          {
+            "id": "smithing_xp_1",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 5
+          },
+          {
+            "id": "smithing_xp_2",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 10
+          },
+          {
+            "id": "smithing_xp_3",
+            "cost": 2,
+            "effect": "xp_pct",
+            "value": 20
+          },
+          {
+            "id": "smithing_xp_4",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 30
+          },
+          {
+            "id": "smithing_xp_5",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 40,
+            "race": "human"
+          }
+        ]
+      },
+      {
+        "key": "flow",
+        "nodes": [
+          {
+            "id": "smithing_flow_1",
+            "cost": 2,
+            "effect": "flow_rate",
+            "value": 2
+          },
+          {
+            "id": "smithing_flow_2",
+            "cost": 2,
+            "effect": "flow_rate",
+            "value": 2.5
+          },
+          {
+            "id": "smithing_flow_3",
+            "cost": 3,
+            "effect": "flow_rate",
+            "value": 3
+          },
+          {
+            "id": "smithing_flow_4",
+            "cost": 3,
+            "effect": "flow_interval_reduction",
+            "value": 10
+          },
+          {
+            "id": "smithing_flow_5",
+            "cost": 3,
+            "effect": "flow_interval_reduction",
+            "value": 20
+          }
+        ]
+      },
+      {
+        "key": "thrift",
+        "nodes": [
+          {
+            "id": "smithing_thrift_1",
+            "cost": 1,
+            "effect": "input_save_pct",
+            "value": 5
+          },
+          {
+            "id": "smithing_thrift_2",
+            "cost": 2,
+            "effect": "input_save_pct",
+            "value": 10
+          },
+          {
+            "id": "smithing_thrift_3",
+            "cost": 3,
+            "effect": "input_save_pct",
+            "value": 15
+          }
+        ]
+      },
+      {
+        "key": "cape",
+        "nodes": [
+          {
+            "id": "smithing_cape_1",
+            "cost": 2,
+            "effect": "cape_scaling",
+            "value": 2
+          },
+          {
+            "id": "smithing_cape_2",
+            "cost": 3,
+            "effect": "cape_scaling",
+            "value": 3
+          },
+          {
+            "id": "smithing_cape_3",
+            "cost": 4,
+            "effect": "cape_scaling",
+            "value": 4
+          }
+        ]
+      },
+      {
+        "key": "race_dwarf",
+        "nodes": [
+          {
+            "id": "smithing_race_dwarf_1",
+            "cost": 3,
+            "effect": "input_save_pct",
+            "value": 10,
+            "race": "dwarf"
+          },
+          {
+            "id": "smithing_race_dwarf_2",
+            "cost": 4,
+            "effect": "input_save_pct",
+            "value": 15,
+            "race": "dwarf"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "cooking",
+    "paths": [
+      {
+        "key": "xp",
+        "nodes": [
+          {
+            "id": "cooking_xp_1",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 5
+          },
+          {
+            "id": "cooking_xp_2",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 10
+          },
+          {
+            "id": "cooking_xp_3",
+            "cost": 2,
+            "effect": "xp_pct",
+            "value": 20
+          },
+          {
+            "id": "cooking_xp_4",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 30
+          },
+          {
+            "id": "cooking_xp_5",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 40,
+            "race": "human"
+          }
+        ]
+      },
+      {
+        "key": "flow",
+        "nodes": [
+          {
+            "id": "cooking_flow_1",
+            "cost": 2,
+            "effect": "flow_rate",
+            "value": 2
+          },
+          {
+            "id": "cooking_flow_2",
+            "cost": 2,
+            "effect": "flow_rate",
+            "value": 2.5
+          },
+          {
+            "id": "cooking_flow_3",
+            "cost": 3,
+            "effect": "flow_rate",
+            "value": 3
+          },
+          {
+            "id": "cooking_flow_4",
+            "cost": 3,
+            "effect": "flow_interval_reduction",
+            "value": 10
+          },
+          {
+            "id": "cooking_flow_5",
+            "cost": 3,
+            "effect": "flow_interval_reduction",
+            "value": 20
+          }
+        ]
+      },
+      {
+        "key": "hearty",
+        "nodes": [
+          {
+            "id": "cooking_hearty_1",
+            "cost": 1,
+            "effect": "heal_pct",
+            "value": 5
+          },
+          {
+            "id": "cooking_hearty_2",
+            "cost": 2,
+            "effect": "heal_pct",
+            "value": 10
+          },
+          {
+            "id": "cooking_hearty_3",
+            "cost": 3,
+            "effect": "heal_pct",
+            "value": 15
+          }
+        ]
+      },
+      {
+        "key": "cape",
+        "nodes": [
+          {
+            "id": "cooking_cape_1",
+            "cost": 2,
+            "effect": "cape_scaling",
+            "value": 2
+          },
+          {
+            "id": "cooking_cape_2",
+            "cost": 3,
+            "effect": "cape_scaling",
+            "value": 3
+          },
+          {
+            "id": "cooking_cape_3",
+            "cost": 4,
+            "effect": "cape_scaling",
+            "value": 4
+          }
+        ]
+      },
+      {
+        "key": "race_halfling",
+        "nodes": [
+          {
+            "id": "cooking_race_halfling_1",
+            "cost": 3,
+            "effect": "heal_pct",
+            "value": 10,
+            "race": "halfling"
+          },
+          {
+            "id": "cooking_race_halfling_2",
+            "cost": 4,
+            "effect": "heal_pct",
+            "value": 15,
+            "race": "halfling"
+          }
+        ]
+      },
+      {
+        "key": "race_orc",
+        "nodes": [
+          {
+            "id": "cooking_race_orc_1",
+            "cost": 3,
+            "effect": "yield_pct",
+            "value": 10,
+            "race": "orc"
+          },
+          {
+            "id": "cooking_race_orc_2",
+            "cost": 4,
+            "effect": "yield_pct",
+            "value": 15,
+            "race": "orc"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "fletching",
+    "paths": [
+      {
+        "key": "xp",
+        "nodes": [
+          {
+            "id": "fletching_xp_1",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 5
+          },
+          {
+            "id": "fletching_xp_2",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 10
+          },
+          {
+            "id": "fletching_xp_3",
+            "cost": 2,
+            "effect": "xp_pct",
+            "value": 20
+          },
+          {
+            "id": "fletching_xp_4",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 30
+          },
+          {
+            "id": "fletching_xp_5",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 40,
+            "race": "human"
+          }
+        ]
+      },
+      {
+        "key": "flow",
+        "nodes": [
+          {
+            "id": "fletching_flow_1",
+            "cost": 2,
+            "effect": "flow_rate",
+            "value": 2
+          },
+          {
+            "id": "fletching_flow_2",
+            "cost": 2,
+            "effect": "flow_rate",
+            "value": 2.5
+          },
+          {
+            "id": "fletching_flow_3",
+            "cost": 3,
+            "effect": "flow_rate",
+            "value": 3
+          },
+          {
+            "id": "fletching_flow_4",
+            "cost": 3,
+            "effect": "flow_interval_reduction",
+            "value": 10
+          },
+          {
+            "id": "fletching_flow_5",
+            "cost": 3,
+            "effect": "flow_interval_reduction",
+            "value": 20
+          }
+        ]
+      },
+      {
+        "key": "cape",
+        "nodes": [
+          {
+            "id": "fletching_cape_1",
+            "cost": 2,
+            "effect": "cape_scaling",
+            "value": 2
+          },
+          {
+            "id": "fletching_cape_2",
+            "cost": 3,
+            "effect": "cape_scaling",
+            "value": 3
+          },
+          {
+            "id": "fletching_cape_3",
+            "cost": 4,
+            "effect": "cape_scaling",
+            "value": 4
+          }
+        ]
+      },
+      {
+        "key": "race_gnome",
+        "nodes": [
+          {
+            "id": "fletching_race_gnome_1",
+            "cost": 3,
+            "effect": "reclaim_pct",
+            "value": 10,
+            "race": "gnome"
+          },
+          {
+            "id": "fletching_race_gnome_2",
+            "cost": 4,
+            "effect": "reclaim_pct",
+            "value": 20,
+            "race": "gnome"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "crafting",
+    "paths": [
+      {
+        "key": "xp",
+        "nodes": [
+          {
+            "id": "crafting_xp_1",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 5
+          },
+          {
+            "id": "crafting_xp_2",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 10
+          },
+          {
+            "id": "crafting_xp_3",
+            "cost": 2,
+            "effect": "xp_pct",
+            "value": 20
+          },
+          {
+            "id": "crafting_xp_4",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 30
+          },
+          {
+            "id": "crafting_xp_5",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 40,
+            "race": "human"
+          }
+        ]
+      },
+      {
+        "key": "flow",
+        "nodes": [
+          {
+            "id": "crafting_flow_1",
+            "cost": 2,
+            "effect": "flow_rate",
+            "value": 2
+          },
+          {
+            "id": "crafting_flow_2",
+            "cost": 2,
+            "effect": "flow_rate",
+            "value": 2.5
+          },
+          {
+            "id": "crafting_flow_3",
+            "cost": 3,
+            "effect": "flow_rate",
+            "value": 3
+          },
+          {
+            "id": "crafting_flow_4",
+            "cost": 3,
+            "effect": "flow_interval_reduction",
+            "value": 10
+          },
+          {
+            "id": "crafting_flow_5",
+            "cost": 3,
+            "effect": "flow_interval_reduction",
+            "value": 20
+          }
+        ]
+      },
+      {
+        "key": "thrift",
+        "nodes": [
+          {
+            "id": "crafting_thrift_1",
+            "cost": 1,
+            "effect": "input_save_pct",
+            "value": 5
+          },
+          {
+            "id": "crafting_thrift_2",
+            "cost": 2,
+            "effect": "input_save_pct",
+            "value": 10
+          },
+          {
+            "id": "crafting_thrift_3",
+            "cost": 3,
+            "effect": "input_save_pct",
+            "value": 15
+          }
+        ]
+      },
+      {
+        "key": "cape",
+        "nodes": [
+          {
+            "id": "crafting_cape_1",
+            "cost": 2,
+            "effect": "cape_scaling",
+            "value": 2
+          },
+          {
+            "id": "crafting_cape_2",
+            "cost": 3,
+            "effect": "cape_scaling",
+            "value": 3
+          },
+          {
+            "id": "crafting_cape_3",
+            "cost": 4,
+            "effect": "cape_scaling",
+            "value": 4
+          }
+        ]
+      },
+      {
+        "key": "race_elf",
+        "nodes": [
+          {
+            "id": "crafting_race_elf_1",
+            "cost": 3,
+            "effect": "input_save_pct",
+            "value": 10,
+            "race": "elf"
+          },
+          {
+            "id": "crafting_race_elf_2",
+            "cost": 4,
+            "effect": "input_save_pct",
+            "value": 15,
+            "race": "elf"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "firemaking",
+    "paths": [
+      {
+        "key": "xp",
+        "nodes": [
+          {
+            "id": "firemaking_xp_1",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 5
+          },
+          {
+            "id": "firemaking_xp_2",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 10
+          },
+          {
+            "id": "firemaking_xp_3",
+            "cost": 2,
+            "effect": "xp_pct",
+            "value": 20
+          },
+          {
+            "id": "firemaking_xp_4",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 30
+          },
+          {
+            "id": "firemaking_xp_5",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 40,
+            "race": "human"
+          }
+        ]
+      },
+      {
+        "key": "flow",
+        "nodes": [
+          {
+            "id": "firemaking_flow_1",
+            "cost": 2,
+            "effect": "flow_rate",
+            "value": 2
+          },
+          {
+            "id": "firemaking_flow_2",
+            "cost": 2,
+            "effect": "flow_rate",
+            "value": 2.5
+          },
+          {
+            "id": "firemaking_flow_3",
+            "cost": 3,
+            "effect": "flow_rate",
+            "value": 3
+          },
+          {
+            "id": "firemaking_flow_4",
+            "cost": 3,
+            "effect": "flow_interval_reduction",
+            "value": 10
+          },
+          {
+            "id": "firemaking_flow_5",
+            "cost": 3,
+            "effect": "flow_interval_reduction",
+            "value": 20
+          }
+        ]
+      },
+      {
+        "key": "cape",
+        "nodes": [
+          {
+            "id": "firemaking_cape_1",
+            "cost": 2,
+            "effect": "cape_scaling",
+            "value": 2
+          },
+          {
+            "id": "firemaking_cape_2",
+            "cost": 3,
+            "effect": "cape_scaling",
+            "value": 3
+          },
+          {
+            "id": "firemaking_cape_3",
+            "cost": 4,
+            "effect": "cape_scaling",
+            "value": 4
+          }
+        ]
+      },
+      {
+        "key": "race_dwarf",
+        "nodes": [
+          {
+            "id": "firemaking_race_dwarf_1",
+            "cost": 3,
+            "effect": "flow_rate",
+            "value": 1,
+            "race": "dwarf"
+          },
+          {
+            "id": "firemaking_race_dwarf_2",
+            "cost": 4,
+            "effect": "flow_interval_reduction",
+            "value": 10,
+            "race": "dwarf"
+          }
+        ]
+      },
+      {
+        "key": "race_gnome",
+        "nodes": [
+          {
+            "id": "firemaking_race_gnome_1",
+            "cost": 3,
+            "effect": "flow_rate",
+            "value": 1,
+            "race": "gnome"
+          },
+          {
+            "id": "firemaking_race_gnome_2",
+            "cost": 4,
+            "effect": "flow_interval_reduction",
+            "value": 10,
+            "race": "gnome"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "runecrafting",
+    "paths": [
+      {
+        "key": "xp",
+        "nodes": [
+          {
+            "id": "runecrafting_xp_1",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 5
+          },
+          {
+            "id": "runecrafting_xp_2",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 10
+          },
+          {
+            "id": "runecrafting_xp_3",
+            "cost": 2,
+            "effect": "xp_pct",
+            "value": 20
+          },
+          {
+            "id": "runecrafting_xp_4",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 30
+          },
+          {
+            "id": "runecrafting_xp_5",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 40,
+            "race": "human"
+          }
+        ]
+      },
+      {
+        "key": "flow",
+        "nodes": [
+          {
+            "id": "runecrafting_flow_1",
+            "cost": 2,
+            "effect": "flow_rate",
+            "value": 2
+          },
+          {
+            "id": "runecrafting_flow_2",
+            "cost": 2,
+            "effect": "flow_rate",
+            "value": 2.5
+          },
+          {
+            "id": "runecrafting_flow_3",
+            "cost": 3,
+            "effect": "flow_rate",
+            "value": 3
+          },
+          {
+            "id": "runecrafting_flow_4",
+            "cost": 3,
+            "effect": "flow_interval_reduction",
+            "value": 10
+          },
+          {
+            "id": "runecrafting_flow_5",
+            "cost": 3,
+            "effect": "flow_interval_reduction",
+            "value": 20
+          }
+        ]
+      },
+      {
+        "key": "runethrift",
+        "nodes": [
+          {
+            "id": "runecrafting_runethrift_1",
+            "cost": 1,
+            "effect": "reclaim_pct",
+            "value": 5
+          },
+          {
+            "id": "runecrafting_runethrift_2",
+            "cost": 2,
+            "effect": "reclaim_pct",
+            "value": 10
+          },
+          {
+            "id": "runecrafting_runethrift_3",
+            "cost": 3,
+            "effect": "reclaim_pct",
+            "value": 15
+          }
+        ]
+      },
+      {
+        "key": "cape",
+        "nodes": [
+          {
+            "id": "runecrafting_cape_1",
+            "cost": 2,
+            "effect": "cape_scaling",
+            "value": 2
+          },
+          {
+            "id": "runecrafting_cape_2",
+            "cost": 3,
+            "effect": "cape_scaling",
+            "value": 3
+          },
+          {
+            "id": "runecrafting_cape_3",
+            "cost": 4,
+            "effect": "cape_scaling",
+            "value": 4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "herblore",
+    "paths": [
+      {
+        "key": "xp",
+        "nodes": [
+          {
+            "id": "herblore_xp_1",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 5
+          },
+          {
+            "id": "herblore_xp_2",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 10
+          },
+          {
+            "id": "herblore_xp_3",
+            "cost": 2,
+            "effect": "xp_pct",
+            "value": 20
+          },
+          {
+            "id": "herblore_xp_4",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 30
+          },
+          {
+            "id": "herblore_xp_5",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 40,
+            "race": "human"
+          }
+        ]
+      },
+      {
+        "key": "flow",
+        "nodes": [
+          {
+            "id": "herblore_flow_1",
+            "cost": 2,
+            "effect": "flow_rate",
+            "value": 2
+          },
+          {
+            "id": "herblore_flow_2",
+            "cost": 2,
+            "effect": "flow_rate",
+            "value": 2.5
+          },
+          {
+            "id": "herblore_flow_3",
+            "cost": 3,
+            "effect": "flow_rate",
+            "value": 3
+          },
+          {
+            "id": "herblore_flow_4",
+            "cost": 3,
+            "effect": "flow_interval_reduction",
+            "value": 10
+          },
+          {
+            "id": "herblore_flow_5",
+            "cost": 3,
+            "effect": "flow_interval_reduction",
+            "value": 20
+          }
+        ]
+      },
+      {
+        "key": "potency",
+        "nodes": [
+          {
+            "id": "herblore_potency_1",
+            "cost": 1,
+            "effect": "potion_bonus_flat",
+            "value": 1
+          },
+          {
+            "id": "herblore_potency_2",
+            "cost": 2,
+            "effect": "potion_bonus_flat",
+            "value": 2
+          },
+          {
+            "id": "herblore_potency_3",
+            "cost": 3,
+            "effect": "potion_bonus_flat",
+            "value": 3
+          }
+        ]
+      },
+      {
+        "key": "cape",
+        "nodes": [
+          {
+            "id": "herblore_cape_1",
+            "cost": 2,
+            "effect": "cape_scaling",
+            "value": 2
+          },
+          {
+            "id": "herblore_cape_2",
+            "cost": 3,
+            "effect": "cape_scaling",
+            "value": 3
+          },
+          {
+            "id": "herblore_cape_3",
+            "cost": 4,
+            "effect": "cape_scaling",
+            "value": 4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "construction",
+    "paths": [
+      {
+        "key": "xp",
+        "nodes": [
+          {
+            "id": "construction_xp_1",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 5
+          },
+          {
+            "id": "construction_xp_2",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 10
+          },
+          {
+            "id": "construction_xp_3",
+            "cost": 2,
+            "effect": "xp_pct",
+            "value": 20
+          },
+          {
+            "id": "construction_xp_4",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 30
+          },
+          {
+            "id": "construction_xp_5",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 40,
+            "race": "human"
+          }
+        ]
+      },
+      {
+        "key": "flow",
+        "nodes": [
+          {
+            "id": "construction_flow_1",
+            "cost": 2,
+            "effect": "flow_rate",
+            "value": 2
+          },
+          {
+            "id": "construction_flow_2",
+            "cost": 2,
+            "effect": "flow_rate",
+            "value": 2.5
+          },
+          {
+            "id": "construction_flow_3",
+            "cost": 3,
+            "effect": "flow_rate",
+            "value": 3
+          },
+          {
+            "id": "construction_flow_4",
+            "cost": 3,
+            "effect": "flow_interval_reduction",
+            "value": 10
+          },
+          {
+            "id": "construction_flow_5",
+            "cost": 3,
+            "effect": "flow_interval_reduction",
+            "value": 20
+          }
+        ]
+      },
+      {
+        "key": "efficient",
+        "nodes": [
+          {
+            "id": "construction_efficient_1",
+            "cost": 1,
+            "effect": "builder_discount_pct",
+            "value": 2
+          },
+          {
+            "id": "construction_efficient_2",
+            "cost": 2,
+            "effect": "builder_discount_pct",
+            "value": 4
+          },
+          {
+            "id": "construction_efficient_3",
+            "cost": 3,
+            "effect": "builder_discount_pct",
+            "value": 6
+          }
+        ]
+      },
+      {
+        "key": "cape",
+        "nodes": [
+          {
+            "id": "construction_cape_1",
+            "cost": 2,
+            "effect": "cape_scaling",
+            "value": 2
+          },
+          {
+            "id": "construction_cape_2",
+            "cost": 3,
+            "effect": "cape_scaling",
+            "value": 3
+          },
+          {
+            "id": "construction_cape_3",
+            "cost": 4,
+            "effect": "cape_scaling",
+            "value": 4
+          }
+        ]
+      },
+      {
+        "key": "race_dwarf",
+        "nodes": [
+          {
+            "id": "construction_race_dwarf_1",
+            "cost": 3,
+            "effect": "builder_discount_pct",
+            "value": 3,
+            "race": "dwarf"
+          },
+          {
+            "id": "construction_race_dwarf_2",
+            "cost": 4,
+            "effect": "builder_discount_pct",
+            "value": 6,
+            "race": "dwarf"
+          }
+        ]
+      },
+      {
+        "key": "race_halfling",
+        "nodes": [
+          {
+            "id": "construction_race_halfling_1",
+            "cost": 3,
+            "effect": "input_save_pct",
+            "value": 10,
+            "race": "halfling"
+          },
+          {
+            "id": "construction_race_halfling_2",
+            "cost": 4,
+            "effect": "input_save_pct",
+            "value": 15,
+            "race": "halfling"
+          }
+        ]
+      },
+      {
+        "key": "race_gnome",
+        "nodes": [
+          {
+            "id": "construction_race_gnome_1",
+            "cost": 3,
+            "effect": "builder_discount_pct",
+            "value": 2,
+            "race": "gnome"
+          },
+          {
+            "id": "construction_race_gnome_2",
+            "cost": 5,
+            "effect": "queue_slot",
+            "value": 1,
+            "race": "gnome"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "attack",
+    "paths": [
+      {
+        "key": "xp",
+        "nodes": [
+          {
+            "id": "attack_xp_1",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 5
+          },
+          {
+            "id": "attack_xp_2",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 10
+          },
+          {
+            "id": "attack_xp_3",
+            "cost": 2,
+            "effect": "xp_pct",
+            "value": 20
+          },
+          {
+            "id": "attack_xp_4",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 30
+          },
+          {
+            "id": "attack_xp_5",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 40,
+            "race": "human"
+          }
+        ]
+      },
+      {
+        "key": "prowess",
+        "nodes": [
+          {
+            "id": "attack_prowess_1",
+            "cost": 1,
+            "effect": "combat_stat_flat",
+            "value": 4
+          },
+          {
+            "id": "attack_prowess_2",
+            "cost": 2,
+            "effect": "combat_stat_flat",
+            "value": 9
+          },
+          {
+            "id": "attack_prowess_3",
+            "cost": 3,
+            "effect": "combat_stat_flat",
+            "value": 15
+          }
+        ]
+      },
+      {
+        "key": "race_orc",
+        "nodes": [
+          {
+            "id": "attack_race_orc_1",
+            "cost": 3,
+            "effect": "combat_stat_flat",
+            "value": 3,
+            "race": "orc"
+          },
+          {
+            "id": "attack_race_orc_2",
+            "cost": 4,
+            "effect": "combat_stat_flat",
+            "value": 8,
+            "race": "orc"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "strength",
+    "paths": [
+      {
+        "key": "xp",
+        "nodes": [
+          {
+            "id": "strength_xp_1",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 5
+          },
+          {
+            "id": "strength_xp_2",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 10
+          },
+          {
+            "id": "strength_xp_3",
+            "cost": 2,
+            "effect": "xp_pct",
+            "value": 20
+          },
+          {
+            "id": "strength_xp_4",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 30
+          },
+          {
+            "id": "strength_xp_5",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 40,
+            "race": "human"
+          }
+        ]
+      },
+      {
+        "key": "prowess",
+        "nodes": [
+          {
+            "id": "strength_prowess_1",
+            "cost": 1,
+            "effect": "combat_stat_flat",
+            "value": 4
+          },
+          {
+            "id": "strength_prowess_2",
+            "cost": 2,
+            "effect": "combat_stat_flat",
+            "value": 9
+          },
+          {
+            "id": "strength_prowess_3",
+            "cost": 3,
+            "effect": "combat_stat_flat",
+            "value": 15
+          }
+        ]
+      },
+      {
+        "key": "race_orc",
+        "nodes": [
+          {
+            "id": "strength_race_orc_1",
+            "cost": 3,
+            "effect": "combat_stat_flat",
+            "value": 3,
+            "race": "orc"
+          },
+          {
+            "id": "strength_race_orc_2",
+            "cost": 4,
+            "effect": "combat_stat_flat",
+            "value": 8,
+            "race": "orc"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "defense",
+    "paths": [
+      {
+        "key": "xp",
+        "nodes": [
+          {
+            "id": "defense_xp_1",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 5
+          },
+          {
+            "id": "defense_xp_2",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 10
+          },
+          {
+            "id": "defense_xp_3",
+            "cost": 2,
+            "effect": "xp_pct",
+            "value": 20
+          },
+          {
+            "id": "defense_xp_4",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 30
+          },
+          {
+            "id": "defense_xp_5",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 40,
+            "race": "human"
+          }
+        ]
+      },
+      {
+        "key": "prowess",
+        "nodes": [
+          {
+            "id": "defense_prowess_1",
+            "cost": 1,
+            "effect": "combat_stat_flat",
+            "value": 4
+          },
+          {
+            "id": "defense_prowess_2",
+            "cost": 2,
+            "effect": "combat_stat_flat",
+            "value": 9
+          },
+          {
+            "id": "defense_prowess_3",
+            "cost": 3,
+            "effect": "combat_stat_flat",
+            "value": 15
+          }
+        ]
+      },
+      {
+        "key": "laststand",
+        "nodes": [
+          {
+            "id": "defense_laststand_1",
+            "cost": 1,
+            "effect": "death_keep_pct",
+            "value": 10
+          },
+          {
+            "id": "defense_laststand_2",
+            "cost": 2,
+            "effect": "death_keep_pct",
+            "value": 20
+          },
+          {
+            "id": "defense_laststand_3",
+            "cost": 3,
+            "effect": "death_keep_pct",
+            "value": 30
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "ranged",
+    "paths": [
+      {
+        "key": "xp",
+        "nodes": [
+          {
+            "id": "ranged_xp_1",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 5
+          },
+          {
+            "id": "ranged_xp_2",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 10
+          },
+          {
+            "id": "ranged_xp_3",
+            "cost": 2,
+            "effect": "xp_pct",
+            "value": 20
+          },
+          {
+            "id": "ranged_xp_4",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 30
+          },
+          {
+            "id": "ranged_xp_5",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 40,
+            "race": "human"
+          }
+        ]
+      },
+      {
+        "key": "prowess",
+        "nodes": [
+          {
+            "id": "ranged_prowess_1",
+            "cost": 1,
+            "effect": "combat_stat_flat",
+            "value": 4
+          },
+          {
+            "id": "ranged_prowess_2",
+            "cost": 2,
+            "effect": "combat_stat_flat",
+            "value": 9
+          },
+          {
+            "id": "ranged_prowess_3",
+            "cost": 3,
+            "effect": "combat_stat_flat",
+            "value": 15
+          }
+        ]
+      },
+      {
+        "key": "quiver",
+        "nodes": [
+          {
+            "id": "ranged_quiver_1",
+            "cost": 1,
+            "effect": "reclaim_pct",
+            "value": 5
+          },
+          {
+            "id": "ranged_quiver_2",
+            "cost": 2,
+            "effect": "reclaim_pct",
+            "value": 10
+          },
+          {
+            "id": "ranged_quiver_3",
+            "cost": 3,
+            "effect": "reclaim_pct",
+            "value": 15
+          }
+        ]
+      },
+      {
+        "key": "race_elf",
+        "nodes": [
+          {
+            "id": "ranged_race_elf_1",
+            "cost": 3,
+            "effect": "reclaim_pct",
+            "value": 10,
+            "race": "elf"
+          },
+          {
+            "id": "ranged_race_elf_2",
+            "cost": 4,
+            "effect": "reclaim_pct",
+            "value": 20,
+            "race": "elf"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "magic",
+    "paths": [
+      {
+        "key": "xp",
+        "nodes": [
+          {
+            "id": "magic_xp_1",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 5
+          },
+          {
+            "id": "magic_xp_2",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 10
+          },
+          {
+            "id": "magic_xp_3",
+            "cost": 2,
+            "effect": "xp_pct",
+            "value": 20
+          },
+          {
+            "id": "magic_xp_4",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 30
+          },
+          {
+            "id": "magic_xp_5",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 40,
+            "race": "human"
+          }
+        ]
+      },
+      {
+        "key": "prowess",
+        "nodes": [
+          {
+            "id": "magic_prowess_1",
+            "cost": 1,
+            "effect": "combat_stat_flat",
+            "value": 4
+          },
+          {
+            "id": "magic_prowess_2",
+            "cost": 2,
+            "effect": "combat_stat_flat",
+            "value": 9
+          },
+          {
+            "id": "magic_prowess_3",
+            "cost": 3,
+            "effect": "combat_stat_flat",
+            "value": 15
+          }
+        ]
+      },
+      {
+        "key": "runethrift",
+        "nodes": [
+          {
+            "id": "magic_runethrift_1",
+            "cost": 1,
+            "effect": "reclaim_pct",
+            "value": 5
+          },
+          {
+            "id": "magic_runethrift_2",
+            "cost": 2,
+            "effect": "reclaim_pct",
+            "value": 10
+          },
+          {
+            "id": "magic_runethrift_3",
+            "cost": 3,
+            "effect": "reclaim_pct",
+            "value": 15
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "hitpoints",
+    "paths": [
+      {
+        "key": "xp",
+        "nodes": [
+          {
+            "id": "hitpoints_xp_1",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 5
+          },
+          {
+            "id": "hitpoints_xp_2",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 10
+          },
+          {
+            "id": "hitpoints_xp_3",
+            "cost": 2,
+            "effect": "xp_pct",
+            "value": 20
+          },
+          {
+            "id": "hitpoints_xp_4",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 30
+          },
+          {
+            "id": "hitpoints_xp_5",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 40,
+            "race": "human"
+          }
+        ]
+      },
+      {
+        "key": "prowess",
+        "nodes": [
+          {
+            "id": "hitpoints_prowess_1",
+            "cost": 1,
+            "effect": "combat_stat_flat",
+            "value": 4
+          },
+          {
+            "id": "hitpoints_prowess_2",
+            "cost": 2,
+            "effect": "combat_stat_flat",
+            "value": 9
+          },
+          {
+            "id": "hitpoints_prowess_3",
+            "cost": 3,
+            "effect": "combat_stat_flat",
+            "value": 15
+          }
+        ]
+      },
+      {
+        "key": "constitution",
+        "nodes": [
+          {
+            "id": "hitpoints_constitution_1",
+            "cost": 1,
+            "effect": "heal_pct",
+            "value": 5
+          },
+          {
+            "id": "hitpoints_constitution_2",
+            "cost": 2,
+            "effect": "heal_pct",
+            "value": 10
+          },
+          {
+            "id": "hitpoints_constitution_3",
+            "cost": 3,
+            "effect": "heal_pct",
+            "value": 15
+          }
+        ]
+      },
+      {
+        "key": "race_orc",
+        "nodes": [
+          {
+            "id": "hitpoints_race_orc_1",
+            "cost": 3,
+            "effect": "death_keep_pct",
+            "value": 15,
+            "race": "orc"
+          },
+          {
+            "id": "hitpoints_race_orc_2",
+            "cost": 4,
+            "effect": "death_keep_pct",
+            "value": 30,
+            "race": "orc"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "prayer",
+    "paths": [
+      {
+        "key": "xp",
+        "nodes": [
+          {
+            "id": "prayer_xp_1",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 5
+          },
+          {
+            "id": "prayer_xp_2",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 10
+          },
+          {
+            "id": "prayer_xp_3",
+            "cost": 2,
+            "effect": "xp_pct",
+            "value": 20
+          },
+          {
+            "id": "prayer_xp_4",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 30
+          },
+          {
+            "id": "prayer_xp_5",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 40,
+            "race": "human"
+          }
+        ]
+      },
+      {
+        "key": "devotion",
+        "nodes": [
+          {
+            "id": "prayer_devotion_1",
+            "cost": 1,
+            "effect": "blessing_duration_pct",
+            "value": 10
+          },
+          {
+            "id": "prayer_devotion_2",
+            "cost": 2,
+            "effect": "blessing_duration_pct",
+            "value": 20
+          },
+          {
+            "id": "prayer_devotion_3",
+            "cost": 3,
+            "effect": "blessing_duration_pct",
+            "value": 30
+          }
+        ]
+      },
+      {
+        "key": "cape",
+        "nodes": [
+          {
+            "id": "prayer_cape_1",
+            "cost": 2,
+            "effect": "cape_scaling",
+            "value": 2
+          },
+          {
+            "id": "prayer_cape_2",
+            "cost": 3,
+            "effect": "cape_scaling",
+            "value": 3
+          },
+          {
+            "id": "prayer_cape_3",
+            "cost": 4,
+            "effect": "cape_scaling",
+            "value": 4
+          }
+        ]
+      },
+      {
+        "key": "race_elf",
+        "nodes": [
+          {
+            "id": "prayer_race_elf_1",
+            "cost": 3,
+            "effect": "blessing_duration_pct",
+            "value": 15,
+            "race": "elf"
+          },
+          {
+            "id": "prayer_race_elf_2",
+            "cost": 4,
+            "effect": "blessing_duration_pct",
+            "value": 25,
+            "race": "elf"
+          }
+        ]
+      },
+      {
+        "key": "race_gnome",
+        "nodes": [
+          {
+            "id": "prayer_race_gnome_1",
+            "cost": 3,
+            "effect": "blessing_cost_pct",
+            "value": 10,
+            "race": "gnome"
+          },
+          {
+            "id": "prayer_race_gnome_2",
+            "cost": 4,
+            "effect": "blessing_cost_pct",
+            "value": 20,
+            "race": "gnome"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "mercantile",
+    "paths": [
+      {
+        "key": "xp",
+        "nodes": [
+          {
+            "id": "mercantile_xp_1",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 5
+          },
+          {
+            "id": "mercantile_xp_2",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 10
+          },
+          {
+            "id": "mercantile_xp_3",
+            "cost": 2,
+            "effect": "xp_pct",
+            "value": 20
+          },
+          {
+            "id": "mercantile_xp_4",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 30
+          },
+          {
+            "id": "mercantile_xp_5",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 40,
+            "race": "human"
+          }
+        ]
+      },
+      {
+        "key": "coin",
+        "nodes": [
+          {
+            "id": "mercantile_coin_1",
+            "cost": 1,
+            "effect": "coin_pct",
+            "value": 5
+          },
+          {
+            "id": "mercantile_coin_2",
+            "cost": 2,
+            "effect": "coin_pct",
+            "value": 10
+          },
+          {
+            "id": "mercantile_coin_3",
+            "cost": 3,
+            "effect": "coin_pct",
+            "value": 20
+          }
+        ]
+      },
+      {
+        "key": "trade",
+        "nodes": [
+          {
+            "id": "mercantile_trade_1",
+            "cost": 1,
+            "effect": "sell_price_pct",
+            "value": 2
+          },
+          {
+            "id": "mercantile_trade_2",
+            "cost": 2,
+            "effect": "sell_price_pct",
+            "value": 4
+          },
+          {
+            "id": "mercantile_trade_3",
+            "cost": 3,
+            "effect": "sell_price_pct",
+            "value": 6
+          }
+        ]
+      },
+      {
+        "key": "cape",
+        "nodes": [
+          {
+            "id": "mercantile_cape_1",
+            "cost": 2,
+            "effect": "cape_scaling",
+            "value": 2
+          },
+          {
+            "id": "mercantile_cape_2",
+            "cost": 3,
+            "effect": "cape_scaling",
+            "value": 3
+          },
+          {
+            "id": "mercantile_cape_3",
+            "cost": 4,
+            "effect": "cape_scaling",
+            "value": 4
+          }
+        ]
+      },
+      {
+        "key": "race_dwarf",
+        "nodes": [
+          {
+            "id": "mercantile_race_dwarf_1",
+            "cost": 3,
+            "effect": "sell_price_pct",
+            "value": 3,
+            "race": "dwarf"
+          },
+          {
+            "id": "mercantile_race_dwarf_2",
+            "cost": 4,
+            "effect": "sell_price_pct",
+            "value": 6,
+            "race": "dwarf"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "slayer",
+    "paths": [
+      {
+        "key": "xp",
+        "nodes": [
+          {
+            "id": "slayer_xp_1",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 5
+          },
+          {
+            "id": "slayer_xp_2",
+            "cost": 1,
+            "effect": "xp_pct",
+            "value": 10
+          },
+          {
+            "id": "slayer_xp_3",
+            "cost": 2,
+            "effect": "xp_pct",
+            "value": 20
+          },
+          {
+            "id": "slayer_xp_4",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 30
+          },
+          {
+            "id": "slayer_xp_5",
+            "cost": 4,
+            "effect": "xp_pct",
+            "value": 40,
+            "race": "human"
+          }
+        ]
+      },
+      {
+        "key": "yield",
+        "nodes": [
+          {
+            "id": "slayer_yield_1",
+            "cost": 1,
+            "effect": "yield_pct",
+            "value": 5
+          },
+          {
+            "id": "slayer_yield_2",
+            "cost": 2,
+            "effect": "yield_pct",
+            "value": 10
+          },
+          {
+            "id": "slayer_yield_3",
+            "cost": 4,
+            "effect": "yield_pct",
+            "value": 25
+          }
+        ]
+      },
+      {
+        "key": "bounty",
+        "nodes": [
+          {
+            "id": "slayer_bounty_1",
+            "cost": 1,
+            "effect": "slayer_points_pct",
+            "value": 10
+          },
+          {
+            "id": "slayer_bounty_2",
+            "cost": 2,
+            "effect": "slayer_points_pct",
+            "value": 20
+          },
+          {
+            "id": "slayer_bounty_3",
+            "cost": 3,
+            "effect": "slayer_points_pct",
+            "value": 30
+          }
+        ]
+      },
+      {
+        "key": "race_orc",
+        "nodes": [
+          {
+            "id": "slayer_race_orc_1",
+            "cost": 3,
+            "effect": "slayer_points_pct",
+            "value": 15,
+            "race": "orc"
+          },
+          {
+            "id": "slayer_race_orc_2",
+            "cost": 4,
+            "effect": "slayer_points_pct",
+            "value": 30,
+            "race": "orc"
+          }
+        ]
+      }
+    ]
+  }
+]

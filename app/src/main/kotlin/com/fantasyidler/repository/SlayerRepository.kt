@@ -16,6 +16,7 @@ sealed class ForetelResult {
 
 @Singleton
 class SlayerRepository @Inject constructor(
+    private val boostRepo: BoostRepository,
     private val playerRepo: PlayerRepository,
     private val questRepo: QuestRepository,
     private val gameData: GameDataRepository,
@@ -169,7 +170,7 @@ class SlayerRepository @Inject constructor(
         val equippedCape   = playerRepo.getEquipped()[EquipSlot.CAPE]?.let { gameData.equipment[it] }
         val capeMult       = resolveCapeMultiplier(
             Skills.SLAYER, equippedCape, playerRepo.getInventory().keys,
-            flags.townBuildingTiers, flags.skillPrestige, gameData.equipment, flags.ironman,
+            flags.townBuildingTiers, boostRepo.capeScalingBySkill(flags), gameData.equipment, flags.ironman,
         )
         val xpEarned       = (added.toLong() * task.xpPerKill * capeMult).toLong()
         val newCompleted   = task.killsCompleted + added
@@ -182,7 +183,8 @@ class SlayerRepository @Inject constructor(
                 freshFlags.copy(
                     activeSlayerTask = nextTask,
                     foretelledTasks  = if (nextTask != null) freshFlags.foretelledTasks.drop(1) else freshFlags.foretelledTasks,
-                    slayerPoints     = freshFlags.slayerPoints + task.taskPoints,
+                    slayerPoints     = freshFlags.slayerPoints +
+                        (task.taskPoints * boostRepo.slayerPointsMultiplier(freshFlags)).toInt(),
                 )
             )
             questRepo.recordSlayerTaskCompleted()

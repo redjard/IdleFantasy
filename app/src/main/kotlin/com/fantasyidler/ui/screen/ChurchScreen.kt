@@ -69,7 +69,7 @@ fun ChurchScreen(
                 "blessing_${blessing.key}_name", "string", context.packageName,
             )
             val name      = if (nameResId != 0) stringResource(nameResId) else blessing.key
-            val cost      = ChurchRepository.boneCostFor(blessing)
+            val cost      = ChurchRepository.discountedBoneCost(blessing, state.blessingCostMult)
             val hasEnough = state.totalBoneEquivalent >= cost
             AlertDialog(
                 onDismissRequest = viewModel::dismissConfirm,
@@ -210,7 +210,7 @@ fun ChurchScreen(
                         isUnlocked        = blessing.key in state.unlockedBlessingKeys,
                         isActive          = blessing.key == state.activeBlessing?.key && state.activeBlessingRemainingMs > 0,
                         anyBlessingActive = anyBlessingActive,
-                        boneCost          = ChurchRepository.boneCostFor(blessing),
+                        boneCost          = ChurchRepository.discountedBoneCost(blessing, state.blessingCostMult),
                         blessingTimeMs    = state.blessingDuration,
                         onActivate        = { viewModel.activateBlessing(blessing.key) },
                     )

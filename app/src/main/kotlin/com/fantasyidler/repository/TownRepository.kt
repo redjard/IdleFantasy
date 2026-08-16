@@ -18,6 +18,7 @@ class TownRepository @Inject constructor(
     private val gameData: GameDataRepository,
     private val playerRepo: PlayerRepository,
     private val questRepo: QuestRepository,
+    private val boostRepo: BoostRepository,
 ) {
 
     companion object {
@@ -26,23 +27,23 @@ class TownRepository @Inject constructor(
          * (49.5% at 99). Integer per-mille math so the transaction, the card display, and the
          * tests all agree exactly, with no float rounding drift.
          */
-        fun builderDiscountPerMille(constructionLevel: Int): Int =
-            (constructionLevel.coerceAtLeast(0) * 5).coerceAtMost(495)
+        fun builderDiscountPerMille(constructionLevel: Int, extraPerMille: Int = 0): Int =
+            ((constructionLevel.coerceAtLeast(0) * 5).coerceAtMost(495) + extraPerMille).coerceAtMost(750)
 
-        fun builderDiscount(constructionLevel: Int): Float =
-            builderDiscountPerMille(constructionLevel) / 1000f
+        fun builderDiscount(constructionLevel: Int, extraPerMille: Int = 0): Float =
+            builderDiscountPerMille(constructionLevel, extraPerMille) / 1000f
 
-        fun discountedCoins(cost: Long, constructionLevel: Int): Long =
-            cost * (1000 - builderDiscountPerMille(constructionLevel)) / 1000
+        fun discountedCoins(cost: Long, constructionLevel: Int, extraPerMille: Int = 0): Long =
+            cost * (1000 - builderDiscountPerMille(constructionLevel, extraPerMille)) / 1000
 
         /** Rounds up, and a required material never discounts below one. */
-        fun discountedQty(qty: Int, constructionLevel: Int): Int {
-            val remainingPerMille = qty.toLong() * (1000 - builderDiscountPerMille(constructionLevel))
+        fun discountedQty(qty: Int, constructionLevel: Int, extraPerMille: Int = 0): Int {
+            val remainingPerMille = qty.toLong() * (1000 - builderDiscountPerMille(constructionLevel, extraPerMille))
             return ((remainingPerMille + 999) / 1000).toInt().coerceAtLeast(1)
         }
 
-        fun discountedMaterials(materials: Map<String, Int>, constructionLevel: Int): Map<String, Int> =
-            materials.mapValues { (_, qty) -> discountedQty(qty, constructionLevel) }
+        fun discountedMaterials(materials: Map<String, Int>, constructionLevel: Int, extraPerMille: Int = 0): Map<String, Int> =
+            materials.mapValues { (_, qty) -> discountedQty(qty, constructionLevel, extraPerMille) }
     }
 
     // -------------------------------------------------------------------------
@@ -215,8 +216,9 @@ class TownRepository @Inject constructor(
             return@withLock UpgradeBuildingResult.InsufficientLevel
         }
 
-        val coinCost  = discountedCoins(tierDef.coinCost, constructionLevel)
-        val materials = discountedMaterials(tierDef.materials, constructionLevel)
+        val prestigePerMille = boostRepo.builderDiscountPerMille(playerRepo.getFlagsUnlocked())
+        val coinCost  = discountedCoins(tierDef.coinCost, constructionLevel, prestigePerMille)
+        val materials = discountedMaterials(tierDef.materials, constructionLevel, prestigePerMille)
 
         if (player.coins < coinCost) return@withLock UpgradeBuildingResult.InsufficientCoins
 

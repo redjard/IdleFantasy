@@ -50,6 +50,7 @@ import com.fantasyidler.ui.screen.CombatScreen
 import com.fantasyidler.ui.screen.FarmingScreen
 import com.fantasyidler.ui.screen.GuildDetailScreen
 import com.fantasyidler.ui.screen.GuildHallScreen
+import com.fantasyidler.ui.screen.PrestigeDetailScreen
 import com.fantasyidler.ui.screen.HomeScreen
 import com.fantasyidler.ui.screen.InnScreen
 import com.fantasyidler.ui.screen.OnboardingScreen
@@ -110,7 +111,7 @@ fun AppNavigation(
 
     val tabSubScreens: Map<String, Set<String>> = mapOf(
         "home"   to setOf("shop", "settings", "inn", Screen.WorkerSkills.route, "guild_hall", "guild_detail/{guild}", "church", "slayer", "carnival", Screen.SeasonalEvent.route),
-        "skills" to setOf("farming", "mercantile", Screen.Slayer.route, Screen.BoneAltar.route),
+        "skills" to setOf("farming", "mercantile", Screen.Slayer.route, Screen.BoneAltar.route, Screen.PrestigeDetail.route),
         "combat" to setOf(Screen.Tower.route),
     )
 
@@ -197,12 +198,18 @@ fun AppNavigation(
                 SkillsScreen(
                     onNavigateToSlayer    = { navController.navigate(Screen.Slayer.route) },
                     onNavigateToBoneAltar = { navController.navigate(Screen.BoneAltar.route) },
+                    onNavigateToPrestige  = { skill -> navController.navigate(Screen.PrestigeDetail.createRoute(skill)) },
                 )
             }
             composable(Screen.Farming.route) { entry ->
                 FarmingScreen(onBack = { if (navController.currentBackStackEntry == entry) navController.popBackStack() })
             }
-            composable(Screen.Combat.route)   { CombatScreen(onNavigateToTower = { navController.navigate(Screen.Tower.route) }) }
+            composable(Screen.Combat.route)   {
+                CombatScreen(
+                    onNavigateToTower    = { navController.navigate(Screen.Tower.route) },
+                    onNavigateToPrestige = { skill -> navController.navigate(Screen.PrestigeDetail.createRoute(skill)) },
+                )
+            }
             composable(Screen.Home.route)     {
                 HomeScreen(
                     onNavigateToSettings     = { navController.navigate(Screen.Settings.route) },
@@ -220,7 +227,12 @@ fun AppNavigation(
                 )
             }
             composable(Screen.Quests.route)   { QuestsScreen() }
-            composable(Screen.Profile.route)  { ProfileScreen(onNavigateToCombat = { navController.navigate(Screen.Combat.gearRoute) }) }
+            composable(Screen.Profile.route)  {
+                ProfileScreen(
+                    onNavigateToCombat   = { navController.navigate(Screen.Combat.gearRoute) },
+                    onNavigateToPrestige = { skill -> navController.navigate(Screen.PrestigeDetail.createRoute(skill)) },
+                )
+            }
             composable(Screen.Combat.gearRoute) { CombatScreen(startOnGear = true) }
             composable(
                 route     = Screen.Combat.presetDungeonRoute,
@@ -304,6 +316,11 @@ fun AppNavigation(
                 WorkerSkillsScreen(
                     initialSlot = initialSlot,
                     onBack      = { if (navController.currentBackStackEntry == entry) navController.popBackStack() },
+                )
+            }
+            composable(Screen.PrestigeDetail.route) { entry ->
+                PrestigeDetailScreen(
+                    onBack = { if (navController.currentBackStackEntry == entry) navController.popBackStack() },
                 )
             }
             composable(Screen.GuildHall.route) { entry ->

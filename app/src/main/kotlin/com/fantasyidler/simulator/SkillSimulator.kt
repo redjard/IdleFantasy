@@ -43,6 +43,7 @@ object SkillSimulator {
      * @param agilityLevel player's agility level (for duration reduction)
      * @param petBoostPct  XP boost percent from an equipped mining pet (0 = none)
      * @param toolEfficiency  pickaxe multiplier: 1.0 = base, 1.5 = +50% ores/min
+     * @param gemChanceMult multiplier on gem drop rates (mining Gem Hunter prestige nodes)
      */
     fun simulateMining(
         oreKey: String,
@@ -50,12 +51,13 @@ object SkillSimulator {
         gems: Map<String, GemData>,
         startXp: Long,
         agilityLevel: Int = 1,
-        agilityPrestige: Int = 0,
+        floorReductionMin: Double = 0.0,
         petBoostPct: Int = 0,
         toolEfficiency: Float = 1.0f,
         petDropKey: String? = null,
         petDropChance: Double = 0.0,
         chronosMultiplier: Float = 1.0f,
+        gemChanceMult: Double = 1.0,
         random: Random = Random.Default,
     ): Result {
         var currentXp = startXp
@@ -80,7 +82,7 @@ object SkillSimulator {
             // Bonus gem rolls — one independent roll per ore mined per gem type
             for (i in 0 until oreQty) {
                 for ((gemKey, gemData) in gems) {
-                    if (random.nextDouble() < gemData.dropRate) {
+                    if (random.nextDouble() < gemData.dropRate * gemChanceMult) {
                         items[gemKey] = (items[gemKey] ?: 0) + 1
                     }
                 }
@@ -103,7 +105,7 @@ object SkillSimulator {
             )
         }
 
-        return Result(frames, sessionDurationMs(agilityLevel, agilityPrestige, chronosMultiplier))
+        return Result(frames, sessionDurationMs(agilityLevel, floorReductionMin, chronosMultiplier))
     }
 
     // ------------------------------------------------------------------
@@ -119,7 +121,7 @@ object SkillSimulator {
         treeData: TreeData,
         startXp: Long,
         agilityLevel: Int = 1,
-        agilityPrestige: Int = 0,
+        floorReductionMin: Double = 0.0,
         petBoostPct: Int = 0,
         toolEfficiency: Float = 1.0f,
         petDropKey: String? = null,
@@ -163,7 +165,7 @@ object SkillSimulator {
             )
         }
 
-        return Result(frames, sessionDurationMs(agilityLevel, agilityPrestige, chronosMultiplier))
+        return Result(frames, sessionDurationMs(agilityLevel, floorReductionMin, chronosMultiplier))
     }
 
     // ------------------------------------------------------------------
@@ -175,7 +177,7 @@ object SkillSimulator {
         fishData: FishData,
         startXp: Long,
         agilityLevel: Int = 1,
-        agilityPrestige: Int = 0,
+        floorReductionMin: Double = 0.0,
         petBoostPct: Int = 0,
         rodEfficiency: Float = 1.0f,
         petDropKey: String? = null,
@@ -231,7 +233,7 @@ object SkillSimulator {
             )
         }
 
-        return Result(frames, sessionDurationMs(agilityLevel, agilityPrestige, chronosMultiplier))
+        return Result(frames, sessionDurationMs(agilityLevel, floorReductionMin, chronosMultiplier))
     }
 
     // ------------------------------------------------------------------
@@ -247,7 +249,7 @@ object SkillSimulator {
         skillData: GatheringSkillData,
         startXp: Long,
         agilityLevel: Int = 1,
-        agilityPrestige: Int = 0,
+        floorReductionMin: Double = 0.0,
         petBoostPct: Int = 0,
         toolEfficiency: Float = 1.0f,
         petDropKey: String? = null,
@@ -300,7 +302,7 @@ object SkillSimulator {
             )
         }
 
-        return Result(frames, sessionDurationMs(agilityLevel, agilityPrestige, chronosMultiplier))
+        return Result(frames, sessionDurationMs(agilityLevel, floorReductionMin, chronosMultiplier))
     }
 
     // ------------------------------------------------------------------
@@ -322,7 +324,7 @@ object SkillSimulator {
         courseData: AgilityCourseData,
         startXp: Long,
         agilityLevel: Int = 1,
-        agilityPrestige: Int = 0,
+        floorReductionMin: Double = 0.0,
         petBoostPct: Int = 0,
         toolEfficiency: Float = 1.0f,
         petDropKey: String? = null,
@@ -368,7 +370,7 @@ object SkillSimulator {
             )
         }
 
-        return Result(frames, sessionDurationMs(agilityLevel, agilityPrestige, chronosMultiplier))
+        return Result(frames, sessionDurationMs(agilityLevel, floorReductionMin, chronosMultiplier))
     }
 
     // ------------------------------------------------------------------
@@ -399,18 +401,19 @@ object SkillSimulator {
     /**
      * Returns the duration of a session in milliseconds, applying the agility
      * speed bonus. Sessions scale linearly from 60 min at level 1 to 40 min at level 99.
-     * Each agility prestige level reduces the level-99 floor by ~3.33 min (P3 = 30 min).
+     * [floorReductionMin] (agility Endurance prestige nodes) lowers the level-99
+     * floor by up to that many minutes, scaled by level like the base bonus.
      *
-     * Examples (agilityPrestige=0):
+     * Examples (floorReductionMin=0):
      *   level  1 → 60 min
      *   level 25 → 55 min
      *   level 50 → 50 min
      *   level 75 → 45 min
      *   level 99 → 40 min
      */
-    fun sessionDurationMs(agilityLevel: Int, agilityPrestige: Int = 0, chronosMultiplier: Float = 1.0f): Long {
+    fun sessionDurationMs(agilityLevel: Int, floorReductionMin: Double = 0.0, chronosMultiplier: Float = 1.0f): Long {
         val fraction = (agilityLevel - 1).coerceIn(0, 98) / 98.0
-        val maxReduction = 20.0 + agilityPrestige.coerceIn(0, 3) * (10.0 / 3.0)
+        val maxReduction = 20.0 + floorReductionMin.coerceIn(0.0, 10.0)
         val minutes = (60.0 - maxReduction * fraction) * chronosMultiplier.coerceIn(0.5f, 1.0f)
         return (minutes.roundToInt() * 60_000L).coerceAtLeast(60_000L)
     }

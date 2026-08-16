@@ -29,6 +29,7 @@ class FarmingRepository @Inject constructor(
     private val gameData: GameDataRepository,
     private val seasonalEventRepo: SeasonalEventRepository,
     private val json: Json,
+    private val boostRepo: BoostRepository,
 ) {
     fun observePatches(): Flow<List<FarmingPatch>> = patchDao.observeAllPatches()
 
@@ -135,8 +136,14 @@ class FarmingRepository @Inject constructor(
         val ashKey = flags.farmingFertilizer[patchNumber.toString()]
         val ashMult = ashYieldMultiplier(ashKey)
 
+        // Prestige: flat farming yield nodes, plus Crop Rotation when this patch's crop
+        // differs from its previous harvest (or always, with the gnome capstone).
+        val rotated       = flags.lastCropByPatch[patchNumber.toString()].let { it != null && it != cropId }
+        val rotationMult  = 1.0 + boostRepo.cropRotationBonusPct(flags, rotated) / 100.0
+        val prestigeYield = boostRepo.yieldMultiplier(Skills.FARMING, flags)
+
         var yield = kotlin.random.Random.nextInt(crop.yieldMin, crop.yieldMax + 1)
-        yield = (yield * hoeMult * ashMult).roundToInt()
+        yield = (yield * hoeMult * ashMult * prestigeYield * rotationMult).roundToInt()
         if (capedDouble) yield *= 2
 
         val items = buildMap<String, Int> {
@@ -151,6 +158,9 @@ class FarmingRepository @Inject constructor(
         )
 
         playerRepo.recordWeeklyProgress("farming", "any", 1)
+        playerRepo.updateFlagsAtomically { f ->
+            f.copy(lastCropByPatch = f.lastCropByPatch + (patchNumber.toString() to cropId))
+        }
         seasonalEventRepo.recordGathering(items)
 
         val farmingPet = gameData.pets.values.firstOrNull { it.boostedSkill == Skills.FARMING }

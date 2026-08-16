@@ -17,7 +17,7 @@ object MercantileSimulator {
         route: TradeRouteData,
         startXp: Long,
         agilityLevel: Int = 1,
-        agilityPrestige: Int = 0,
+        floorReductionMin: Double = 0.0,
         petDropKey: String? = null,
         petDropChance: Double = 0.0,
         chronosMultiplier: Float = 1.0f,
@@ -60,7 +60,7 @@ object MercantileSimulator {
 
         return Result(
             frames    = frames,
-            durationMs = SkillSimulator.sessionDurationMs(agilityLevel, agilityPrestige, chronosMultiplier),
+            durationMs = SkillSimulator.sessionDurationMs(agilityLevel, floorReductionMin, chronosMultiplier),
         )
     }
 

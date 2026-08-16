@@ -114,6 +114,14 @@ sealed class Screen(
         icon     = Icons.Filled.Group,
     )
 
+    object PrestigeDetail : Screen(
+        route    = "prestige_detail/{skill}",
+        labelRes = R.string.prestige_title,
+        icon     = Icons.Filled.Star,
+    ) {
+        fun createRoute(skill: String) = "prestige_detail/$skill"
+    }
+
     object Church : Screen(
         route    = "church",
         labelRes = R.string.church_title,
