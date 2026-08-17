@@ -153,9 +153,7 @@ class GuildDetailViewModel @Inject constructor(
 
     fun claimGuildDaily(templateId: String) {
         viewModelScope.launch {
-            val flags = playerRepo.getFlags()
-            val (newFlags, rewards) = guildRepo.claimGuildDaily(flags, templateId) ?: return@launch
-            playerRepo.updateFlags(newFlags)
+            val rewards = guildRepo.claimGuildDaily(templateId) ?: return@launch
             playerRepo.recordWeeklyProgress("guild_daily", "any", 1)
             var xpSuffix = ""
             var finalXp = 0L

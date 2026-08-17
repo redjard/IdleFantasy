@@ -187,6 +187,10 @@ data class PlayerFlags(
     @SerialName("race_last_changed_at") val raceLastChangedAt: Long = 0L,
     /** Whether the one-time legacy prestige-to-points migration has run for this save. */
     @SerialName("prestige_points_migrated") val prestigePointsMigrated: Boolean = false,
+    /** Per-skill 2x XP boost expiry (epoch ms), granted for 48h on each prestige of that skill.
+     *  Earned rather than bought, so it applies to ironmen; shares the 2x slot with the
+     *  purchased boost (they never stack to 4x). */
+    @SerialName("prestige_xp_boosts") val prestigeXpBoosts: Map<String, Long> = emptyMap(),
     /** Last crop harvested per farming patch (patchNumber.toString() → crop id), for Crop Rotation nodes. */
     @SerialName("last_crop_by_patch") val lastCropByPatch: Map<String, String> = emptyMap(),
     /** Ironman race lock: set at creation for new ironmen; legacy ironmen get one free change, then this locks. */

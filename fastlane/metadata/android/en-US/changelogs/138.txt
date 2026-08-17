@@ -1,0 +1,11 @@
+• Prestige overhaul: prestiging a level 99 skill now awards points to spend in that skill's upgrade tree, with race-specific branches, respec, and a one-time conversion of 2 points per existing prestige star
+• Prestiging now grants a 2x XP boost in that skill for 48 hours, so climbing back up is faster
+• Upgrade tree nodes beyond the next unowned tier are now hidden as "?" until you unlock the path that far
+• Race-specific upgrades that boost the same effect as a main path now appear as extra tiers of that path, so the totals are easier to read
+• Removed the Cape Mastery prestige paths; skill yield paths now carry that role and any spent cape points are refunded
+• Swapped the cooking race bonuses: Orcs now cook heartier combat food, Halflings cook bigger batches
+• Prestige stars now always display as a count (for example star x4) instead of a row of stars
+• Prestiging a skill now resets its unclaimed daily quest progress, closing the trick of finishing dailies before a prestige and claiming the flat XP at level 1
+• Fixed daily, weekly, and guild daily quest claims occasionally being lost when another save landed at the same moment
+• Skill tree paths containing race-locked tiers now show the race next to the path name, so bonuses like the Gnome farming tier are findable in the tree
+• The character edit sheet no longer offers a free race switch; it now shows your current race with its proficiencies and points to the appearance editor, where changes cost a token or coins

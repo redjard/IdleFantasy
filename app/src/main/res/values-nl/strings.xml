@@ -159,6 +159,7 @@
     <string name="label_inactive">Inactief</string>
     <string name="label_boost">Boost</string> <!-- untranslated -->
     <string name="label_xp_boost">XP Boost</string> <!-- untranslated -->
+    <string name="label_prestige_xp_boost">Prestige XP Boost</string> <!-- untranslated -->
     <string name="label_weapon">Wapen</string>
     <string name="label_armour">Uitrusting</string>
     <string name="label_food">Voedsel</string>
@@ -1962,7 +1963,7 @@
     <string name="prestige_button_with_points">Prestige now for +%1$d points</string> <!-- untranslated -->
     <string name="prestige_requires_99">Reach level 99 to prestige (currently %1$d).</string> <!-- untranslated -->
     <string name="prestige_maxed_cap">Maximum prestige reached. Every point this skill can earn is yours.</string> <!-- untranslated -->
-    <string name="prestige_confirm_message_points">Your %1$s level will reset to 1 and you\'ll earn %2$d prestige points to spend in this skill\'s tree. Equipment that no longer meets its requirements will be swapped out.</string> <!-- untranslated -->
+    <string name="prestige_confirm_message_points">Your %1$s level will reset to 1 and you\'ll earn %2$d prestige points to spend in this skill\'s tree. Equipment that no longer meets its requirements will be swapped out, and unclaimed %1$s daily quest progress resets. You\'ll also gain 2x %1$s XP for 48 hours to speed the climb back up.</string> <!-- untranslated -->
     <string name="prestige_respec">Reset points</string> <!-- untranslated -->
     <string name="prestige_respec_available_in">Reset available in %1$s</string> <!-- untranslated -->
     <string name="prestige_respec_confirm_title">Reset prestige points?</string> <!-- untranslated -->
@@ -1973,6 +1974,8 @@
     <string name="prestige_node_owned">Purchased</string> <!-- untranslated -->
     <string name="prestige_node_race_only">%1$s only</string> <!-- untranslated -->
     <string name="prestige_node_prereq_locked">Requires the previous tier in this path.</string> <!-- untranslated -->
+    <string name="prestige_node_hidden">Unlock the previous upgrade first.</string> <!-- untranslated -->
+    <string name="character_race_edit_hint">Race changes are made in the appearance editor.</string> <!-- untranslated -->
     <string name="prestige_node_not_enough">Not enough points</string> <!-- untranslated -->
     <string name="prestige_node_purchased">%1$s purchased!</string> <!-- untranslated -->
     <string name="prestige_buy">Purchase for %1$d points</string> <!-- untranslated -->
@@ -2017,7 +2020,6 @@
     <string name="prestige_path_hitpoints_constitution">Constitution</string> <!-- untranslated -->
     <string name="prestige_path_xp">XP Boost</string> <!-- untranslated -->
     <string name="prestige_path_yield">Yield</string> <!-- untranslated -->
-    <string name="prestige_path_cape">Cape Mastery</string> <!-- untranslated -->
     <string name="prestige_path_flow">Flow-state</string> <!-- untranslated -->
     <string name="prestige_path_endurance">Endurance</string> <!-- untranslated -->
     <string name="prestige_path_gem">Gem Hunter</string> <!-- untranslated -->
@@ -2035,16 +2037,8 @@
     <string name="prestige_path_hitpoints_prowess">Vitality</string> <!-- untranslated -->
     <string name="prestige_path_thieving_coin">Silver Tongue</string> <!-- untranslated -->
     <string name="prestige_path_mercantile_coin">Haggler</string> <!-- untranslated -->
-    <string name="prestige_path_fishing_race_elf">Keen Eyes</string> <!-- untranslated -->
     <string name="prestige_path_thieving_race_elf">Shadow Step</string> <!-- untranslated -->
-    <string name="prestige_path_crafting_race_elf">Elven Artistry</string> <!-- untranslated -->
-    <string name="prestige_path_ranged_race_elf">Eagle Eye</string> <!-- untranslated -->
-    <string name="prestige_path_prayer_race_elf">Forest Grace</string> <!-- untranslated -->
-    <string name="prestige_path_mining_race_dwarf">Deep Veins</string> <!-- untranslated -->
-    <string name="prestige_path_smithing_race_dwarf">Forge Born</string> <!-- untranslated -->
     <string name="prestige_path_firemaking_race_dwarf">Ember Heart</string> <!-- untranslated -->
-    <string name="prestige_path_construction_race_dwarf">Master Mason</string> <!-- untranslated -->
-    <string name="prestige_path_mercantile_race_dwarf">Gold Sense</string> <!-- untranslated -->
     <string name="prestige_path_fishing_race_halfling">Patient Angler</string> <!-- untranslated -->
     <string name="prestige_path_woodcutting_race_halfling">Forest Kin</string> <!-- untranslated -->
     <string name="prestige_path_farming_race_halfling">Bountiful Harvest</string> <!-- untranslated -->
@@ -2055,11 +2049,7 @@
     <string name="prestige_path_firemaking_race_gnome">Spark Wright</string> <!-- untranslated -->
     <string name="prestige_path_construction_race_gnome">Gadget Works</string> <!-- untranslated -->
     <string name="prestige_path_prayer_race_gnome">Trickster\'s Favor</string> <!-- untranslated -->
-    <string name="prestige_path_attack_race_orc">Bloodlust</string> <!-- untranslated -->
-    <string name="prestige_path_strength_race_orc">Brute Force</string> <!-- untranslated -->
     <string name="prestige_path_hitpoints_race_orc">Thick Hide</string> <!-- untranslated -->
-    <string name="prestige_path_cooking_race_orc">Feast Master</string> <!-- untranslated -->
-    <string name="prestige_path_slayer_race_orc">Headhunter</string> <!-- untranslated -->
     <string name="race_change_confirm_title">Change race?</string> <!-- untranslated -->
     <string name="item_race_change_token_name">Race Change Token</string> <!-- untranslated -->
     <string name="item_race_change_token_desc">A rare boss drop that lets you change your character\'s race once.</string> <!-- untranslated -->

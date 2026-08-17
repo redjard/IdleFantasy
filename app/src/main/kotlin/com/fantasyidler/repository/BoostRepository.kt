@@ -158,15 +158,23 @@ class BoostRepository @Inject constructor(
         PrestigeBoosts.effectTotal(trees, flags, skill, effect)
 
     /**
-     * Combined XP multiplier for [skill]: 2x boost purchase, church blessing, and
-     * prestige xp_pct nodes. Returns 1.0 for ironman.
+     * Whether a 2x XP boost applies to [skill]: the purchased 48h boost (non-ironman only)
+     * or the post-prestige 48h boost for this skill (earned, so ironmen included). The two
+     * share one slot — together they still mean 2x, never 4x.
+     */
+    fun xpBoostActive(skill: String, flags: PlayerFlags, now: Long = System.currentTimeMillis()): Boolean =
+        (!flags.ironman && flags.xpBoostExpiresAt > now) || (flags.prestigeXpBoosts[skill] ?: 0L) > now
+
+    /**
+     * Combined XP multiplier for [skill]: 2x boost (purchased or post-prestige), church
+     * blessing, and prestige xp_pct nodes. Purchases and blessings are inert for ironmen.
      */
     fun xpMultiplier(skill: String, flags: PlayerFlags, now: Long = System.currentTimeMillis()): Double {
         val prestigeMult = 1.0 + effectTotal(skill, flags, PrestigeBoosts.XP_PCT) / 100.0
-        // Prestige is earned, not bought, so it applies to ironmen too; the purchased
-        // 2x boost and church XP blessings stay inert for them.
-        if (flags.ironman) return prestigeMult
-        val boostMult = if (flags.xpBoostExpiresAt > now) 2.0 else 1.0
+        val boostMult = if (xpBoostActive(skill, flags, now)) 2.0 else 1.0
+        // Prestige effects are earned, not bought, so they apply to ironmen too; the
+        // purchased boost (excluded in xpBoostActive) and church blessings stay inert.
+        if (flags.ironman) return boostMult * prestigeMult
         val blessingMult = ChurchRepository.xpMultiplier(flags).toDouble()
         return boostMult * blessingMult * prestigeMult
     }

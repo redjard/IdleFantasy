@@ -253,16 +253,7 @@ class QuestsViewModel @Inject constructor(
 
     fun claimDailyQuest(templateId: String) {
         viewModelScope.launch {
-            val flags = playerRepo.getFlags()
-            val ownedItems = playerRepo.getInventory().keys +
-                playerRepo.getEquipped().values.filterNotNull()
-            val (newFlags, reward) = dailyQuestRepo.claimQuest(flags, templateId, ownedItems.toSet())
-
-            // Atomically write the updated flags (quest marked claimed) + any item grant in one
-            // DB upsert. Previously these were two separate writes; if anything interrupted between
-            // them the item was silently lost even though the notification had already fired.
-            playerRepo.claimDailyReward(newFlags, reward)
-
+            val reward = playerRepo.claimDailyQuest(templateId) ?: return@launch
             val message = when (reward) {
                 is DailyReward.CoinsReward -> {
                     playerRepo.addCoins(reward.amount.toLong())
@@ -279,9 +270,7 @@ class QuestsViewModel @Inject constructor(
 
     fun claimWeeklyQuest(templateId: String) {
         viewModelScope.launch {
-            val flags = playerRepo.getFlags()
-            val (newFlags, rewardCoins) = weeklyQuestRepo.claimQuest(flags, templateId)
-            playerRepo.updateFlags(newFlags)
+            val rewardCoins = playerRepo.claimWeeklyQuest(templateId) ?: return@launch
             playerRepo.addCoins(rewardCoins)
             _extra.update { it.copy(snackbarMessage = context.withAppLocale().getString(R.string.quest_weekly_complete, rewardCoins.formatCoins())) }
         }
@@ -289,19 +278,7 @@ class QuestsViewModel @Inject constructor(
 
     fun claimWeeklyBonus() {
         viewModelScope.launch {
-            val flags = playerRepo.getFlags()
-            if (flags.weeklyQuestClaimed.size < 5 || flags.weeklyBonusClaimed) return@launch
-
-            val ownedItems = playerRepo.getInventory().keys +
-                playerRepo.getEquipped().values.filterNotNull()
-            val (newFlags, reward) = weeklyQuestRepo.claimWeeklyBonus(flags, ownedItems.toSet())
-
-            // Atomically write the updated flags (weeklyBonusClaimed = true) + any item grant in
-            // one DB upsert. Previously these were two separate writes; if anything interrupted
-            // between them the divine item was silently lost even though the notification had
-            // already fired — the same bug as the dwarven gear drop in daily quests.
-            playerRepo.claimWeeklyBonusReward(newFlags, reward)
-
+            val reward = playerRepo.claimWeeklyBonus() ?: return@launch
             val message = when (reward) {
                 is WeeklyBonusReward.CoinsReward -> {
                     playerRepo.addCoins(reward.amount)

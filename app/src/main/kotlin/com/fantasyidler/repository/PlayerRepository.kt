@@ -853,7 +853,7 @@ class PlayerRepository @Inject constructor(
      */
     suspend fun previewFlatXpGrant(skillName: String, baseXp: Long): FlatXpBreakdown {
         val flags = getFlags()
-        val boostActive = !flags.ironman && flags.xpBoostExpiresAt > System.currentTimeMillis()
+        val boostActive = boostRepo.xpBoostActive(skillName, flags)
         val blessingMult = if (flags.ironman) 1.0f else ChurchRepository.xpMultiplier(flags)
         val prestigeXpPct = boostRepo.prestigeXpPct(skillName, flags)
         val finalXp = (baseXp * boostRepo.xpMultiplier(skillName, flags)).toLong()
@@ -986,7 +986,24 @@ class PlayerRepository @Inject constructor(
             }
         }
 
-        var newFlags = flags.copy(skillPrestige = newPrestige, prestigePointsEarned = newEarned)
+        var newFlags = flags.copy(
+            skillPrestige        = newPrestige,
+            prestigePointsEarned = newEarned,
+            // Compensation for the banked-dailies reset below: a 48h 2x XP boost for just
+            // this skill, so the fast climb back is a feature instead of an exploit.
+            prestigeXpBoosts     = flags.prestigeXpBoosts +
+                (skillName to System.currentTimeMillis() + PRESTIGE_XP_BOOST_DURATION_MS),
+        )
+        // Completed-but-unclaimed dailies would otherwise bank their flat XP across the
+        // reset and cash it in at level 1 for an outsized jump, so unclaimed progress on
+        // dailies paying this skill's XP is cleared.
+        val bankedDailyIds = gameData.guildDailyPool
+            .filter { it.rewards.xpSkill == skillName && it.id !in flags.guildDailyClaimed }
+            .map { it.id }
+            .toSet()
+        if (bankedDailyIds.isNotEmpty()) {
+            newFlags = newFlags.copy(guildDailyProgress = newFlags.guildDailyProgress - bankedDailyIds)
+        }
         if (skillName == Skills.MAGIC) {
             val magicLevel = levels[Skills.MAGIC] ?: 1
             val activeSpell = newFlags.activeSpell?.let { gameData.spells[it] }
@@ -1091,6 +1108,9 @@ class PlayerRepository @Inject constructor(
     companion object {
         const val XP_BOOST_COST = 2_500_000L
         const val XP_BOOST_DURATION_MS = 48 * 3_600_000L   // 48 hours
+
+        /** Duration of the skill-specific 2x XP boost granted by each prestige. */
+        const val PRESTIGE_XP_BOOST_DURATION_MS = 48 * 3_600_000L
 
         const val PRESTIGE_RESPEC_COOLDOWN_MS = 24 * 3_600_000L
         const val RACE_CHANGE_TOKEN_ITEM = "race_change_token"
@@ -1323,29 +1343,51 @@ class PlayerRepository @Inject constructor(
     // Daily quest helpers
     // ------------------------------------------------------------------
 
+    /**
+     * Runs the 6am daily/weekly refresh plus [transform] on the freshest flags under a single
+     * lock hold. The previous flows read flags, transformed, and wrote back across separate
+     * lock acquisitions, so a concurrent flags writer (e.g. the prestige flow while a session
+     * collect was still recording progress) could clobber either side's update — most visibly
+     * resurrecting already-claimed dailies.
+     */
+    private suspend fun updateRefreshedDailyFlagsAtomically(transform: (PlayerFlags) -> PlayerFlags) = playerMutex.withLock {
+        val player = getOrCreatePlayer()
+        val original: PlayerFlags = json.decodeFromString(player.flags)
+        var flags = original
+        if (dailyQuestRepo.shouldRefresh(flags.dailyQuestGeneratedAt, flags.dailyResetHour) ||
+            weeklyQuestRepo.shouldRefresh(flags.weeklyQuestGeneratedAt, flags.dailyResetHour)
+        ) {
+            val skillLevels: Map<String, Int> = json.decodeFromString(player.skillLevels)
+            if (dailyQuestRepo.shouldRefresh(flags.dailyQuestGeneratedAt, flags.dailyResetHour)) flags = dailyQuestRepo.refreshFlags(flags, skillLevels)
+            if (weeklyQuestRepo.shouldRefresh(flags.weeklyQuestGeneratedAt, flags.dailyResetHour)) flags = weeklyQuestRepo.refreshFlags(flags, skillLevels)
+        }
+        flags = transform(flags)
+        if (flags != original) updateFlagsUnlocked(flags)
+    }
+
     /** Refresh daily and weekly quests if past 6am, then record progress for a gather session. */
-    suspend fun recordDailyGathering(items: Map<String, Int>) {
-        var flags = getRefreshedDailyFlags()
+    suspend fun recordDailyGathering(items: Map<String, Int>) = updateRefreshedDailyFlagsAtomically { refreshed ->
+        var flags = refreshed
         for ((target, amount) in items) {
             flags = dailyQuestRepo.recordProgress(flags, "gather", target, amount)
             flags = weeklyQuestRepo.recordProgress(flags, "gather", target, amount)
         }
-        updateFlags(flags)
+        flags
     }
 
     /** Refresh daily and weekly quests if past 6am, then record progress for a crafting session. */
-    suspend fun recordDailyCrafting(items: Map<String, Int>) {
-        var flags = getRefreshedDailyFlags()
+    suspend fun recordDailyCrafting(items: Map<String, Int>) = updateRefreshedDailyFlagsAtomically { refreshed ->
+        var flags = refreshed
         for ((target, amount) in items) {
             flags = dailyQuestRepo.recordProgress(flags, "craft", target, amount)
             flags = weeklyQuestRepo.recordProgress(flags, "craft", target, amount)
         }
-        updateFlags(flags)
+        flags
     }
 
     /** Refresh daily and weekly quests if past 6am, then record progress for combat kills. */
-    suspend fun recordDailyKills(killsByEnemy: Map<String, Int>) {
-        var flags = getRefreshedDailyFlags()
+    suspend fun recordDailyKills(killsByEnemy: Map<String, Int>) = updateRefreshedDailyFlagsAtomically { refreshed ->
+        var flags = refreshed
         for ((enemy, count) in killsByEnemy) {
             flags = dailyQuestRepo.recordProgress(flags, "kill_enemy", enemy, count)
             flags = weeklyQuestRepo.recordProgress(flags, "kill_enemy", enemy, count)
@@ -1355,26 +1397,24 @@ class PlayerRepository @Inject constructor(
             for ((enemy, count) in killsByEnemy) updated[enemy] = (updated[enemy] ?: 0) + count
             flags = flags.copy(enemyKills = updated)
         }
-        updateFlags(flags)
+        flags
     }
 
     /** Refresh daily quests if past 6am, then record bones buried. */
-    suspend fun recordDailyPrayer(amount: Int) {
-        var flags = getRefreshedDailyFlags()
+    suspend fun recordDailyPrayer(amount: Int) = updateRefreshedDailyFlagsAtomically { refreshed ->
+        var flags = refreshed
         flags = dailyQuestRepo.recordPrayerProgress(flags, amount)
         flags = weeklyQuestRepo.recordPrayerProgress(flags, amount)
-        updateFlags(flags)
+        flags
     }
 
     /** Record arbitrary weekly progress (for new weekly quest types). */
-    suspend fun recordWeeklyProgress(type: String, target: String, amount: Int) {
-        var flags = getRefreshedDailyFlags()
-        flags = weeklyQuestRepo.recordProgress(flags, type, target, amount)
-        updateFlags(flags)
+    suspend fun recordWeeklyProgress(type: String, target: String, amount: Int) = updateRefreshedDailyFlagsAtomically { refreshed ->
+        weeklyQuestRepo.recordProgress(refreshed, type, target, amount)
     }
 
     /** Returns current flags after refreshing daily and weekly quests if the boundary has passed. */
-    suspend fun getRefreshedDailyFlags(): PlayerFlags {
+    suspend fun getRefreshedDailyFlags(): PlayerFlags = playerMutex.withLock {
         val player = getOrCreatePlayer()
         var flags: PlayerFlags = json.decodeFromString(player.flags)
         var changed = false
@@ -1384,79 +1424,87 @@ class PlayerRepository @Inject constructor(
             flags = dailyQuestRepo.refreshFlags(flags, skillLevels)
             changed = true
         }
-        
+
         if (weeklyQuestRepo.shouldRefresh(flags.weeklyQuestGeneratedAt, flags.dailyResetHour)) {
             flags = weeklyQuestRepo.refreshFlags(flags, skillLevels)
             changed = true
         }
 
         if (changed) {
-            updateFlags(flags)
+            updateFlagsUnlocked(flags)
         }
-        return flags
+        flags
     }
 
     /**
-     * Atomically applies a claimed daily quest reward:
-     * - Updates [PlayerFlags] with the new [newFlags] (which includes the quest marked as claimed).
-     * - If [reward] is [DailyReward.DwarvenItemReward], adds the item to inventory in the SAME write.
+     * Atomically claims a completed daily quest: the flags read, the claimed marker, and any
+     * Dwarven item grant all happen under one lock hold and land in one DB upsert. The previous
+     * flow read flags in the ViewModel and wrote them back afterwards, so a concurrent flags
+     * writer (e.g. the prestige flow) could clobber the claim and let it be claimed again.
      *
-     * This prevents the silent item loss that occurred when [updateFlags] and [addItem] were two
-     * separate DB writes — if anything interrupted between them (crash, concurrent write), the
-     * item was lost even though the notification had already fired.
-     *
-     * Returns the item key that was granted, or null for a coins reward (coins are handled by the
-     * caller since they don't touch the inventory/flags row).
+     * Returns the reward, or null when the quest isn't complete or is already claimed (double
+     * tap). Coin rewards are still credited by the caller — coins don't touch this row.
      */
-    suspend fun claimDailyReward(newFlags: PlayerFlags, reward: DailyReward): String? {
+    suspend fun claimDailyQuest(templateId: String): DailyReward? = playerMutex.withLock {
         val player = getOrCreatePlayer()
-        val flags = newFlags.let { it.plusSeen(
-            if (reward is DailyReward.DwarvenItemReward) listOf(reward.itemKey) else emptyList()
-        ) }
+        val flags: PlayerFlags = json.decodeFromString(player.flags)
         val inventory: MutableMap<String, Int> = json.decodeFromString(player.inventory)
-        val grantedKey: String? = if (reward is DailyReward.DwarvenItemReward) {
-            inventory[reward.itemKey] = (inventory[reward.itemKey] ?: 0) + 1
-            reward.itemKey
-        } else null
+        val equipped: Map<String, String?> = json.decodeFromString(player.equipped)
+        val ownedItems = inventory.keys + equipped.values.filterNotNull()
+        val (newFlags, reward) = try {
+            dailyQuestRepo.claimQuest(flags, templateId, ownedItems)
+        } catch (_: IllegalStateException) {
+            return@withLock null
+        }
+        val grantedKey = (reward as? DailyReward.DwarvenItemReward)?.itemKey
+        if (grantedKey != null) inventory[grantedKey] = (inventory[grantedKey] ?: 0) + 1
 
         playerDao.upsert(
             player.copy(
-                flags     = json.encode<PlayerFlags>(flags),
+                flags     = json.encode<PlayerFlags>(newFlags.plusSeen(listOfNotNull(grantedKey))),
                 inventory = json.encode<Map<String, Int>>(inventory),
             )
         )
-        return grantedKey
+        reward
+    }
+
+    /** Atomically claims a completed weekly quest (same lost-update guard as [claimDailyQuest]).
+     *  Returns the coin reward, or null when it isn't complete or is already claimed. */
+    suspend fun claimWeeklyQuest(templateId: String): Long? = playerMutex.withLock {
+        val flags = getFlagsUnlocked()
+        val (newFlags, rewardCoins) = try {
+            weeklyQuestRepo.claimQuest(flags, templateId)
+        } catch (_: IllegalStateException) {
+            return@withLock null
+        }
+        updateFlagsUnlocked(newFlags)
+        rewardCoins
     }
 
     /**
-     * Atomically applies a claimed weekly bonus reward:
-     * - Updates [PlayerFlags] with [newFlags] (weeklyBonusClaimed = true).
-     * - If [reward] is [WeeklyBonusReward.DivineItemReward], adds the item to inventory in the SAME write.
-     *
-     * Mirrors [claimDailyReward]: prevents the silent divine-item loss that occurred when
-     * [updateFlags] and [addItem] were two separate DB writes in [claimWeeklyBonus].
-     *
-     * Returns the item key that was granted, or null for a coins reward (coins are handled by the
-     * caller since they don't touch the inventory/flags row).
+     * Atomically claims the weekly bonus: flags (weeklyBonusClaimed = true) and any Divine item
+     * grant land in one DB upsert under one lock hold (same lost-update guard as
+     * [claimDailyQuest]). Returns the reward, or null when not all weeklies are claimed or the
+     * bonus was already taken. Coin rewards are credited by the caller.
      */
-    suspend fun claimWeeklyBonusReward(newFlags: PlayerFlags, reward: WeeklyBonusReward): String? {
+    suspend fun claimWeeklyBonus(): WeeklyBonusReward? = playerMutex.withLock {
         val player = getOrCreatePlayer()
-        val flags = newFlags.let { it.plusSeen(
-            if (reward is WeeklyBonusReward.DivineItemReward) listOf(reward.itemKey) else emptyList()
-        ) }
+        val flags: PlayerFlags = json.decodeFromString(player.flags)
+        if (flags.weeklyQuestClaimed.size < 5 || flags.weeklyBonusClaimed) return@withLock null
         val inventory: MutableMap<String, Int> = json.decodeFromString(player.inventory)
-        val grantedKey: String? = if (reward is WeeklyBonusReward.DivineItemReward) {
-            inventory[reward.itemKey] = (inventory[reward.itemKey] ?: 0) + 1
-            reward.itemKey
-        } else null
+        val equipped: Map<String, String?> = json.decodeFromString(player.equipped)
+        val ownedItems = inventory.keys + equipped.values.filterNotNull()
+        val (newFlags, reward) = weeklyQuestRepo.claimWeeklyBonus(flags, ownedItems)
+        val grantedKey = (reward as? WeeklyBonusReward.DivineItemReward)?.itemKey
+        if (grantedKey != null) inventory[grantedKey] = (inventory[grantedKey] ?: 0) + 1
 
         playerDao.upsert(
             player.copy(
-                flags     = json.encode<PlayerFlags>(flags),
+                flags     = json.encode<PlayerFlags>(newFlags.plusSeen(listOfNotNull(grantedKey))),
                 inventory = json.encode<Map<String, Int>>(inventory),
             )
         )
-        return grantedKey
+        reward
     }
 
     /** Adds [qty] of [itemKey] to inventory. */

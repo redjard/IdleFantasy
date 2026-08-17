@@ -500,8 +500,14 @@ class GuildRepository @Inject constructor(
             }
     }
 
-    /** Returns updated flags with guild daily reward claimed and this tier's daily counter incremented (capped once this tier's requirement is met). Returns null if not claimable. */
-    suspend fun claimGuildDaily(flags: PlayerFlags, templateId: String): Pair<PlayerFlags, GuildQuestRewards>? = playerRepo.playerMutex.withLock {
+    /**
+     * Claims a completed guild daily and increments this tier's daily counter (capped once the
+     * tier requirement is met). Flags are read AND written under one lock hold so a concurrent
+     * flags writer (e.g. the prestige flow while a collect is in flight) can't clobber the
+     * claim and let it be claimed again. Returns the rewards, or null if not claimable.
+     */
+    suspend fun claimGuildDaily(templateId: String): GuildQuestRewards? = playerRepo.playerMutex.withLock {
+        val flags = playerRepo.getFlagsUnlocked()
         val pool = gameData.guildDailyPool.associateBy { it.id }
         val template = pool[templateId] ?: return null
         val progress = flags.guildDailyProgress[templateId] ?: 0
@@ -518,8 +524,9 @@ class GuildRepository @Inject constructor(
             guildDailyClaimed      = flags.guildDailyClaimed + templateId,
             guildDailyTierCounts   = flags.guildDailyTierCounts + (tierKey to newCount),
         )
+        playerRepo.updateFlagsUnlocked(newFlags)
         val newLevel = guildLevel(guild, newFlags.guildDailyTierCounts, completedIds)
-        return newFlags to withCapeIfMaxLevel(guild, currentLevel, newLevel, template.rewards)
+        return withCapeIfMaxLevel(guild, currentLevel, newLevel, template.rewards)
     }
 
     // -------------------------------------------------------------------------

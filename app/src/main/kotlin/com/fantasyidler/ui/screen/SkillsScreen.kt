@@ -1005,8 +1005,7 @@ internal fun SkillRow(
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         Text(
-                            text  = if (prestigeLevel > 3) "★×$prestigeLevel"
-                                    else "★".repeat(prestigeLevel) + "☆".repeat((3 - prestigeLevel).coerceAtLeast(0)),
+                            text  = "★×$prestigeLevel",
                             style = MaterialTheme.typography.labelMedium,
                             color = MaterialTheme.colorScheme.primary,
                         )

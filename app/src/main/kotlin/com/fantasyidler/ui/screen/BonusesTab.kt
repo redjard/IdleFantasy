@@ -67,9 +67,11 @@ internal fun BonusesTab(
     val context = LocalContext.current
     val now     = System.currentTimeMillis()
 
+    val prestigeBoosts = state.prestigeXpBoosts.filterValues { it > now }
+
     // Ironman: purchased multipliers are inert, but earned prestige effects apply,
-    // so show the notice only when no prestige nodes are active either.
-    if (state.ironman && state.prestigeEffects.isEmpty()) {
+    // so show the notice only when no prestige nodes or post-prestige boosts are active either.
+    if (state.ironman && state.prestigeEffects.isEmpty() && prestigeBoosts.isEmpty()) {
         Box(
             modifier         = Modifier.fillMaxSize().padding(32.dp),
             contentAlignment = Alignment.Center,
@@ -206,7 +208,7 @@ internal fun BonusesTab(
     // "all" pets with no skill-specific rows: surface them in the Boosts section
     val showAllPetsInBoosts = allPetBoostPct > 0 && specificSkillKeys.isEmpty()
 
-    if (!boostActive && !blessingActive && cape == null && bonusPets.isEmpty() && prestigeEffects.isEmpty() && builderDiscountPct <= 0) {
+    if (!boostActive && !blessingActive && cape == null && bonusPets.isEmpty() && prestigeEffects.isEmpty() && prestigeBoosts.isEmpty() && builderDiscountPct <= 0) {
         Box(
             modifier         = Modifier.fillMaxSize().padding(32.dp),
             contentAlignment = Alignment.Center,
@@ -226,7 +228,7 @@ internal fun BonusesTab(
     val showCombined    = boostActive && blessingActive
 
     LazyColumn(modifier = Modifier.fillMaxSize()) {
-        if (boostActive || blessingActive || showAllPetsInBoosts) {
+        if (boostActive || blessingActive || showAllPetsInBoosts || prestigeBoosts.isNotEmpty()) {
             item { SlotSectionHeader(stringResource(R.string.bonus_section_boosts)) }
             if (boostActive) {
                 item {
@@ -238,6 +240,15 @@ internal fun BonusesTab(
                         detail = stringResource(R.string.church_expires_in, remaining),
                     )
                 }
+            }
+            items(prestigeBoosts.entries.sortedBy { it.key }, key = { "pboost_${it.key}" }) { (skill, expiresAt) ->
+                val remaining = (expiresAt - now).formatDurationMs(context)
+                BonusRow(
+                    name   = stringResource(R.string.label_prestige_xp_boost),
+                    pct    = "+100%",
+                    scope  = GameStrings.skillName(context, skill),
+                    detail = stringResource(R.string.church_expires_in, remaining),
+                )
             }
             if (blessingActive) {
                 item {

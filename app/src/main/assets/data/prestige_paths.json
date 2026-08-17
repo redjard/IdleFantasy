@@ -58,6 +58,20 @@
             "cost": 4,
             "effect": "yield_pct",
             "value": 25
+          },
+          {
+            "id": "mining_yield_4",
+            "cost": 3,
+            "effect": "yield_pct",
+            "value": 35,
+            "race": "dwarf"
+          },
+          {
+            "id": "mining_yield_5",
+            "cost": 4,
+            "effect": "yield_pct",
+            "value": 40,
+            "race": "dwarf"
           }
         ]
       },
@@ -81,29 +95,6 @@
             "cost": 3,
             "effect": "bonus_roll_pct",
             "value": 200
-          }
-        ]
-      },
-      {
-        "key": "cape",
-        "nodes": [
-          {
-            "id": "mining_cape_1",
-            "cost": 2,
-            "effect": "cape_scaling",
-            "value": 2
-          },
-          {
-            "id": "mining_cape_2",
-            "cost": 3,
-            "effect": "cape_scaling",
-            "value": 3
-          },
-          {
-            "id": "mining_cape_3",
-            "cost": 4,
-            "effect": "cape_scaling",
-            "value": 4
           }
         ]
       },
@@ -210,29 +201,20 @@
             "cost": 3,
             "effect": "tool_eff_pct",
             "value": 15
-          }
-        ]
-      },
-      {
-        "key": "cape",
-        "nodes": [
-          {
-            "id": "fishing_cape_1",
-            "cost": 2,
-            "effect": "cape_scaling",
-            "value": 2
           },
           {
-            "id": "fishing_cape_2",
+            "id": "fishing_rod_4",
             "cost": 3,
-            "effect": "cape_scaling",
-            "value": 3
+            "effect": "tool_eff_pct",
+            "value": 25,
+            "race": "elf"
           },
           {
-            "id": "fishing_cape_3",
+            "id": "fishing_rod_5",
             "cost": 4,
-            "effect": "cape_scaling",
-            "value": 4
+            "effect": "tool_eff_pct",
+            "value": 30,
+            "race": "elf"
           }
         ]
       },
@@ -381,29 +363,6 @@
         ]
       },
       {
-        "key": "cape",
-        "nodes": [
-          {
-            "id": "woodcutting_cape_1",
-            "cost": 2,
-            "effect": "cape_scaling",
-            "value": 2
-          },
-          {
-            "id": "woodcutting_cape_2",
-            "cost": 3,
-            "effect": "cape_scaling",
-            "value": 3
-          },
-          {
-            "id": "woodcutting_cape_3",
-            "cost": 4,
-            "effect": "cape_scaling",
-            "value": 4
-          }
-        ]
-      },
-      {
         "key": "race_halfling",
         "nodes": [
           {
@@ -494,29 +453,6 @@
         ]
       },
       {
-        "key": "cape",
-        "nodes": [
-          {
-            "id": "farming_cape_1",
-            "cost": 2,
-            "effect": "cape_scaling",
-            "value": 2
-          },
-          {
-            "id": "farming_cape_2",
-            "cost": 3,
-            "effect": "cape_scaling",
-            "value": 3
-          },
-          {
-            "id": "farming_cape_3",
-            "cost": 4,
-            "effect": "cape_scaling",
-            "value": 4
-          }
-        ]
-      },
-      {
         "key": "race_halfling",
         "nodes": [
           {
@@ -596,29 +532,6 @@
             "cost": 4,
             "effect": "session_floor_min",
             "value": 10
-          }
-        ]
-      },
-      {
-        "key": "cape",
-        "nodes": [
-          {
-            "id": "agility_cape_1",
-            "cost": 2,
-            "effect": "cape_scaling",
-            "value": 2
-          },
-          {
-            "id": "agility_cape_2",
-            "cost": 3,
-            "effect": "cape_scaling",
-            "value": 3
-          },
-          {
-            "id": "agility_cape_3",
-            "cost": 4,
-            "effect": "cape_scaling",
-            "value": 4
           }
         ]
       }
@@ -706,29 +619,6 @@
             "cost": 3,
             "effect": "coin_pct",
             "value": 20
-          }
-        ]
-      },
-      {
-        "key": "cape",
-        "nodes": [
-          {
-            "id": "thieving_cape_1",
-            "cost": 2,
-            "effect": "cape_scaling",
-            "value": 2
-          },
-          {
-            "id": "thieving_cape_2",
-            "cost": 3,
-            "effect": "cape_scaling",
-            "value": 3
-          },
-          {
-            "id": "thieving_cape_3",
-            "cost": 4,
-            "effect": "cape_scaling",
-            "value": 4
           }
         ]
       },
@@ -847,29 +737,20 @@
             "cost": 3,
             "effect": "input_save_pct",
             "value": 15
-          }
-        ]
-      },
-      {
-        "key": "cape",
-        "nodes": [
-          {
-            "id": "smithing_cape_1",
-            "cost": 2,
-            "effect": "cape_scaling",
-            "value": 2
           },
           {
-            "id": "smithing_cape_2",
+            "id": "smithing_thrift_4",
             "cost": 3,
-            "effect": "cape_scaling",
-            "value": 3
+            "effect": "input_save_pct",
+            "value": 25,
+            "race": "dwarf"
           },
           {
-            "id": "smithing_cape_3",
+            "id": "smithing_thrift_5",
             "cost": 4,
-            "effect": "cape_scaling",
-            "value": 4
+            "effect": "input_save_pct",
+            "value": 30,
+            "race": "dwarf"
           }
         ]
       },
@@ -988,29 +869,20 @@
             "cost": 3,
             "effect": "heal_pct",
             "value": 15
-          }
-        ]
-      },
-      {
-        "key": "cape",
-        "nodes": [
-          {
-            "id": "cooking_cape_1",
-            "cost": 2,
-            "effect": "cape_scaling",
-            "value": 2
           },
           {
-            "id": "cooking_cape_2",
+            "id": "cooking_hearty_4",
             "cost": 3,
-            "effect": "cape_scaling",
-            "value": 3
+            "effect": "heal_pct",
+            "value": 25,
+            "race": "orc"
           },
           {
-            "id": "cooking_cape_3",
+            "id": "cooking_hearty_5",
             "cost": 4,
-            "effect": "cape_scaling",
-            "value": 4
+            "effect": "heal_pct",
+            "value": 30,
+            "race": "orc"
           }
         ]
       },
@@ -1020,14 +892,14 @@
           {
             "id": "cooking_race_halfling_1",
             "cost": 3,
-            "effect": "heal_pct",
+            "effect": "yield_pct",
             "value": 10,
             "race": "halfling"
           },
           {
             "id": "cooking_race_halfling_2",
             "cost": 4,
-            "effect": "heal_pct",
+            "effect": "yield_pct",
             "value": 15,
             "race": "halfling"
           }
@@ -1039,14 +911,14 @@
           {
             "id": "cooking_race_orc_1",
             "cost": 3,
-            "effect": "yield_pct",
+            "effect": "heal_pct",
             "value": 10,
             "race": "orc"
           },
           {
             "id": "cooking_race_orc_2",
             "cost": 4,
-            "effect": "yield_pct",
+            "effect": "heal_pct",
             "value": 15,
             "race": "orc"
           }
@@ -1125,29 +997,6 @@
             "cost": 3,
             "effect": "flow_interval_reduction",
             "value": 20
-          }
-        ]
-      },
-      {
-        "key": "cape",
-        "nodes": [
-          {
-            "id": "fletching_cape_1",
-            "cost": 2,
-            "effect": "cape_scaling",
-            "value": 2
-          },
-          {
-            "id": "fletching_cape_2",
-            "cost": 3,
-            "effect": "cape_scaling",
-            "value": 3
-          },
-          {
-            "id": "fletching_cape_3",
-            "cost": 4,
-            "effect": "cape_scaling",
-            "value": 4
           }
         ]
       },
@@ -1266,29 +1115,20 @@
             "cost": 3,
             "effect": "input_save_pct",
             "value": 15
-          }
-        ]
-      },
-      {
-        "key": "cape",
-        "nodes": [
-          {
-            "id": "crafting_cape_1",
-            "cost": 2,
-            "effect": "cape_scaling",
-            "value": 2
           },
           {
-            "id": "crafting_cape_2",
+            "id": "crafting_thrift_4",
             "cost": 3,
-            "effect": "cape_scaling",
-            "value": 3
+            "effect": "input_save_pct",
+            "value": 25,
+            "race": "elf"
           },
           {
-            "id": "crafting_cape_3",
+            "id": "crafting_thrift_5",
             "cost": 4,
-            "effect": "cape_scaling",
-            "value": 4
+            "effect": "input_save_pct",
+            "value": 30,
+            "race": "elf"
           }
         ]
       },
@@ -1384,29 +1224,6 @@
             "cost": 3,
             "effect": "flow_interval_reduction",
             "value": 20
-          }
-        ]
-      },
-      {
-        "key": "cape",
-        "nodes": [
-          {
-            "id": "firemaking_cape_1",
-            "cost": 2,
-            "effect": "cape_scaling",
-            "value": 2
-          },
-          {
-            "id": "firemaking_cape_2",
-            "cost": 3,
-            "effect": "cape_scaling",
-            "value": 3
-          },
-          {
-            "id": "firemaking_cape_3",
-            "cost": 4,
-            "effect": "cape_scaling",
-            "value": 4
           }
         ]
       },
@@ -1546,29 +1363,6 @@
             "value": 15
           }
         ]
-      },
-      {
-        "key": "cape",
-        "nodes": [
-          {
-            "id": "runecrafting_cape_1",
-            "cost": 2,
-            "effect": "cape_scaling",
-            "value": 2
-          },
-          {
-            "id": "runecrafting_cape_2",
-            "cost": 3,
-            "effect": "cape_scaling",
-            "value": 3
-          },
-          {
-            "id": "runecrafting_cape_3",
-            "cost": 4,
-            "effect": "cape_scaling",
-            "value": 4
-          }
-        ]
       }
     ]
   },
@@ -1668,29 +1462,6 @@
             "value": 3
           }
         ]
-      },
-      {
-        "key": "cape",
-        "nodes": [
-          {
-            "id": "herblore_cape_1",
-            "cost": 2,
-            "effect": "cape_scaling",
-            "value": 2
-          },
-          {
-            "id": "herblore_cape_2",
-            "cost": 3,
-            "effect": "cape_scaling",
-            "value": 3
-          },
-          {
-            "id": "herblore_cape_3",
-            "cost": 4,
-            "effect": "cape_scaling",
-            "value": 4
-          }
-        ]
       }
     ]
   },
@@ -1788,29 +1559,20 @@
             "cost": 3,
             "effect": "builder_discount_pct",
             "value": 6
-          }
-        ]
-      },
-      {
-        "key": "cape",
-        "nodes": [
-          {
-            "id": "construction_cape_1",
-            "cost": 2,
-            "effect": "cape_scaling",
-            "value": 2
           },
           {
-            "id": "construction_cape_2",
+            "id": "construction_efficient_4",
             "cost": 3,
-            "effect": "cape_scaling",
-            "value": 3
+            "effect": "builder_discount_pct",
+            "value": 9,
+            "race": "dwarf"
           },
           {
-            "id": "construction_cape_3",
+            "id": "construction_efficient_5",
             "cost": 4,
-            "effect": "cape_scaling",
-            "value": 4
+            "effect": "builder_discount_pct",
+            "value": 12,
+            "race": "dwarf"
           }
         ]
       },
@@ -1932,6 +1694,20 @@
             "cost": 3,
             "effect": "combat_stat_flat",
             "value": 15
+          },
+          {
+            "id": "attack_prowess_4",
+            "cost": 3,
+            "effect": "combat_stat_flat",
+            "value": 18,
+            "race": "orc"
+          },
+          {
+            "id": "attack_prowess_5",
+            "cost": 4,
+            "effect": "combat_stat_flat",
+            "value": 23,
+            "race": "orc"
           }
         ]
       },
@@ -2015,6 +1791,20 @@
             "cost": 3,
             "effect": "combat_stat_flat",
             "value": 15
+          },
+          {
+            "id": "strength_prowess_4",
+            "cost": 3,
+            "effect": "combat_stat_flat",
+            "value": 18,
+            "race": "orc"
+          },
+          {
+            "id": "strength_prowess_5",
+            "cost": 4,
+            "effect": "combat_stat_flat",
+            "value": 23,
+            "race": "orc"
           }
         ]
       },
@@ -2208,6 +1998,20 @@
             "cost": 3,
             "effect": "reclaim_pct",
             "value": 15
+          },
+          {
+            "id": "ranged_quiver_4",
+            "cost": 3,
+            "effect": "reclaim_pct",
+            "value": 25,
+            "race": "elf"
+          },
+          {
+            "id": "ranged_quiver_5",
+            "cost": 4,
+            "effect": "reclaim_pct",
+            "value": 35,
+            "race": "elf"
           }
         ]
       },
@@ -2484,29 +2288,20 @@
             "cost": 3,
             "effect": "blessing_duration_pct",
             "value": 30
-          }
-        ]
-      },
-      {
-        "key": "cape",
-        "nodes": [
-          {
-            "id": "prayer_cape_1",
-            "cost": 2,
-            "effect": "cape_scaling",
-            "value": 2
           },
           {
-            "id": "prayer_cape_2",
+            "id": "prayer_devotion_4",
             "cost": 3,
-            "effect": "cape_scaling",
-            "value": 3
+            "effect": "blessing_duration_pct",
+            "value": 45,
+            "race": "elf"
           },
           {
-            "id": "prayer_cape_3",
+            "id": "prayer_devotion_5",
             "cost": 4,
-            "effect": "cape_scaling",
-            "value": 4
+            "effect": "blessing_duration_pct",
+            "value": 55,
+            "race": "elf"
           }
         ]
       },
@@ -2632,29 +2427,20 @@
             "cost": 3,
             "effect": "sell_price_pct",
             "value": 6
-          }
-        ]
-      },
-      {
-        "key": "cape",
-        "nodes": [
-          {
-            "id": "mercantile_cape_1",
-            "cost": 2,
-            "effect": "cape_scaling",
-            "value": 2
           },
           {
-            "id": "mercantile_cape_2",
+            "id": "mercantile_trade_4",
             "cost": 3,
-            "effect": "cape_scaling",
-            "value": 3
+            "effect": "sell_price_pct",
+            "value": 9,
+            "race": "dwarf"
           },
           {
-            "id": "mercantile_cape_3",
+            "id": "mercantile_trade_5",
             "cost": 4,
-            "effect": "cape_scaling",
-            "value": 4
+            "effect": "sell_price_pct",
+            "value": 12,
+            "race": "dwarf"
           }
         ]
       },
@@ -2761,6 +2547,20 @@
             "cost": 3,
             "effect": "slayer_points_pct",
             "value": 30
+          },
+          {
+            "id": "slayer_bounty_4",
+            "cost": 3,
+            "effect": "slayer_points_pct",
+            "value": 45,
+            "race": "orc"
+          },
+          {
+            "id": "slayer_bounty_5",
+            "cost": 4,
+            "effect": "slayer_points_pct",
+            "value": 60,
+            "race": "orc"
           }
         ]
       },

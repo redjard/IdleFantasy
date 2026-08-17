@@ -307,7 +307,11 @@ fun PrestigeDetailScreen(
                             skill      = skill,
                             path       = path,
                             playerRace = state.playerRace,
-                            onNodeTap  = { node -> selectedNode = path.key to node },
+                            // Hidden nodes stay a mystery: a banner nudge instead of the detail sheet.
+                            onNodeTap  = { node ->
+                                if (node.prereqLocked) banner = context.getString(R.string.prestige_node_hidden)
+                                else selectedNode = path.key to node
+                            },
                         )
                     }
                 }
@@ -345,8 +349,7 @@ private fun PrestigeHeaderCard(
                 }
                 if (state.prestigeCount > 0) {
                     Text(
-                        text  = if (state.prestigeCount > 3) "★×${state.prestigeCount}"
-                                else "★".repeat(state.prestigeCount),
+                        text  = "★×${state.prestigeCount}",
                         style = MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.primary,
                     )
@@ -416,9 +419,9 @@ private fun PathBranch(
                     MaterialTheme.colorScheme.onSurfaceVariant
                 else MaterialTheme.colorScheme.onSurface,
             )
-            raceLock?.let { race ->
+            if (raceLock != null) {
                 Spacer(Modifier.width(6.dp))
-                if (race != playerRace) {
+                if (raceLock != playerRace) {
                     Icon(
                         Icons.Filled.Lock,
                         contentDescription = null,
@@ -428,11 +431,24 @@ private fun PathBranch(
                     Spacer(Modifier.width(2.dp))
                 }
                 Text(
-                    text  = raceDisplayName(race),
+                    text  = raceDisplayName(raceLock),
                     style = MaterialTheme.typography.labelSmall,
-                    color = if (race == playerRace) MaterialTheme.colorScheme.tertiary
+                    color = if (raceLock == playerRace) MaterialTheme.colorScheme.tertiary
                             else MaterialTheme.colorScheme.onSurfaceVariant,
                 )
+            } else {
+                // Mixed paths (race-locked tiers appended to an open path) still surface
+                // their races here, so e.g. the Gnome farming bonus is findable in the tree.
+                // Human is skipped to match raceProficiencies (XP mastery everywhere).
+                path.nodes.mapNotNull { it.race }.distinct().filter { it != "human" }.forEach { race ->
+                    Spacer(Modifier.width(6.dp))
+                    Text(
+                        text  = raceDisplayName(race),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = if (race == playerRace) MaterialTheme.colorScheme.tertiary
+                                else MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
             }
         }
         Row(
@@ -489,6 +505,13 @@ private fun NodeCircle(node: PrestigeNodeUi, onTap: () -> Unit) {
             when {
                 node.owned -> Icon(Icons.Filled.Check, contentDescription = null, tint = contentColor, modifier = Modifier.size(22.dp))
                 node.raceLocked -> Icon(Icons.Filled.Lock, contentDescription = null, tint = contentColor, modifier = Modifier.size(18.dp))
+                // Nodes past the next unowned tier hide behind "?" until the path reaches them.
+                node.prereqLocked -> Text(
+                    text  = "?",
+                    style = MaterialTheme.typography.titleSmall,
+                    color = contentColor,
+                    fontWeight = FontWeight.Bold,
+                )
                 else -> Text(
                     text  = TIER_NUMERALS.getOrElse(node.tier - 1) { "${node.tier}" },
                     style = MaterialTheme.typography.titleSmall,

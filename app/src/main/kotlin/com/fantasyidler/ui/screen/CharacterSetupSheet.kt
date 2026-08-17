@@ -151,14 +151,23 @@ fun CharacterSetupSheet(
                     "Halfling" to stringResource(R.string.character_race_halfling),
                     "Gnome"    to stringResource(R.string.character_race_gnome),
                 )
-                FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    CHARACTER_RACES.forEach { race ->
-                        FilterChip(
-                            selected = draftRace == race,
-                            onClick  = { draftRace = if (draftRace == race) "" else race },
-                            label    = { Text(raceLabels[race] ?: race) },
-                        )
+                if (isFirstTime) {
+                    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        CHARACTER_RACES.forEach { race ->
+                            FilterChip(
+                                selected = draftRace == race,
+                                onClick  = { draftRace = if (draftRace == race) "" else race },
+                                label    = { Text(raceLabels[race] ?: race) },
+                            )
+                        }
                     }
+                } else {
+                    // Post-setup the race is reference-only here: changes cost a token or
+                    // coins and go through the appearance editor's confirm flow.
+                    Text(
+                        text  = raceLabels[draftRace] ?: draftRace.ifBlank { stringResource(R.string.character_race_human) },
+                        style = MaterialTheme.typography.bodyLarge,
+                    )
                 }
                 val setupContext = LocalContext.current
                 val draftKey = draftRace.lowercase()
@@ -177,6 +186,13 @@ fun CharacterSetupSheet(
                         text  = proficiencyText,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.tertiary,
+                    )
+                }
+                if (!isFirstTime) {
+                    Text(
+                        text  = stringResource(R.string.character_race_edit_hint),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
                 if (draftIronman) {

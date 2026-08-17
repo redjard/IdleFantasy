@@ -159,6 +159,7 @@
     <string name="label_inactive">Inactive</string>
     <string name="label_boost">Boost</string>
     <string name="label_xp_boost">XP Boost</string>
+    <string name="label_prestige_xp_boost">Prestige XP Boost</string>
     <string name="label_weapon">Weapon</string>
     <string name="label_armour">Armour</string>
     <string name="label_food">Food</string>
@@ -1968,7 +1969,7 @@
     <string name="prestige_requires_99">Reach level 99 to prestige (currently %1$d).</string>
     <string name="prestige_maxed_cap">Maximum prestige reached. Every point this skill can earn is yours.</string>
     <!-- Translator note: %1$s = skill name, %2$d = points awarded -->
-    <string name="prestige_confirm_message_points">Your %1$s level will reset to 1 and you\'ll earn %2$d prestige points to spend in this skill\'s tree. Equipment that no longer meets its requirements will be swapped out.</string>
+    <string name="prestige_confirm_message_points">Your %1$s level will reset to 1 and you\'ll earn %2$d prestige points to spend in this skill\'s tree. Equipment that no longer meets its requirements will be swapped out, and unclaimed %1$s daily quest progress resets. You\'ll also gain 2x %1$s XP for 48 hours to speed the climb back up.</string>
     <string name="prestige_respec">Reset points</string>
     <!-- Translator note: %1$s = formatted remaining cooldown -->
     <string name="prestige_respec_available_in">Reset available in %1$s</string>
@@ -1984,6 +1985,8 @@
     <!-- Translator note: %1$s = race name -->
     <string name="prestige_node_race_only">%1$s only</string>
     <string name="prestige_node_prereq_locked">Requires the previous tier in this path.</string>
+    <string name="prestige_node_hidden">Unlock the previous upgrade first.</string>
+    <string name="character_race_edit_hint">Race changes are made in the appearance editor.</string>
     <string name="prestige_node_not_enough">Not enough points</string>
     <!-- Translator note: %1$s = node name -->
     <string name="prestige_node_purchased">%1$s purchased!</string>
@@ -2039,7 +2042,6 @@
     <!-- Prestige path names (generic) -->
     <string name="prestige_path_xp">XP Boost</string>
     <string name="prestige_path_yield">Yield</string>
-    <string name="prestige_path_cape">Cape Mastery</string>
     <string name="prestige_path_flow">Flow-state</string>
     <string name="prestige_path_endurance">Endurance</string>
     <string name="prestige_path_gem">Gem Hunter</string>
@@ -2061,16 +2063,8 @@
     <string name="prestige_path_mercantile_coin">Haggler</string>
 
     <!-- Prestige race branch names -->
-    <string name="prestige_path_fishing_race_elf">Keen Eyes</string>
     <string name="prestige_path_thieving_race_elf">Shadow Step</string>
-    <string name="prestige_path_crafting_race_elf">Elven Artistry</string>
-    <string name="prestige_path_ranged_race_elf">Eagle Eye</string>
-    <string name="prestige_path_prayer_race_elf">Forest Grace</string>
-    <string name="prestige_path_mining_race_dwarf">Deep Veins</string>
-    <string name="prestige_path_smithing_race_dwarf">Forge Born</string>
     <string name="prestige_path_firemaking_race_dwarf">Ember Heart</string>
-    <string name="prestige_path_construction_race_dwarf">Master Mason</string>
-    <string name="prestige_path_mercantile_race_dwarf">Gold Sense</string>
     <string name="prestige_path_fishing_race_halfling">Patient Angler</string>
     <string name="prestige_path_woodcutting_race_halfling">Forest Kin</string>
     <string name="prestige_path_farming_race_halfling">Bountiful Harvest</string>
@@ -2081,11 +2075,7 @@
     <string name="prestige_path_firemaking_race_gnome">Spark Wright</string>
     <string name="prestige_path_construction_race_gnome">Gadget Works</string>
     <string name="prestige_path_prayer_race_gnome">Trickster\'s Favor</string>
-    <string name="prestige_path_attack_race_orc">Bloodlust</string>
-    <string name="prestige_path_strength_race_orc">Brute Force</string>
     <string name="prestige_path_hitpoints_race_orc">Thick Hide</string>
-    <string name="prestige_path_cooking_race_orc">Feast Master</string>
-    <string name="prestige_path_slayer_race_orc">Headhunter</string>
 
     <!-- Race change -->
     <string name="race_change_confirm_title">Change race?</string>
