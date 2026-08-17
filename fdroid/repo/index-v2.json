@@ -14,7 +14,7 @@
       }
     },
     "address": "https://idlefantasy.tristinbaker.xyz/fdroid/repo",
-    "timestamp": 1786882451413,
+    "timestamp": 1786964407767,
     "categories": {
       "Games": {
         "name": {
@@ -31,7 +31,7 @@
           "Games"
         ],
         "issueTracker": "https://github.com/tristinbaker/IdleFantasy/issues",
-        "lastUpdated": 1786882413309,
+        "lastUpdated": 1786964374618,
         "license": "GPL-3.0-only",
         "sourceCode": "https://github.com/tristinbaker/IdleFantasy",
         "screenshots": {
@@ -140,6 +140,56 @@
         "preferredSigner": "99a980a934cb0149bfbdd5f4358471ffe69302e0467bae4d8574d4feeda34010"
       },
       "versions": {
+        "c3a1f84631faa3b772304d14e4b415992bb2f966ec4fbb287206f24923f8e5fd": {
+          "added": 1786964374618,
+          "file": {
+            "name": "/com.tristinbaker.idlefantasy_136.apk",
+            "sha256": "c3a1f84631faa3b772304d14e4b415992bb2f966ec4fbb287206f24923f8e5fd",
+            "size": 9449530
+          },
+          "manifest": {
+            "nativecode": [
+              "arm64-v8a",
+              "armeabi-v7a",
+              "x86",
+              "x86_64"
+            ],
+            "versionName": "1.13.9",
+            "versionCode": 136,
+            "usesSdk": {
+              "minSdkVersion": 26,
+              "targetSdkVersion": 35
+            },
+            "signer": {
+              "sha256": [
+                "99a980a934cb0149bfbdd5f4358471ffe69302e0467bae4d8574d4feeda34010"
+              ]
+            },
+            "usesPermission": [
+              {
+                "name": "android.permission.POST_NOTIFICATIONS"
+              },
+              {
+                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
+              },
+              {
+                "name": "android.permission.WAKE_LOCK"
+              },
+              {
+                "name": "android.permission.USE_EXACT_ALARM"
+              },
+              {
+                "name": "android.permission.SCHEDULE_EXACT_ALARM"
+              },
+              {
+                "name": "com.tristinbaker.idlefantasy.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+              }
+            ]
+          },
+          "whatsNew": {
+            "en-US": "• New Slayer Plateskirt in the slayer shop and Tower Plateskirt in the floor 150 milestone, granted retroactively if you already claimed it (thanks wallsocket-boop!)\n• The Skills and Combat tabs now show a badge and count when a skill is ready to prestige, with a toggle in Settings to turn it off (thanks Michaelomh!)\n• Updated French, German, Italian, Russian, and Chinese translations (thanks MarcMush and all translators!)\n• Infinite Tower milestone descriptions are now translatable and use your"
+          }
+        },
         "371c1ada4d8c8f18ad0c9ab2b343cd40259b649db4a43f195d188f1f5daa4a08": {
           "added": 1786882413309,
           "file": {
