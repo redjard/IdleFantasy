@@ -109,10 +109,17 @@
 <li><a href="#staticdynamically-generated-pages">Static/Dynamically-generated pages</a></li>
 </ul>
 </li>
-<li><a href="#buildingcompiling-the-wiki">Building/Compiling the Wiki</a></li>
+<li><a href="#building-from-source">Building from source</a><ul>
+<li><a href="#1-activate-the-virtual-environment">1. Activate the virtual environment</a></li>
+<li><a href="#2-install-dependencies-required-packages">2. Install dependencies / required packages</a></li>
+<li><a href="#3-usage">3. Usage</a></li>
+</ul>
+</li>
 <li><a href="#wiki-code-structure">Wiki code structure</a></li>
-<li><a href="#contributing-process">Contributing process</a></li>
+<li><a href="#contributing-process">Contributing process</a><ul>
 <li><a href="#pull-request-guides">Pull request guides</a></li>
+</ul>
+</li>
 <li><a href="#additional-topics">Additional topics</a></li>
 </ul>
 <h2 id="how-the-wiki-works">How the wiki works</h2>
@@ -135,20 +142,58 @@
 <h3 id="staticdynamically-generated-pages">Static/Dynamically-generated pages</h3>
 <p>Whenever we refer to static vs dynamically-generated pages, this refers not to the content within pages but how the pages are defined. If pages are "hardcoded" in the <code>add_static_pages</code> function, these are static, whereas generated pages will produce an unknown amount of pages like with each individual boss page for which the number of pages change as bosses are added to the game.</p>
 <p>For more information, see <a href="wiki_page_types.html#">Types of Wiki Pages</a>.</p>
-<h2 id="buildingcompiling-the-wiki">Building/Compiling the Wiki</h2>
-<p>To build the wiki, you'll need to set up an appropriate Python environment in the root directory. For information about setting up virtual environments, see <a href="https://www.geeksforgeeks.org/python/create-virtual-environment-using-venv-python/">this tutorial</a> (make sure to call it .venv to have it be gitignored).</p>
-<p>Then, make sure you've installed all packages shown in <code>wiki/requirements.txt</code>.</p>
-<p>From there, you can run the following command to see what you can do:</p>
-<pre><code class="language-bash"># Ensure you are currently at the root folder for the repository
-# Activate the virtual environment (Only run in Windows terminal)
-.venv/Scripts/activate
-# Activate the virtual environment (Only run in bash terminal)
-source .venv/bin/activate
-# See help information for program
-python -m wiki.src -h
+<h2 id="building-from-source">Building from source</h2>
+<p>To build the wiki, you'll need to set up an appropriate Python environment in the root directory. For information about setting up virtual environments, see <a href="https://www.geeksforgeeks.org/python/create-virtual-environment-using-venv-python/">this tutorial</a>. 
+<em>Make sure to call your virtual environment <code>.venv</code> to have it be gitignored).</em></p>
+<h3 id="1-activate-the-virtual-environment">1. Activate the virtual environment</h3>
+<ul>
+<li>If you are using Mac or Gnu/Linux you are probably POSIX. </li>
+<li>If your shell is missing, see the <a href="https://docs.python.org/3/library/venv.html#how-venvs-work">Python venv documentation</a>.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Shell</th>
+<th>Command to activate virtual environment</th>
+</tr>
+</thead>
+<tbody>
+<tr id="posix">
+<td>POSIX</td>
+<td>bash/zsh</td>
+<td><code>$ source .venv/bin/activate</code></td>
+</tr>
+<tr id="windows">
+<td>Windows</td>
+<td>cmd.exe</td>
+<td><code>C:\&gt; .venv\Scripts\activate.bat</code></td>
+</tr>
+<tr id="windows">
+<td>Windows</td>
+<td>Powershell</td>
+<td><code>PS C:\&gt; .venv\Scripts\Activate.ps1</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-install-dependencies-required-packages">2. Install dependencies / required packages</h3>
+<pre><code class="language-bash">pip install -r wiki/requirements.txt
 </code></pre>
-<p>The main command you'll need use is <code>python -m wiki.src write-html</code>. This writes out the HTML version of the wiki into <code>out/IdleFantasy-site</code>. You can then open any of the HTML pages and the website should come up. If you're using Pycharm, I'd recommend opening it using the Live Preview option which should update things more seamlessly.</p>
-<p><code>python -m wiki.src validity</code> is the next most common command which you can use to validate the wiki and perform several tests that can help you pick up errors</p>
+<p>Make sure you've installed all packages shown in <code>wiki/requirements.txt</code>. You can do this by running the above command in root folder for the repository.</p>
+<h3 id="3-usage">3. Usage</h3>
+<p>If you have sucesfully completed the above instructions, you should now be ready to modify and compile the wiki. </p>
+<p>This section contains instruction and detail around the various commands you can use to assist you with this, you can also always see the available commands, and what they do from the command line with the following command:</p>
+<pre><code class="language-bash">python -m wiki.src -h
+</code></pre>
+<h4 id="compiling-the-wiki">Compiling the wiki</h4>
+<pre><code class="language-bash">python -m wiki.src write-html
+</code></pre>
+<p>This is the main command you'll need use, it creates the HTML version of the wiki in <code>out/IdleFantasy-site</code>, and you will need to re-run it every time you make any changes to the source files to update the output. You can then open any of the HTML pages and the website should come up.</p>
+<p>If you're using Pycharm, you can open it using the live preview option, which should update things more seamlessly.</p>
+<h4 id="validating-the-wiki">Validating the wiki</h4>
+<pre><code class="language-bash">python -m wiki.src validity
+</code></pre>
+<p>You can use the above command to validate the wiki and perform several tests that can help you pick up errors.</p>
 <h2 id="wiki-code-structure">Wiki code structure</h2>
 <p>The following code files are used as follows in the wiki:</p>
 <ul>
@@ -163,7 +208,7 @@ python -m wiki.src -h
 <p>If you notice larger issues/inaccuracies that might take some time to fix, you should create an issue beforehand and mention that you're planning on making the changes. This makes sure that there aren't multiple people working on the same issue (without knowing) and also means that the issue can be referenced/tracked.</p>
 <p>If you want to make a number of new pages or significant changes (especially dynamically-generated ones) in order to improve the wiki, then you should open a discussion to give the opportunity for community involvement.</p>
 <p>Additionally, you might notice a number of #Todo items in the wiki code. These are also great places to look for things that need doing that we maybe just haven't got around to sorting out yet.</p>
-<h2 id="pull-request-guides">Pull request guides</h2>
+<h3 id="pull-request-guides">Pull request guides</h3>
 <p>The guides below will show you an example of editing the wiki which you might find helpful to wrap your head around how things work:</p>
 <ul>
 <li><a href="https://github.com/tristinbaker/IdleFantasy/pull/1353">Guide: Fixing an out-of-date wiki page</a> - In this detailed guide, I go over editing a couple pages in the wiki. This is probably the most common level of detail you'll need to edit a page.</li>
