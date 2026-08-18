@@ -59,6 +59,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import android.content.Context
+import com.fantasyidler.BuildConfig
 import com.fantasyidler.R
 import com.fantasyidler.repository.PrestigeActionResult
 import com.fantasyidler.repository.PrestigeBoosts
@@ -309,7 +310,7 @@ fun PrestigeDetailScreen(
                             playerRace = state.playerRace,
                             // Hidden nodes stay a mystery: a banner nudge instead of the detail sheet.
                             onNodeTap  = { node ->
-                                if (node.prereqLocked) banner = context.getString(R.string.prestige_node_hidden)
+                                if (node.prereqLocked && !BuildConfig.DEBUG) banner = context.getString(R.string.prestige_node_hidden)
                                 else selectedNode = path.key to node
                             },
                         )
@@ -506,7 +507,7 @@ private fun NodeCircle(node: PrestigeNodeUi, onTap: () -> Unit) {
                 node.owned -> Icon(Icons.Filled.Check, contentDescription = null, tint = contentColor, modifier = Modifier.size(22.dp))
                 node.raceLocked -> Icon(Icons.Filled.Lock, contentDescription = null, tint = contentColor, modifier = Modifier.size(18.dp))
                 // Nodes past the next unowned tier hide behind "?" until the path reaches them.
-                node.prereqLocked -> Text(
+                node.prereqLocked && !BuildConfig.DEBUG -> Text(
                     text  = "?",
                     style = MaterialTheme.typography.titleSmall,
                     color = contentColor,
