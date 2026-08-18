@@ -654,6 +654,18 @@ class PlayerRepository @Inject constructor(
         PrestigeActionResult.SUCCESS
     }
 
+    suspend fun debugChangeRaceFree(race: String) {
+        val player = getOrCreatePlayer()
+        val flags: PlayerFlags = json.decodeFromString(player.flags)
+        val prunedNodes = flags.prestigeNodes.mapValues { (skill, ids) ->
+            val nodesById = gameData.prestigeTrees[skill]?.paths
+                ?.flatMap { it.nodes }?.associateBy { it.id }.orEmpty()
+            ids.filter { id -> nodesById[id]?.race.let { r -> r == null || r == race.lowercase() } }
+        }.filterValues { it.isNotEmpty() }
+        val updatedFlags = flags.copy(characterRace = race, prestigeNodes = prunedNodes)
+        playerDao.upsert(player.copy(flags = json.encode<PlayerFlags>(updatedFlags)))
+    }
+
     suspend fun dismissCharacterSetup() {
         val player = getOrCreatePlayer()
         val flags: PlayerFlags = json.decodeFromString(player.flags)

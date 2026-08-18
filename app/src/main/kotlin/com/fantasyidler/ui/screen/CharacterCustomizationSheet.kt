@@ -58,6 +58,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import com.fantasyidler.BuildConfig
 import com.fantasyidler.R
 import com.fantasyidler.ui.theme.ScaledSheetContent
 
@@ -569,6 +570,12 @@ fun CharacterCustomizationSheet(
                                         showRaceConfirm = false
                                         onSave(skin, hair, hairColor, eye, beard, beardColor, selectedRace, false)
                                     }) { Text(stringResource(R.string.race_change_pay_coins)) }
+                                }
+                                if (BuildConfig.DEBUG) {
+                                    TextButton(onClick = {
+                                        showRaceConfirm = false
+                                        onSave(skin, hair, hairColor, eye, beard, beardColor, selectedRace, false)
+                                    }) { Text("[Debug] Change (Free)") }
                                 }
                             }
                         }

@@ -23,6 +23,7 @@ import com.fantasyidler.data.json.ThievingNpcData
 import com.fantasyidler.data.json.TradeRouteData
 import com.fantasyidler.data.json.TreeData
 import android.content.Context
+import com.fantasyidler.BuildConfig
 import com.fantasyidler.data.json.BlessingType
 import com.fantasyidler.data.model.EquipSlot
 import com.fantasyidler.data.model.PlayerFlags
@@ -474,6 +475,11 @@ class InventoryViewModel @Inject constructor(
                 characterBeardStyle = beardStyle,
                 characterBeardColor = beardColor,
             ))
+            // Free race change during debugging
+            if (BuildConfig.DEBUG) {
+                playerRepo.debugChangeRaceFree(race)
+                return@launch
+            }
             // Race changes cost a Race Change Token or 10M coins (ironman: one legacy change, then locked).
             when (playerRepo.changeCharacterRace(race, useToken)) {
                 PrestigeActionResult.LOCKED ->
