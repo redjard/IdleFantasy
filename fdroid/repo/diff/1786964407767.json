@@ -8,6 +8,7 @@
         "lastUpdated": 1787011528955
       },
       "versions": {
+        "c3a1f84631faa3b772304d14e4b415992bb2f966ec4fbb287206f24923f8e5fd": null,
         "49a31174aeeb60d67191dcef9da2010dfba2f4926ca66767538cdf4ed7585bd7": {
           "added": 1787011528955,
           "file": {
@@ -56,56 +57,6 @@
           },
           "whatsNew": {
             "en-US": "• Crafting quantity preview now includes XP boost, blessing, pet, and tool bonuses, matching the queue and what you actually receive\n• Bonuses tab rows no longer squeeze into unreadable columns on small screens\n• Session Active banner on the Skills page now translates activity names (courses, trade routes, trees, thieving targets)\n• Non-combat skill screens now show when the session queue is full instead of failing silently (thanks Michaelomh!)\n• The Profile screen now remembers which tab you we"
-          }
-        },
-        "371c1ada4d8c8f18ad0c9ab2b343cd40259b649db4a43f195d188f1f5daa4a08": {
-          "added": 1786882413309,
-          "file": {
-            "name": "/com.tristinbaker.idlefantasy_135.apk",
-            "sha256": "371c1ada4d8c8f18ad0c9ab2b343cd40259b649db4a43f195d188f1f5daa4a08",
-            "size": 9289606
-          },
-          "manifest": {
-            "nativecode": [
-              "arm64-v8a",
-              "armeabi-v7a",
-              "x86",
-              "x86_64"
-            ],
-            "versionName": "1.13.8",
-            "versionCode": 135,
-            "usesSdk": {
-              "minSdkVersion": 26,
-              "targetSdkVersion": 35
-            },
-            "signer": {
-              "sha256": [
-                "99a980a934cb0149bfbdd5f4358471ffe69302e0467bae4d8574d4feeda34010"
-              ]
-            },
-            "usesPermission": [
-              {
-                "name": "android.permission.POST_NOTIFICATIONS"
-              },
-              {
-                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
-              },
-              {
-                "name": "android.permission.WAKE_LOCK"
-              },
-              {
-                "name": "android.permission.USE_EXACT_ALARM"
-              },
-              {
-                "name": "android.permission.SCHEDULE_EXACT_ALARM"
-              },
-              {
-                "name": "com.tristinbaker.idlefantasy.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-              }
-            ]
-          },
-          "whatsNew": {
-            "en-US": "• Fixed the Skills tab quest counter counting bury-any-bones guild quests once per bone type, making 4 remaining quests show as 20\n• Fixed the Golden Goose pet showing +10% XP in the pet collection; it now correctly shows +10% Coins\n• Made 166 item names translatable that were previously locked to English (thanks MarcMush!)\n• Many more texts now follow your language: session collect dialog titles, loot and reward names, queue and notification labels, quest chips in skill sheets, bestiary headers"
           }
         }
       }

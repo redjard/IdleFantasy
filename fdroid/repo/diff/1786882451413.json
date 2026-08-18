@@ -1,19 +1,19 @@
 {
   "repo": {
-    "timestamp": 1786964407767
+    "timestamp": 1787011563971
   },
   "packages": {
     "com.tristinbaker.idlefantasy": {
       "metadata": {
-        "lastUpdated": 1786964374618
+        "lastUpdated": 1787011528955
       },
       "versions": {
-        "c3a1f84631faa3b772304d14e4b415992bb2f966ec4fbb287206f24923f8e5fd": {
-          "added": 1786964374618,
+        "49a31174aeeb60d67191dcef9da2010dfba2f4926ca66767538cdf4ed7585bd7": {
+          "added": 1787011528955,
           "file": {
-            "name": "/com.tristinbaker.idlefantasy_136.apk",
-            "sha256": "c3a1f84631faa3b772304d14e4b415992bb2f966ec4fbb287206f24923f8e5fd",
-            "size": 9449530
+            "name": "/com.tristinbaker.idlefantasy_137.apk",
+            "sha256": "49a31174aeeb60d67191dcef9da2010dfba2f4926ca66767538cdf4ed7585bd7",
+            "size": 9520686
           },
           "manifest": {
             "nativecode": [
@@ -22,8 +22,8 @@
               "x86",
               "x86_64"
             ],
-            "versionName": "1.13.9",
-            "versionCode": 136,
+            "versionName": "1.13.10",
+            "versionCode": 137,
             "usesSdk": {
               "minSdkVersion": 26,
               "targetSdkVersion": 35
@@ -55,7 +55,7 @@
             ]
           },
           "whatsNew": {
-            "en-US": "• New Slayer Plateskirt in the slayer shop and Tower Plateskirt in the floor 150 milestone, granted retroactively if you already claimed it (thanks wallsocket-boop!)\n• The Skills and Combat tabs now show a badge and count when a skill is ready to prestige, with a toggle in Settings to turn it off (thanks Michaelomh!)\n• Updated French, German, Italian, Russian, and Chinese translations (thanks MarcMush and all translators!)\n• Infinite Tower milestone descriptions are now translatable and use your"
+            "en-US": "• Crafting quantity preview now includes XP boost, blessing, pet, and tool bonuses, matching the queue and what you actually receive\n• Bonuses tab rows no longer squeeze into unreadable columns on small screens\n• Session Active banner on the Skills page now translates activity names (courses, trade routes, trees, thieving targets)\n• Non-combat skill screens now show when the session queue is full instead of failing silently (thanks Michaelomh!)\n• The Profile screen now remembers which tab you we"
           }
         }
       }
