@@ -25,8 +25,8 @@ data class PrestigeNodeData(
     val cost: Int,
     val effect: String,
     val value: Double = 0.0,
-    /** Lowercase race key ("human", "elf", ...) this node is locked to, or null for all races. */
-    val race: String? = null,
+    /** Lowercase race keys ("human", "elf", ...) this node is locked to, or null for all races. */
+    val races: List<String>? = null,
 )
 
 /** An ordered tier chain: each node requires the previous node in the same path. */

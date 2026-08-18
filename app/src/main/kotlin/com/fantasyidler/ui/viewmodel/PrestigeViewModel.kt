@@ -9,7 +9,7 @@ import com.fantasyidler.repository.BoostRepository
 import com.fantasyidler.repository.GameDataRepository
 import com.fantasyidler.repository.PlayerRepository
 import com.fantasyidler.repository.PrestigeActionResult
-import com.fantasyidler.repository.PrestigeBoosts
+import com.fantasyidler.simulator.PrestigeBoosts
 import com.fantasyidler.simulator.PrestigePoints
 import com.fantasyidler.simulator.XpTable
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,7 +28,7 @@ data class PrestigeNodeUi(
     val cost: Int,
     val effect: String,
     val value: Double,
-    val race: String?,
+    val races: List<String>?,
     val tier: Int,
     val owned: Boolean,
     val raceLocked: Boolean,
@@ -100,7 +100,7 @@ class PrestigeDetailViewModel @Inject constructor(
                             cost         = node.cost,
                             effect       = node.effect,
                             value        = node.value,
-                            race         = node.race,
+                            races        = node.races,
                             tier         = index + 1,
                             owned        = node.id in owned,
                             raceLocked   = !raceOk,

@@ -30,7 +30,7 @@ import com.fantasyidler.data.model.PlayerFlags
 import com.fantasyidler.data.model.Skills
 import com.fantasyidler.repository.BoostRepository
 import com.fantasyidler.repository.PrestigeActionResult
-import com.fantasyidler.repository.PrestigeBoosts
+import com.fantasyidler.simulator.PrestigeBoosts
 import com.fantasyidler.repository.ChurchRepository
 import com.fantasyidler.repository.GameDataRepository
 import com.fantasyidler.simulator.CombatSimulator

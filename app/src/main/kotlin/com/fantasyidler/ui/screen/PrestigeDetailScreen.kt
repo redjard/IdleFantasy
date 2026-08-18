@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -55,76 +54,22 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import android.content.Context
 import com.fantasyidler.BuildConfig
 import com.fantasyidler.R
 import com.fantasyidler.repository.PrestigeActionResult
-import com.fantasyidler.repository.PrestigeBoosts
 import com.fantasyidler.ui.viewmodel.PrestigeDetailViewModel
 import com.fantasyidler.ui.viewmodel.PrestigeNodeUi
 import com.fantasyidler.ui.viewmodel.PrestigePathUi
 import com.fantasyidler.util.GameStrings
 import com.fantasyidler.util.formatDurationMs
-import com.fantasyidler.util.formatXp
-import com.fantasyidler.util.stringByName
-import com.fantasyidler.util.toTitleCase
 
 private val TIER_NUMERALS = listOf("I", "II", "III", "IV", "V")
 
-/** "Purer Ore", "XP Boost", "Keen Eyes"... skill-specific name first, then generic path name. */
-private fun pathDisplayName(context: Context, skill: String, pathKey: String): String =
-    context.stringByName("prestige_path_${skill}_${pathKey}")
-        ?: context.stringByName("prestige_path_${pathKey}")
-        ?: pathKey.toTitleCase()
-
 private fun nodeDisplayName(context: Context, skill: String, pathKey: String, tier: Int): String =
-    "${pathDisplayName(context, skill, pathKey)} ${TIER_NUMERALS.getOrElse(tier - 1) { "$tier" }}"
-
-private fun Double.trimmed(): String =
-    if (this % 1.0 == 0.0) toInt().toString() else toString()
-
-@Composable
-private fun effectDescription(node: PrestigeNodeUi): String = when (node.effect) {
-    PrestigeBoosts.XP_PCT            -> stringResource(R.string.prestige_effect_xp_pct, node.value.toInt())
-    PrestigeBoosts.YIELD_PCT         -> stringResource(R.string.prestige_effect_yield_pct, node.value.toInt())
-    PrestigeBoosts.FLOW_RATE         -> stringResource(R.string.prestige_effect_flow_rate, node.value.trimmed())
-    PrestigeBoosts.FLOW_INTERVAL_REDUCTION -> stringResource(R.string.prestige_effect_flow_interval, node.value.toInt())
-    PrestigeBoosts.COMBAT_STAT_FLAT  -> stringResource(R.string.prestige_effect_combat_stat, node.value.toInt())
-    PrestigeBoosts.SESSION_FLOOR_MIN -> stringResource(R.string.prestige_effect_session_floor, node.value.trimmed())
-    PrestigeBoosts.CAPE_SCALING      -> stringResource(R.string.prestige_effect_cape_scaling, node.value.toInt())
-    PrestigeBoosts.BONUS_ROLL_PCT    -> stringResource(R.string.prestige_effect_bonus_roll, node.value.toInt())
-    PrestigeBoosts.COIN_PCT          -> stringResource(R.string.prestige_effect_coin_pct, node.value.toInt())
-    PrestigeBoosts.CROP_ROTATION_PCT -> stringResource(R.string.prestige_effect_crop_rotation, node.value.toInt())
-    PrestigeBoosts.CROP_ROTATION_ALWAYS -> stringResource(R.string.prestige_effect_crop_rotation_always)
-    PrestigeBoosts.TOOL_EFF_PCT      -> stringResource(R.string.prestige_effect_tool_eff, node.value.toInt())
-    PrestigeBoosts.SUCCESS_CHANCE_PCT -> stringResource(R.string.prestige_effect_success_chance, node.value.toInt())
-    PrestigeBoosts.RECLAIM_PCT       -> stringResource(R.string.prestige_effect_reclaim, node.value.toInt())
-    PrestigeBoosts.HEAL_PCT          -> stringResource(R.string.prestige_effect_heal, node.value.toInt())
-    PrestigeBoosts.DEATH_KEEP_PCT    -> stringResource(R.string.prestige_effect_death_keep, node.value.toInt())
-    PrestigeBoosts.QUEUE_SLOT        -> stringResource(R.string.prestige_effect_queue_slot, node.value.toInt())
-    PrestigeBoosts.PET_BOOST_PCT     -> stringResource(R.string.prestige_effect_pet_boost, node.value.toInt())
-    PrestigeBoosts.BLESSING_DURATION_PCT -> stringResource(R.string.prestige_effect_blessing_duration, node.value.toInt())
-    PrestigeBoosts.BLESSING_COST_PCT -> stringResource(R.string.prestige_effect_blessing_cost, node.value.toInt())
-    PrestigeBoosts.POTION_BONUS_FLAT -> stringResource(R.string.prestige_effect_potion_bonus, node.value.toInt())
-    PrestigeBoosts.INPUT_SAVE_PCT    -> stringResource(R.string.prestige_effect_input_save, node.value.toInt())
-    PrestigeBoosts.BUILDER_DISCOUNT_PCT -> stringResource(R.string.prestige_effect_builder_discount, node.value.toInt())
-    PrestigeBoosts.SELL_PRICE_PCT    -> stringResource(R.string.prestige_effect_sell_price, node.value.toInt())
-    else -> ""
-}
-
-@Composable
-private fun raceDisplayName(race: String): String = when (race) {
-    "human"    -> stringResource(R.string.character_race_human)
-    "elf"      -> stringResource(R.string.character_race_elf)
-    "dwarf"    -> stringResource(R.string.character_race_dwarf)
-    "halfling" -> stringResource(R.string.character_race_halfling)
-    "gnome"    -> stringResource(R.string.character_race_gnome)
-    "orc"      -> stringResource(R.string.character_race_orc)
-    else       -> race.toTitleCase()
-}
+    "${GameStrings.prestigePathDisplayName(context, skill, pathKey)} ${TIER_NUMERALS.getOrElse(tier - 1) { "$tier" }}"
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -198,15 +143,15 @@ fun PrestigeDetailScreen(
                         Icon(Icons.Filled.Check, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                     }
                 }
-                node.race?.let { race ->
+                node.races?.let { races ->
                     Text(
-                        text  = stringResource(R.string.prestige_node_race_only, raceDisplayName(race)),
+                        text  = stringResource(R.string.prestige_node_race_only, GameStrings.raceNames(context, races)),
                         style = MaterialTheme.typography.labelMedium,
                         color = if (node.raceLocked) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.tertiary,
                     )
                 }
                 Spacer(Modifier.height(8.dp))
-                Text(effectDescription(node), style = MaterialTheme.typography.bodyLarge)
+                Text(GameStrings.prestigeEffectDesc(context, node.effect, node.value), style = MaterialTheme.typography.bodyLarge)
                 Spacer(Modifier.height(8.dp))
                 Text(
                     text  = stringResource(R.string.prestige_node_cost, node.cost),
@@ -221,7 +166,10 @@ fun PrestigeDetailScreen(
                         color = MaterialTheme.colorScheme.primary,
                     )
                     node.raceLocked -> Text(
-                        text  = stringResource(R.string.prestige_node_race_only, raceDisplayName(node.race ?: "")),
+                        text  = stringResource(
+                            R.string.prestige_node_race_only,
+                            node.races?.let { GameStrings.raceNames(context, it) }.orEmpty(),
+                        ),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -400,7 +348,9 @@ private fun PathBranch(
     onNodeTap: (PrestigeNodeUi) -> Unit,
 ) {
     val context = LocalContext.current
-    val raceLock = path.nodes.firstOrNull()?.race?.takeIf { path.nodes.all { n -> n.race != null } }
+    val racesLock = path.nodes.firstOrNull()?.races?.takeIf { first ->
+        path.nodes.all { it.races?.toSet() == first.toSet() }
+    }
     Column(Modifier.fillMaxWidth().padding(bottom = 4.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             // Right-angle branch connector off the trunk.
@@ -413,16 +363,16 @@ private fun PathBranch(
             )
             Spacer(Modifier.width(6.dp))
             Text(
-                text  = pathDisplayName(context, skill, path.key),
+                text  = GameStrings.prestigePathDisplayName(context, skill, path.key),
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.Bold,
-                color = if (raceLock != null && raceLock != playerRace)
+                color = if (racesLock != null && playerRace !in racesLock)
                     MaterialTheme.colorScheme.onSurfaceVariant
                 else MaterialTheme.colorScheme.onSurface,
             )
-            if (raceLock != null) {
+            if (racesLock != null) {
                 Spacer(Modifier.width(6.dp))
-                if (raceLock != playerRace) {
+                if (playerRace !in racesLock) {
                     Icon(
                         Icons.Filled.Lock,
                         contentDescription = null,
@@ -432,24 +382,25 @@ private fun PathBranch(
                     Spacer(Modifier.width(2.dp))
                 }
                 Text(
-                    text  = raceDisplayName(raceLock),
+                    text  = GameStrings.raceNames(context, racesLock),
                     style = MaterialTheme.typography.labelSmall,
-                    color = if (raceLock == playerRace) MaterialTheme.colorScheme.tertiary
+                    color = if (playerRace in racesLock) MaterialTheme.colorScheme.tertiary
                             else MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             } else {
                 // Mixed paths (race-locked tiers appended to an open path) still surface
                 // their races here, so e.g. the Gnome farming bonus is findable in the tree.
                 // Human is skipped to match raceProficiencies (XP mastery everywhere).
-                path.nodes.mapNotNull { it.race }.distinct().filter { it != "human" }.forEach { race ->
-                    Spacer(Modifier.width(6.dp))
-                    Text(
-                        text  = raceDisplayName(race),
-                        style = MaterialTheme.typography.labelSmall,
-                        color = if (race == playerRace) MaterialTheme.colorScheme.tertiary
-                                else MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
+                path.nodes.mapNotNull { it.races }
+                    .flatMap { it.filter { race -> race != "human" } }.distinct().forEach { race ->
+                        Spacer(Modifier.width(6.dp))
+                        Text(
+                            text  = GameStrings.raceName(context, race),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = if (playerRace == race) MaterialTheme.colorScheme.tertiary
+                                    else MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
             }
         }
         Row(

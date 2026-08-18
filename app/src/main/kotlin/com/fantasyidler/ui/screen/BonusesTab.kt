@@ -30,7 +30,7 @@ import com.fantasyidler.data.model.Skills
 import com.fantasyidler.simulator.SkillSimulator
 import com.fantasyidler.ui.viewmodel.InventoryViewModel
 import com.fantasyidler.repository.TownRepository
-import com.fantasyidler.repository.PrestigeBoosts
+import com.fantasyidler.simulator.PrestigeBoosts
 import com.fantasyidler.repository.resolveCapeMultiplier
 import com.fantasyidler.repository.isGuildCapeForSkill
 import com.fantasyidler.repository.resolveOwnedCapeKeysForSkill

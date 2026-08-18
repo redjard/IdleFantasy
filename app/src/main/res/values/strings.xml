@@ -1982,7 +1982,7 @@
     <!-- Translator note: %1$d = node cost in points -->
     <string name="prestige_node_cost">Cost: %1$d points</string>
     <string name="prestige_node_owned">Purchased</string>
-    <!-- Translator note: %1$s = race name -->
+    <!-- Translator note: %1$s = list of race names -->
     <string name="prestige_node_race_only">%1$s only</string>
     <string name="prestige_node_prereq_locked">Requires the previous tier in this path.</string>
     <string name="prestige_node_hidden">Unlock the previous upgrade first.</string>

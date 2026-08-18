@@ -5,6 +5,7 @@ import com.fantasyidler.data.db.dao.PlayerDao
 import com.fantasyidler.data.db.dao.QuestProgressDao
 import com.fantasyidler.data.json.EquipmentData
 import com.fantasyidler.data.model.*
+import com.fantasyidler.simulator.PrestigeBoosts
 import com.fantasyidler.simulator.PrestigePoints
 import com.fantasyidler.simulator.SkillSimulator
 import com.fantasyidler.simulator.XpTable
@@ -607,7 +608,7 @@ class PlayerRepository @Inject constructor(
         val prunedNodes = flags.prestigeNodes.mapValues { (skill, ids) ->
             val nodesById = gameData.prestigeTrees[skill]?.paths
                 ?.flatMap { it.nodes }?.associateBy { it.id }.orEmpty()
-            ids.filter { id -> nodesById[id]?.race.let { r -> r == null || r == newRace } }
+            ids.filter { id -> nodesById[id]?.races.let { r -> r == null || newRace in r } }
         }.filterValues { it.isNotEmpty() }
         return flags.copy(characterRace = race, raceLastChangedAt = now, prestigeNodes = prunedNodes)
     }
@@ -660,7 +661,7 @@ class PlayerRepository @Inject constructor(
         val prunedNodes = flags.prestigeNodes.mapValues { (skill, ids) ->
             val nodesById = gameData.prestigeTrees[skill]?.paths
                 ?.flatMap { it.nodes }?.associateBy { it.id }.orEmpty()
-            ids.filter { id -> nodesById[id]?.race.let { r -> r == null || r == race.lowercase() } }
+            ids.filter { id -> nodesById[id]?.races.let { r -> r == null || race.lowercase() in r } }
         }.filterValues { it.isNotEmpty() }
         val updatedFlags = flags.copy(characterRace = race, prestigeNodes = prunedNodes)
         playerDao.upsert(player.copy(flags = json.encode<PlayerFlags>(updatedFlags)))
