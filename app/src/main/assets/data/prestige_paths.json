@@ -97,25 +97,6 @@
             "value": 200
           }
         ]
-      },
-      {
-        "key": "race_dwarf",
-        "nodes": [
-          {
-            "id": "mining_race_dwarf_1",
-            "cost": 3,
-            "effect": "yield_pct",
-            "value": 10,
-            "race": "dwarf"
-          },
-          {
-            "id": "mining_race_dwarf_2",
-            "cost": 4,
-            "effect": "yield_pct",
-            "value": 15,
-            "race": "dwarf"
-          }
-        ]
       }
     ]
   },
@@ -214,25 +195,6 @@
             "cost": 4,
             "effect": "tool_eff_pct",
             "value": 30,
-            "race": "elf"
-          }
-        ]
-      },
-      {
-        "key": "race_elf",
-        "nodes": [
-          {
-            "id": "fishing_race_elf_1",
-            "cost": 3,
-            "effect": "tool_eff_pct",
-            "value": 10,
-            "race": "elf"
-          },
-          {
-            "id": "fishing_race_elf_2",
-            "cost": 4,
-            "effect": "tool_eff_pct",
-            "value": 15,
             "race": "elf"
           }
         ]
@@ -753,25 +715,6 @@
             "race": "dwarf"
           }
         ]
-      },
-      {
-        "key": "race_dwarf",
-        "nodes": [
-          {
-            "id": "smithing_race_dwarf_1",
-            "cost": 3,
-            "effect": "input_save_pct",
-            "value": 10,
-            "race": "dwarf"
-          },
-          {
-            "id": "smithing_race_dwarf_2",
-            "cost": 4,
-            "effect": "input_save_pct",
-            "value": 15,
-            "race": "dwarf"
-          }
-        ]
       }
     ]
   },
@@ -902,25 +845,6 @@
             "effect": "yield_pct",
             "value": 15,
             "race": "halfling"
-          }
-        ]
-      },
-      {
-        "key": "race_orc",
-        "nodes": [
-          {
-            "id": "cooking_race_orc_1",
-            "cost": 3,
-            "effect": "heal_pct",
-            "value": 10,
-            "race": "orc"
-          },
-          {
-            "id": "cooking_race_orc_2",
-            "cost": 4,
-            "effect": "heal_pct",
-            "value": 15,
-            "race": "orc"
           }
         ]
       }
@@ -1128,25 +1052,6 @@
             "cost": 4,
             "effect": "input_save_pct",
             "value": 30,
-            "race": "elf"
-          }
-        ]
-      },
-      {
-        "key": "race_elf",
-        "nodes": [
-          {
-            "id": "crafting_race_elf_1",
-            "cost": 3,
-            "effect": "input_save_pct",
-            "value": 10,
-            "race": "elf"
-          },
-          {
-            "id": "crafting_race_elf_2",
-            "cost": 4,
-            "effect": "input_save_pct",
-            "value": 15,
             "race": "elf"
           }
         ]
@@ -1577,25 +1482,6 @@
         ]
       },
       {
-        "key": "race_dwarf",
-        "nodes": [
-          {
-            "id": "construction_race_dwarf_1",
-            "cost": 3,
-            "effect": "builder_discount_pct",
-            "value": 3,
-            "race": "dwarf"
-          },
-          {
-            "id": "construction_race_dwarf_2",
-            "cost": 4,
-            "effect": "builder_discount_pct",
-            "value": 6,
-            "race": "dwarf"
-          }
-        ]
-      },
-      {
         "key": "race_halfling",
         "nodes": [
           {
@@ -1710,25 +1596,6 @@
             "race": "orc"
           }
         ]
-      },
-      {
-        "key": "race_orc",
-        "nodes": [
-          {
-            "id": "attack_race_orc_1",
-            "cost": 3,
-            "effect": "combat_stat_flat",
-            "value": 3,
-            "race": "orc"
-          },
-          {
-            "id": "attack_race_orc_2",
-            "cost": 4,
-            "effect": "combat_stat_flat",
-            "value": 8,
-            "race": "orc"
-          }
-        ]
       }
     ]
   },
@@ -1804,25 +1671,6 @@
             "cost": 4,
             "effect": "combat_stat_flat",
             "value": 23,
-            "race": "orc"
-          }
-        ]
-      },
-      {
-        "key": "race_orc",
-        "nodes": [
-          {
-            "id": "strength_race_orc_1",
-            "cost": 3,
-            "effect": "combat_stat_flat",
-            "value": 3,
-            "race": "orc"
-          },
-          {
-            "id": "strength_race_orc_2",
-            "cost": 4,
-            "effect": "combat_stat_flat",
-            "value": 8,
             "race": "orc"
           }
         ]
@@ -2011,25 +1859,6 @@
             "cost": 4,
             "effect": "reclaim_pct",
             "value": 35,
-            "race": "elf"
-          }
-        ]
-      },
-      {
-        "key": "race_elf",
-        "nodes": [
-          {
-            "id": "ranged_race_elf_1",
-            "cost": 3,
-            "effect": "reclaim_pct",
-            "value": 10,
-            "race": "elf"
-          },
-          {
-            "id": "ranged_race_elf_2",
-            "cost": 4,
-            "effect": "reclaim_pct",
-            "value": 20,
             "race": "elf"
           }
         ]
@@ -2306,25 +2135,6 @@
         ]
       },
       {
-        "key": "race_elf",
-        "nodes": [
-          {
-            "id": "prayer_race_elf_1",
-            "cost": 3,
-            "effect": "blessing_duration_pct",
-            "value": 15,
-            "race": "elf"
-          },
-          {
-            "id": "prayer_race_elf_2",
-            "cost": 4,
-            "effect": "blessing_duration_pct",
-            "value": 25,
-            "race": "elf"
-          }
-        ]
-      },
-      {
         "key": "race_gnome",
         "nodes": [
           {
@@ -2443,25 +2253,6 @@
             "race": "dwarf"
           }
         ]
-      },
-      {
-        "key": "race_dwarf",
-        "nodes": [
-          {
-            "id": "mercantile_race_dwarf_1",
-            "cost": 3,
-            "effect": "sell_price_pct",
-            "value": 3,
-            "race": "dwarf"
-          },
-          {
-            "id": "mercantile_race_dwarf_2",
-            "cost": 4,
-            "effect": "sell_price_pct",
-            "value": 6,
-            "race": "dwarf"
-          }
-        ]
       }
     ]
   },
@@ -2560,25 +2351,6 @@
             "cost": 4,
             "effect": "slayer_points_pct",
             "value": 60,
-            "race": "orc"
-          }
-        ]
-      },
-      {
-        "key": "race_orc",
-        "nodes": [
-          {
-            "id": "slayer_race_orc_1",
-            "cost": 3,
-            "effect": "slayer_points_pct",
-            "value": 15,
-            "race": "orc"
-          },
-          {
-            "id": "slayer_race_orc_2",
-            "cost": 4,
-            "effect": "slayer_points_pct",
-            "value": 30,
             "race": "orc"
           }
         ]
