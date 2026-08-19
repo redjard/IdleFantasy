@@ -136,7 +136,7 @@ internal fun CraftSkillSheet(
         Skills.HERBLORE      -> craftingViewModel.herbloreRecipes
         Skills.CONSTRUCTION  -> craftingViewModel.constructionRecipes
         else                 -> craftingViewModel.jewelleryRecipes
-    }
+    }.filter { it.key !in craftState.hiddenRecipeKeys }
 
     var onlyCraftable    by remember { mutableStateOf(false) }
     var selectedCategory by remember { mutableStateOf<String?>(null) }

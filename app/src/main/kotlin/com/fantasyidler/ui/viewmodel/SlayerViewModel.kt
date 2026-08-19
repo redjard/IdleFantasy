@@ -65,10 +65,12 @@ data class SlayerUiState(
     val slayerEquippedWeapons: Map<String, EquipmentData> = emptyMap(),
     /** The weapon slot selected in the slayer weapon picker sheet. */
     val slayerSelectedWeaponSlot: String? = null,
-    /** Up to 3 pre-assigned future tasks. */
+    /** Pre-assigned future tasks, up to [maxForetellSlots]. */
     val foretelledTasks: List<SlayerTask> = emptyList(),
     /** Bone cost (units) for the next foretell slot. */
     val nextForetelCostUnits: Int = 10,
+    /** Foretell queue capacity: base 3, extended by Foresight prestige nodes. */
+    val maxForetellSlots: Int = 3,
 )
 
 @HiltViewModel
@@ -129,7 +131,7 @@ class SlayerViewModel @Inject constructor(
             val equippedWeapons = EquipSlot.WEAPON_SLOTS
                 .mapNotNull { slot -> equipped[slot]?.let { key -> gameData.equipment[key]?.let { slot to it } } }
                 .toMap()
-            val nextForetelCost = when (flags.foretelledTasks.size) { 0 -> 10; 1 -> 25; else -> 50 }
+            val nextForetelCost = slayerRepo.foretelCostUnits(flags.foretelledTasks.size)
             extra.copy(
                 isLoading             = false,
                 slayerLevel           = levels[Skills.SLAYER] ?: 1,
@@ -149,6 +151,7 @@ class SlayerViewModel @Inject constructor(
                 slayerEquippedWeapons = equippedWeapons,
                 foretelledTasks       = flags.foretelledTasks,
                 nextForetelCostUnits  = nextForetelCost,
+                maxForetellSlots      = slayerRepo.maxForetellSlots(flags),
             )
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), SlayerUiState())

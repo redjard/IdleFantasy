@@ -573,6 +573,8 @@ class CombatViewModel @Inject constructor(
                     attackSpeedSec      = weapon?.attackSpeed ?: CombatSimulator.BASE_ATTACK_SPEED_SEC,
                     eatThresholdPct     = flags.foodEatThresholdPct,
                     chronosMultiplier   = townRepo.playerSessionDurationMultiplier(flags),
+                    doubleHitChance     = boostRepo.doubleHitChance(flags),
+                    secondChance        = boostRepo.secondChanceActive(flags),
                 )
 
                 val framesJson = json.encodeToString(
@@ -772,6 +774,8 @@ class CombatViewModel @Inject constructor(
                     availableRunes     = if (bossRuneKey != null) inventory[bossRuneKey] ?: 0 else Int.MAX_VALUE,
                     attackSpeedSec     = bossWeapon?.attackSpeed ?: CombatSimulator.BASE_ATTACK_SPEED_SEC,
                     eatThresholdPct    = flags.foodEatThresholdPct,
+                    doubleHitChance     = boostRepo.doubleHitChance(flags),
+                    secondChance        = boostRepo.secondChanceActive(flags),
                 )
 
                 val framesJson = json.encodeToString(
@@ -999,6 +1003,8 @@ class CombatViewModel @Inject constructor(
                     eatThresholdPct     = flags.foodEatThresholdPct,
                     chronosMultiplier   = townRepo.playerSessionDurationMultiplier(flags),
                     random              = Random.Default,
+                    doubleHitChance     = boostRepo.doubleHitChance(flags),
+                    secondChance        = boostRepo.secondChanceActive(flags),
                 )
                 if (result.frames.none { it.died }) survived++
             }
@@ -1124,6 +1130,8 @@ class CombatViewModel @Inject constructor(
             attackSpeedSec      = weapon?.attackSpeed ?: CombatSimulator.BASE_ATTACK_SPEED_SEC,
             eatThresholdPct     = flags.foodEatThresholdPct,
             chronosMultiplier   = townRepo.playerSessionDurationMultiplier(flags),
+            doubleHitChance     = boostRepo.doubleHitChance(flags),
+            secondChance        = boostRepo.secondChanceActive(flags),
         )
         return result.frames.sumOf { it.xpGain.toLong() }
     }
@@ -1198,6 +1206,8 @@ class CombatViewModel @Inject constructor(
             availableRunes     = Int.MAX_VALUE,
             attackSpeedSec     = weapon?.attackSpeed ?: CombatSimulator.BASE_ATTACK_SPEED_SEC,
             eatThresholdPct    = flags.foodEatThresholdPct,
+            doubleHitChance     = boostRepo.doubleHitChance(flags),
+            secondChance        = boostRepo.secondChanceActive(flags),
         )
         return bossFrames.sumOf { it.xpGain.toLong() }
     }

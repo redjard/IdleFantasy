@@ -151,7 +151,7 @@ fun PrestigeDetailScreen(
                     )
                 }
                 Spacer(Modifier.height(8.dp))
-                Text(GameStrings.prestigeEffectDesc(context, node.effect, node.value), style = MaterialTheme.typography.bodyLarge)
+                Text(GameStrings.prestigeEffectDesc(context, node.effect, node.value, node.unlock), style = MaterialTheme.typography.bodyLarge)
                 Spacer(Modifier.height(8.dp))
                 Text(
                     text  = stringResource(R.string.prestige_node_cost, node.cost),

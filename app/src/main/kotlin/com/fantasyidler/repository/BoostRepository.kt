@@ -79,6 +79,36 @@ class BoostRepository @Inject constructor(
     fun prestigeXpPct(skill: String, flags: PlayerFlags): Int =
         effectTotal(skill, flags, PrestigeBoosts.XP_PCT).toInt()
 
+    /** Chance (0..1) of a second melee hit against a still-living enemy (orc Double Hit nodes). */
+    fun doubleHitChance(flags: PlayerFlags): Double =
+        effectTotal(com.fantasyidler.data.model.Skills.STRENGTH, flags, PrestigeBoosts.DOUBLE_HIT_PCT) / 100.0
+
+    /** True when missed melee accuracy rolls are rerolled once (attack Second Chance node). */
+    fun secondChanceActive(flags: PlayerFlags): Boolean =
+        effectTotal(com.fantasyidler.data.model.Skills.ATTACK, flags, PrestigeBoosts.SECOND_CHANCE) >= 1.0
+
+    /** Extra slayer foretell queue slots from Foresight nodes. */
+    fun foretellSlotBonus(flags: PlayerFlags): Int =
+        effectTotal(com.fantasyidler.data.model.Skills.SLAYER, flags, PrestigeBoosts.FORETELL_SLOTS).toInt()
+
+    /** True when dungeon kills also progress matching foretold tasks (Foresight final tier). */
+    fun slayerMultiTaskActive(flags: PlayerFlags): Boolean =
+        effectTotal(com.fantasyidler.data.model.Skills.SLAYER, flags, PrestigeBoosts.SLAYER_MULTI_TASK) >= 1.0
+
+    /** Recipe keys unlocked by owned unlock_recipe nodes (race-checked via activeNodes). */
+    fun unlockedRecipeKeys(flags: PlayerFlags): Set<String> =
+        trees.keys.flatMapTo(mutableSetOf()) { skill ->
+            PrestigeBoosts.activeNodes(trees, flags, skill)
+                .mapNotNull { (_, node) -> if (node.effect == PrestigeBoosts.UNLOCK_RECIPE) node.unlock else null }
+        }
+
+    /** Every recipe key gated behind an unlock_recipe node, owned or not. */
+    val gatedRecipeKeys: Set<String> by lazy {
+        trees.values.flatMapTo(mutableSetOf()) { tree ->
+            tree.paths.flatMap { p -> p.nodes.mapNotNull { it.unlock } }
+        }
+    }
+
     /** Multiplier on secondary drop chances (mining gem rolls). */
     fun bonusRollMultiplier(skill: String, flags: PlayerFlags): Double =
         1.0 + effectTotal(skill, flags, PrestigeBoosts.BONUS_ROLL_PCT) / 100.0

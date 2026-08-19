@@ -883,6 +883,8 @@
     <string name="item_magic_cape_name">Mantello Magico</string>
     <string name="item_magic_longbow_name">Arco Lungo Magico</string>
     <string name="item_magic_shortbow_name">Arco Magico</string>
+    <string name="item_elven_shortbow_name">Elven Shortbow</string> <!-- untranslated -->
+    <string name="item_elven_longbow_name">Elven Longbow</string> <!-- untranslated -->
     <string name="item_maple_shortbow_name">Arco d\'Acero</string>
     <string name="item_mercantile_guild_cape_name">Mantello dei Mercanti</string>
     <string name="item_mining_cape_name">Mantello Minerario</string>
@@ -1004,6 +1006,8 @@
     <string name="item_yew_longbow_desc">Grande arco in tasso.</string>
     <string name="item_magic_shortbow_desc">Piccolo arco in legno magico.</string>
     <string name="item_magic_longbow_desc">Grande arco in legno magico.</string>
+    <string name="item_elven_shortbow_desc">A swift bow strung with elven silk. Only elven hands know the fletching.</string> <!-- untranslated -->
+    <string name="item_elven_longbow_desc">A tall elven warbow of layered redwood. Only elven hands know the fletching.</string> <!-- untranslated -->
     <string name="item_tower_crossbow_name">Balestra della Torre</string>
     <string name="item_tower_crossbow_desc">Balestra altamente efficiente, in metallo estratto dalla Torre.</string>
     <string name="item_arcane_staff_desc">Bastone trovato nelle Rovine Arcane, impregnato del potere magico che ha annientato gli abitanti di questo luogo.</string>

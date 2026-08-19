@@ -259,6 +259,7 @@ fun SlayerScreen(
                 inventory            = state.inventory,
                 queueSize            = state.queueSize,
                 maxQueueSize         = state.maxQueueSize,
+                maxForetellSlots     = state.maxForetellSlots,
                 hasActiveTask        = state.activeTask != null,
                 onForetell           = viewModel::foretellTask,
                 onQueueTask          = viewModel::queueForetelledTaskDungeon,
@@ -437,6 +438,7 @@ private fun ForetellSection(
     inventory: Map<String, Int>,
     queueSize: Int,
     maxQueueSize: Int,
+    maxForetellSlots: Int,
     hasActiveTask: Boolean,
     onForetell: () -> Unit,
     onQueueTask: (SlayerTask) -> Unit,
@@ -490,7 +492,7 @@ private fun ForetellSection(
                     }
                 }
             }
-            if (foretelledTasks.size < 3) {
+            if (foretelledTasks.size < maxForetellSlots) {
                 Button(
                     onClick  = onForetell,
                     enabled  = hasActiveTask,

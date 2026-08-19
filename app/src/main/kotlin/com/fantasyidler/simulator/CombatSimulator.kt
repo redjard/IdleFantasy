@@ -50,6 +50,8 @@ object CombatSimulator {
         attackSpeedSec: Double = BASE_ATTACK_SPEED_SEC,
         eatThresholdPct: Int = 50,
         chronosMultiplier: Float = 1.0f,
+        doubleHitChance: Double = 0.0,
+        secondChance: Boolean = false,
         random: Random = Random.Default,
     ): SkillSimulator.Result {
         val speed = attackSpeedSec.coerceIn(1.2, BASE_ATTACK_SPEED_SEC)
@@ -177,7 +179,16 @@ object CombatSimulator {
                             if (rnd.nextDouble() < playerHitChance) rnd.nextInt(0, playerMaxHit + 1) else 0
                         } else 0
                     }
-                    else -> if (rnd.nextDouble() < playerHitChance) rnd.nextInt(0, playerMaxHit + 1) else 0
+                    else -> {
+                        var dmg = if (rnd.nextDouble() < playerHitChance) rnd.nextInt(0, playerMaxHit + 1)
+                                  else if (secondChance && rnd.nextDouble() < playerHitChance) rnd.nextInt(0, playerMaxHit + 1)
+                                  else 0
+                        // Double Hit only strikes a still-living enemy (no overkill carry).
+                        if (doubleHitChance > 0 && enemyHp - dmg > 0 &&
+                            rnd.nextDouble() < doubleHitChance && rnd.nextDouble() < playerHitChance
+                        ) dmg += rnd.nextInt(0, playerMaxHit + 1)
+                        dmg
+                    }
                 }
                 framePlayerHits += pDmg
                 enemyHp -= pDmg
@@ -356,6 +367,8 @@ object CombatSimulator {
         availableRunes: Int = Int.MAX_VALUE,
         attackSpeedSec: Double = BASE_ATTACK_SPEED_SEC,
         eatThresholdPct: Int = 50,
+        doubleHitChance: Double = 0.0,
+        secondChance: Boolean = false,
         random: Random = Random.Default,
     ): List<SessionFrame> {
         val speed = attackSpeedSec.coerceIn(1.2, BASE_ATTACK_SPEED_SEC)
@@ -450,7 +463,16 @@ object CombatSimulator {
                             if (rnd.nextDouble() < playerHitChance) rnd.nextInt(0, playerMax + 1) else 0
                         } else 0
                     }
-                    else -> if (rnd.nextDouble() < playerHitChance) rnd.nextInt(0, playerMax + 1) else 0
+                    else -> {
+                        var dmg = if (rnd.nextDouble() < playerHitChance) rnd.nextInt(0, playerMax + 1)
+                                  else if (secondChance && rnd.nextDouble() < playerHitChance) rnd.nextInt(0, playerMax + 1)
+                                  else 0
+                        // Double Hit only strikes a still-living boss (no overkill carry).
+                        if (doubleHitChance > 0 && currentBossHp - dmg > 0 &&
+                            rnd.nextDouble() < doubleHitChance && rnd.nextDouble() < playerHitChance
+                        ) dmg += rnd.nextInt(0, playerMax + 1)
+                        dmg
+                    }
                 }
                 currentBossHp -= pDmg
                 pHits.add(pDmg)

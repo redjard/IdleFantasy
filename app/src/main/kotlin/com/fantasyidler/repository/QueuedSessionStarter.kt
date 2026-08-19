@@ -658,6 +658,8 @@ class QueuedSessionStarter @Inject constructor(
                     blessingDefBonus   = (ChurchRepository.defBonus(flags) * prayerCapeMult).toInt(),
                     attackSpeedSec     = bossWeapon?.attackSpeed ?: CombatSimulator.BASE_ATTACK_SPEED_SEC,
                     eatThresholdPct    = flags.foodEatThresholdPct,
+                    doubleHitChance     = boostRepo.doubleHitChance(flags),
+                    secondChance        = boostRepo.secondChanceActive(flags),
                 )
                 val frameMs        = SkillSimulator.sessionDurationMs(agilityLevel, floorReductionMin, chronosMult) / 60L
                 val bossDurationMs = boss.durationMinutes * frameMs
@@ -769,6 +771,8 @@ class QueuedSessionStarter @Inject constructor(
                     attackSpeedSec      = weapon?.attackSpeed ?: CombatSimulator.BASE_ATTACK_SPEED_SEC,
                     eatThresholdPct     = flags.foodEatThresholdPct,
                     chronosMultiplier   = chronosMult,
+                    doubleHitChance     = boostRepo.doubleHitChance(flags),
+                    secondChance        = boostRepo.secondChanceActive(flags),
                 )
                 startSession(action, result, offline, backdateMs, levelAtStart)
             }
@@ -853,6 +857,8 @@ class QueuedSessionStarter @Inject constructor(
                     attackSpeedSec      = weapon?.attackSpeed ?: CombatSimulator.BASE_ATTACK_SPEED_SEC,
                     eatThresholdPct     = flags.foodEatThresholdPct,
                     chronosMultiplier   = chronosMult,
+                    doubleHitChance     = boostRepo.doubleHitChance(flags),
+                    secondChance        = boostRepo.secondChanceActive(flags),
                 )
                 sessionRepo.startSession(
                     skillName         = "tower",

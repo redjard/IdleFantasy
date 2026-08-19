@@ -414,6 +414,8 @@ class TowerViewModel @Inject constructor(
                     attackSpeedSec      = weaponAttackSpeed,
                     eatThresholdPct     = flags.foodEatThresholdPct,
                     chronosMultiplier   = townRepo.playerSessionDurationMultiplier(flags),
+                    doubleHitChance     = boostRepo.doubleHitChance(flags),
+                    secondChance        = boostRepo.secondChanceActive(flags),
                 )
 
                 // Runes are consumed after the session, not upfront.

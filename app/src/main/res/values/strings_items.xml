@@ -883,6 +883,8 @@
     <string name="item_magic_cape_name">Magic Cape</string>
     <string name="item_magic_longbow_name">Magic Longbow</string>
     <string name="item_magic_shortbow_name">Magic Shortbow</string>
+    <string name="item_elven_shortbow_name">Elven Shortbow</string>
+    <string name="item_elven_longbow_name">Elven Longbow</string>
     <string name="item_maple_shortbow_name">Maple Shortbow</string>
     <string name="item_mercantile_guild_cape_name">Mercantile Guild Cape</string>
     <string name="item_mining_cape_name">Mining Cape</string>
@@ -1004,6 +1006,8 @@
     <string name="item_yew_longbow_desc">A longbow crafted from yew logs.</string>
     <string name="item_magic_shortbow_desc">A shortbow crafted from magic logs.</string>
     <string name="item_magic_longbow_desc">A longbow crafted from magic logs.</string>
+    <string name="item_elven_shortbow_desc">A swift bow strung with elven silk. Only elven hands know the fletching.</string>
+    <string name="item_elven_longbow_desc">A tall elven warbow of layered redwood. Only elven hands know the fletching.</string>
     <string name="item_tower_crossbow_name">Tower Crossbow</string>
     <string name="item_tower_crossbow_desc">A precision crossbow wrought from tower metal.</string>
     <string name="item_arcane_staff_desc">A staff recovered from the Arcane Ruins, still humming with contained magical energy from the catastrophe that destroyed the spire above.</string>

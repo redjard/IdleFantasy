@@ -883,6 +883,8 @@
     <string name="item_magic_cape_name">Magieumhang</string>
     <string name="item_magic_longbow_name">Magischer Langbogen</string>
     <string name="item_magic_shortbow_name">Magischer Kurzbogen</string>
+    <string name="item_elven_shortbow_name">Elven Shortbow</string> <!-- untranslated -->
+    <string name="item_elven_longbow_name">Elven Longbow</string> <!-- untranslated -->
     <string name="item_maple_shortbow_name">Ahorn-Kurzbogen</string>
     <string name="item_mercantile_guild_cape_name">Handelsgildenumhang</string>
     <string name="item_mining_cape_name">Bergbauumhang</string>
@@ -1004,6 +1006,8 @@
     <string name="item_yew_longbow_desc">A longbow crafted from yew logs.</string> <!-- untranslated -->
     <string name="item_magic_shortbow_desc">A shortbow crafted from magic logs.</string> <!-- untranslated -->
     <string name="item_magic_longbow_desc">A longbow crafted from magic logs.</string> <!-- untranslated -->
+    <string name="item_elven_shortbow_desc">A swift bow strung with elven silk. Only elven hands know the fletching.</string> <!-- untranslated -->
+    <string name="item_elven_longbow_desc">A tall elven warbow of layered redwood. Only elven hands know the fletching.</string> <!-- untranslated -->
     <string name="item_tower_crossbow_name">Tower Crossbow</string> <!-- untranslated -->
     <string name="item_tower_crossbow_desc">A precision crossbow wrought from tower metal.</string> <!-- untranslated -->
     <string name="item_arcane_staff_desc">Ein Stab, der aus den Arkanen Ruinen geborgen wurde und noch immer vor gebündelter magischer Energie brummt – ein Überbleibsel der Katastrophe, die den Turm darüber zerstört hat.</string>

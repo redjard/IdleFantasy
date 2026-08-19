@@ -34,7 +34,9 @@
             "cost": 4,
             "effect": "xp_pct",
             "value": 40,
-            "races": ["human"]
+            "races": [
+              "human"
+            ]
           }
         ]
       },
@@ -64,14 +66,18 @@
             "cost": 3,
             "effect": "yield_pct",
             "value": 35,
-            "races": ["dwarf"]
+            "races": [
+              "dwarf"
+            ]
           },
           {
             "id": "mining_yield_5",
             "cost": 4,
             "effect": "yield_pct",
             "value": 40,
-            "races": ["dwarf"]
+            "races": [
+              "dwarf"
+            ]
           }
         ]
       },
@@ -135,7 +141,9 @@
             "cost": 4,
             "effect": "xp_pct",
             "value": 40,
-            "races": ["human"]
+            "races": [
+              "human"
+            ]
           }
         ]
       },
@@ -188,14 +196,18 @@
             "cost": 3,
             "effect": "tool_eff_pct",
             "value": 25,
-            "races": ["elf"]
+            "races": [
+              "elf"
+            ]
           },
           {
             "id": "fishing_rod_5",
             "cost": 4,
             "effect": "tool_eff_pct",
             "value": 30,
-            "races": ["elf"]
+            "races": [
+              "elf"
+            ]
           }
         ]
       },
@@ -207,14 +219,18 @@
             "cost": 3,
             "effect": "flow_rate",
             "value": 1.5,
-            "races": ["halfling"]
+            "races": [
+              "halfling"
+            ]
           },
           {
             "id": "fishing_race_halfling_2",
             "cost": 4,
             "effect": "flow_interval_reduction",
             "value": 10,
-            "races": ["halfling"]
+            "races": [
+              "halfling"
+            ]
           }
         ]
       },
@@ -226,14 +242,18 @@
             "cost": 3,
             "effect": "pet_boost_pct",
             "value": 25,
-            "races": ["gnome"]
+            "races": [
+              "gnome"
+            ]
           },
           {
             "id": "fishing_race_gnome_2",
             "cost": 4,
             "effect": "pet_boost_pct",
             "value": 50,
-            "races": ["gnome"]
+            "races": [
+              "gnome"
+            ]
           }
         ]
       }
@@ -274,7 +294,9 @@
             "cost": 4,
             "effect": "xp_pct",
             "value": 40,
-            "races": ["human"]
+            "races": [
+              "human"
+            ]
           }
         ]
       },
@@ -332,14 +354,18 @@
             "cost": 3,
             "effect": "pet_boost_pct",
             "value": 25,
-            "races": ["halfling"]
+            "races": [
+              "halfling"
+            ]
           },
           {
             "id": "woodcutting_race_halfling_2",
             "cost": 4,
             "effect": "pet_boost_pct",
             "value": 50,
-            "races": ["halfling"]
+            "races": [
+              "halfling"
+            ]
           }
         ]
       }
@@ -380,7 +406,9 @@
             "cost": 4,
             "effect": "xp_pct",
             "value": 40,
-            "races": ["human"]
+            "races": [
+              "human"
+            ]
           }
         ]
       },
@@ -410,7 +438,9 @@
             "cost": 5,
             "effect": "crop_rotation_always",
             "value": 1,
-            "races": ["gnome"]
+            "races": [
+              "gnome"
+            ]
           }
         ]
       },
@@ -422,14 +452,19 @@
             "cost": 3,
             "effect": "yield_pct",
             "value": 10,
-            "races": ["halfling", "gnome"]
+            "races": [
+              "halfling",
+              "gnome"
+            ]
           },
           {
             "id": "farming_race_halfling_2",
             "cost": 4,
             "effect": "yield_pct",
             "value": 15,
-            "races": ["halfling"]
+            "races": [
+              "halfling"
+            ]
           }
         ]
       }
@@ -470,7 +505,9 @@
             "cost": 4,
             "effect": "xp_pct",
             "value": 40,
-            "races": ["human"]
+            "races": [
+              "human"
+            ]
           }
         ]
       },
@@ -534,7 +571,9 @@
             "cost": 4,
             "effect": "xp_pct",
             "value": 40,
-            "races": ["human"]
+            "races": [
+              "human"
+            ]
           }
         ]
       },
@@ -592,14 +631,18 @@
             "cost": 3,
             "effect": "success_chance_pct",
             "value": 5,
-            "races": ["elf"]
+            "races": [
+              "elf"
+            ]
           },
           {
             "id": "thieving_race_elf_2",
             "cost": 4,
             "effect": "success_chance_pct",
             "value": 10,
-            "races": ["elf"]
+            "races": [
+              "elf"
+            ]
           }
         ]
       }
@@ -640,7 +683,9 @@
             "cost": 4,
             "effect": "xp_pct",
             "value": 40,
-            "races": ["human"]
+            "races": [
+              "human"
+            ]
           }
         ]
       },
@@ -705,14 +750,18 @@
             "cost": 3,
             "effect": "input_save_pct",
             "value": 25,
-            "races": ["dwarf"]
+            "races": [
+              "dwarf"
+            ]
           },
           {
             "id": "smithing_thrift_5",
             "cost": 4,
             "effect": "input_save_pct",
             "value": 30,
-            "races": ["dwarf"]
+            "races": [
+              "dwarf"
+            ]
           }
         ]
       }
@@ -753,7 +802,9 @@
             "cost": 4,
             "effect": "xp_pct",
             "value": 40,
-            "races": ["human"]
+            "races": [
+              "human"
+            ]
           }
         ]
       },
@@ -818,14 +869,18 @@
             "cost": 3,
             "effect": "heal_pct",
             "value": 25,
-            "races": ["orc"]
+            "races": [
+              "orc"
+            ]
           },
           {
             "id": "cooking_hearty_5",
             "cost": 4,
             "effect": "heal_pct",
             "value": 30,
-            "races": ["orc"]
+            "races": [
+              "orc"
+            ]
           }
         ]
       },
@@ -837,14 +892,18 @@
             "cost": 3,
             "effect": "yield_pct",
             "value": 10,
-            "races": ["halfling"]
+            "races": [
+              "halfling"
+            ]
           },
           {
             "id": "cooking_race_halfling_2",
             "cost": 4,
             "effect": "yield_pct",
             "value": 15,
-            "races": ["halfling"]
+            "races": [
+              "halfling"
+            ]
           }
         ]
       }
@@ -885,7 +944,9 @@
             "cost": 4,
             "effect": "xp_pct",
             "value": 40,
-            "races": ["human"]
+            "races": [
+              "human"
+            ]
           }
         ]
       },
@@ -932,14 +993,18 @@
             "cost": 3,
             "effect": "reclaim_pct",
             "value": 10,
-            "races": ["gnome"]
+            "races": [
+              "gnome"
+            ]
           },
           {
             "id": "fletching_race_gnome_2",
             "cost": 4,
             "effect": "reclaim_pct",
             "value": 20,
-            "races": ["gnome"]
+            "races": [
+              "gnome"
+            ]
           }
         ]
       }
@@ -980,7 +1045,9 @@
             "cost": 4,
             "effect": "xp_pct",
             "value": 40,
-            "races": ["human"]
+            "races": [
+              "human"
+            ]
           }
         ]
       },
@@ -1045,14 +1112,18 @@
             "cost": 3,
             "effect": "input_save_pct",
             "value": 25,
-            "races": ["elf"]
+            "races": [
+              "elf"
+            ]
           },
           {
             "id": "crafting_thrift_5",
             "cost": 4,
             "effect": "input_save_pct",
             "value": 30,
-            "races": ["elf"]
+            "races": [
+              "elf"
+            ]
           }
         ]
       }
@@ -1093,7 +1164,9 @@
             "cost": 4,
             "effect": "xp_pct",
             "value": 40,
-            "races": ["human"]
+            "races": [
+              "human"
+            ]
           }
         ]
       },
@@ -1140,14 +1213,18 @@
             "cost": 3,
             "effect": "flow_rate",
             "value": 1,
-            "races": ["dwarf"]
+            "races": [
+              "dwarf"
+            ]
           },
           {
             "id": "firemaking_race_dwarf_2",
             "cost": 4,
             "effect": "flow_interval_reduction",
             "value": 10,
-            "races": ["dwarf"]
+            "races": [
+              "dwarf"
+            ]
           }
         ]
       },
@@ -1159,14 +1236,18 @@
             "cost": 3,
             "effect": "flow_rate",
             "value": 1,
-            "races": ["gnome"]
+            "races": [
+              "gnome"
+            ]
           },
           {
             "id": "firemaking_race_gnome_2",
             "cost": 4,
             "effect": "flow_interval_reduction",
             "value": 10,
-            "races": ["gnome"]
+            "races": [
+              "gnome"
+            ]
           }
         ]
       }
@@ -1207,7 +1288,9 @@
             "cost": 4,
             "effect": "xp_pct",
             "value": 40,
-            "races": ["human"]
+            "races": [
+              "human"
+            ]
           }
         ]
       },
@@ -1306,7 +1389,9 @@
             "cost": 4,
             "effect": "xp_pct",
             "value": 40,
-            "races": ["human"]
+            "races": [
+              "human"
+            ]
           }
         ]
       },
@@ -1405,7 +1490,9 @@
             "cost": 4,
             "effect": "xp_pct",
             "value": 40,
-            "races": ["human"]
+            "races": [
+              "human"
+            ]
           }
         ]
       },
@@ -1470,14 +1557,18 @@
             "cost": 3,
             "effect": "builder_discount_pct",
             "value": 9,
-            "races": ["dwarf"]
+            "races": [
+              "dwarf"
+            ]
           },
           {
             "id": "construction_efficient_5",
             "cost": 4,
             "effect": "builder_discount_pct",
             "value": 12,
-            "races": ["dwarf"]
+            "races": [
+              "dwarf"
+            ]
           }
         ]
       },
@@ -1489,14 +1580,18 @@
             "cost": 3,
             "effect": "input_save_pct",
             "value": 10,
-            "races": ["halfling"]
+            "races": [
+              "halfling"
+            ]
           },
           {
             "id": "construction_race_halfling_2",
             "cost": 4,
             "effect": "input_save_pct",
             "value": 15,
-            "races": ["halfling"]
+            "races": [
+              "halfling"
+            ]
           }
         ]
       },
@@ -1508,14 +1603,18 @@
             "cost": 3,
             "effect": "builder_discount_pct",
             "value": 2,
-            "races": ["gnome"]
+            "races": [
+              "gnome"
+            ]
           },
           {
             "id": "construction_race_gnome_2",
             "cost": 5,
             "effect": "queue_slot",
             "value": 1,
-            "races": ["gnome"]
+            "races": [
+              "gnome"
+            ]
           }
         ]
       }
@@ -1556,7 +1655,9 @@
             "cost": 4,
             "effect": "xp_pct",
             "value": 40,
-            "races": ["human"]
+            "races": [
+              "human"
+            ]
           }
         ]
       },
@@ -1586,14 +1687,24 @@
             "cost": 3,
             "effect": "combat_stat_flat",
             "value": 18,
-            "races": ["orc"]
+            "races": [
+              "orc"
+            ]
           },
           {
             "id": "attack_prowess_5",
             "cost": 4,
             "effect": "combat_stat_flat",
             "value": 23,
-            "races": ["orc"]
+            "races": [
+              "orc"
+            ]
+          },
+          {
+            "id": "attack_prowess_6",
+            "cost": 4,
+            "effect": "second_chance",
+            "value": 1
           }
         ]
       }
@@ -1634,7 +1745,9 @@
             "cost": 4,
             "effect": "xp_pct",
             "value": 40,
-            "races": ["human"]
+            "races": [
+              "human"
+            ]
           }
         ]
       },
@@ -1664,14 +1777,50 @@
             "cost": 3,
             "effect": "combat_stat_flat",
             "value": 18,
-            "races": ["orc"]
+            "races": [
+              "orc"
+            ]
           },
           {
             "id": "strength_prowess_5",
             "cost": 4,
             "effect": "combat_stat_flat",
             "value": 23,
-            "races": ["orc"]
+            "races": [
+              "orc"
+            ]
+          }
+        ]
+      },
+      {
+        "key": "double_hit",
+        "nodes": [
+          {
+            "id": "strength_double_hit_1",
+            "cost": 1,
+            "effect": "double_hit_pct",
+            "value": 5,
+            "races": [
+              "orc"
+            ]
+          },
+          {
+            "id": "strength_double_hit_2",
+            "cost": 2,
+            "effect": "double_hit_pct",
+            "value": 10,
+            "races": [
+              "orc"
+            ]
+          },
+          {
+            "id": "strength_double_hit_3",
+            "cost": 4,
+            "effect": "double_hit_pct",
+            "value": 15,
+            "races": [
+              "orc"
+            ]
           }
         ]
       }
@@ -1712,7 +1861,9 @@
             "cost": 4,
             "effect": "xp_pct",
             "value": 40,
-            "races": ["human"]
+            "races": [
+              "human"
+            ]
           }
         ]
       },
@@ -1799,7 +1950,9 @@
             "cost": 4,
             "effect": "xp_pct",
             "value": 40,
-            "races": ["human"]
+            "races": [
+              "human"
+            ]
           }
         ]
       },
@@ -1852,14 +2005,43 @@
             "cost": 3,
             "effect": "reclaim_pct",
             "value": 25,
-            "races": ["elf"]
+            "races": [
+              "elf"
+            ]
           },
           {
             "id": "ranged_quiver_5",
             "cost": 4,
             "effect": "reclaim_pct",
             "value": 35,
-            "races": ["elf"]
+            "races": [
+              "elf"
+            ]
+          }
+        ]
+      },
+      {
+        "key": "bows",
+        "nodes": [
+          {
+            "id": "ranged_bows_1",
+            "cost": 2,
+            "effect": "unlock_recipe",
+            "value": 0,
+            "races": [
+              "elf"
+            ],
+            "unlock": "elven_shortbow"
+          },
+          {
+            "id": "ranged_bows_2",
+            "cost": 4,
+            "effect": "unlock_recipe",
+            "value": 0,
+            "races": [
+              "elf"
+            ],
+            "unlock": "elven_longbow"
           }
         ]
       }
@@ -1900,7 +2082,9 @@
             "cost": 4,
             "effect": "xp_pct",
             "value": 40,
-            "races": ["human"]
+            "races": [
+              "human"
+            ]
           }
         ]
       },
@@ -1987,7 +2171,9 @@
             "cost": 4,
             "effect": "xp_pct",
             "value": 40,
-            "races": ["human"]
+            "races": [
+              "human"
+            ]
           }
         ]
       },
@@ -2045,14 +2231,18 @@
             "cost": 3,
             "effect": "death_keep_pct",
             "value": 15,
-            "races": ["orc"]
+            "races": [
+              "orc"
+            ]
           },
           {
             "id": "hitpoints_race_orc_2",
             "cost": 4,
             "effect": "death_keep_pct",
             "value": 30,
-            "races": ["orc"]
+            "races": [
+              "orc"
+            ]
           }
         ]
       }
@@ -2093,7 +2283,9 @@
             "cost": 4,
             "effect": "xp_pct",
             "value": 40,
-            "races": ["human"]
+            "races": [
+              "human"
+            ]
           }
         ]
       },
@@ -2123,14 +2315,18 @@
             "cost": 3,
             "effect": "blessing_duration_pct",
             "value": 45,
-            "races": ["elf"]
+            "races": [
+              "elf"
+            ]
           },
           {
             "id": "prayer_devotion_5",
             "cost": 4,
             "effect": "blessing_duration_pct",
             "value": 55,
-            "races": ["elf"]
+            "races": [
+              "elf"
+            ]
           }
         ]
       },
@@ -2142,14 +2338,18 @@
             "cost": 3,
             "effect": "blessing_cost_pct",
             "value": 10,
-            "races": ["gnome"]
+            "races": [
+              "gnome"
+            ]
           },
           {
             "id": "prayer_race_gnome_2",
             "cost": 4,
             "effect": "blessing_cost_pct",
             "value": 20,
-            "races": ["gnome"]
+            "races": [
+              "gnome"
+            ]
           }
         ]
       }
@@ -2190,7 +2390,9 @@
             "cost": 4,
             "effect": "xp_pct",
             "value": 40,
-            "races": ["human"]
+            "races": [
+              "human"
+            ]
           }
         ]
       },
@@ -2243,14 +2445,18 @@
             "cost": 3,
             "effect": "sell_price_pct",
             "value": 9,
-            "races": ["dwarf"]
+            "races": [
+              "dwarf"
+            ]
           },
           {
             "id": "mercantile_trade_5",
             "cost": 4,
             "effect": "sell_price_pct",
             "value": 12,
-            "races": ["dwarf"]
+            "races": [
+              "dwarf"
+            ]
           }
         ]
       }
@@ -2291,7 +2497,9 @@
             "cost": 4,
             "effect": "xp_pct",
             "value": 40,
-            "races": ["human"]
+            "races": [
+              "human"
+            ]
           }
         ]
       },
@@ -2344,14 +2552,47 @@
             "cost": 3,
             "effect": "slayer_points_pct",
             "value": 45,
-            "races": ["orc"]
+            "races": [
+              "orc"
+            ]
           },
           {
             "id": "slayer_bounty_5",
             "cost": 4,
             "effect": "slayer_points_pct",
             "value": 60,
-            "races": ["orc"]
+            "races": [
+              "orc"
+            ]
+          }
+        ]
+      },
+      {
+        "key": "foresight",
+        "nodes": [
+          {
+            "id": "slayer_foresight_1",
+            "cost": 2,
+            "effect": "foretell_slots",
+            "value": 1
+          },
+          {
+            "id": "slayer_foresight_2",
+            "cost": 2,
+            "effect": "foretell_slots",
+            "value": 2
+          },
+          {
+            "id": "slayer_foresight_3",
+            "cost": 3,
+            "effect": "foretell_slots",
+            "value": 3
+          },
+          {
+            "id": "slayer_foresight_4",
+            "cost": 4,
+            "effect": "slayer_multi_task",
+            "value": 1
           }
         ]
       }

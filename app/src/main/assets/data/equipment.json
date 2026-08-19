@@ -832,6 +832,38 @@
     },
     "ranged_strength_bonus": 42
   },
+  "elven_shortbow": {
+    "name": "elven_shortbow",
+    "display_name": "Elven Shortbow",
+    "slot": "weapon",
+    "combat_style": "ranged",
+    "attack_speed": 1.5,
+    "description": "A swift bow strung with elven silk. Only elven hands know the fletching.",
+    "attack_bonus": 0,
+    "strength_bonus": 0,
+    "defense_bonus": 0,
+    "ranged_attack_bonus": 85,
+    "requirements": {
+      "ranged": 75
+    },
+    "ranged_strength_bonus": 70
+  },
+  "elven_longbow": {
+    "name": "elven_longbow",
+    "display_name": "Elven Longbow",
+    "slot": "weapon",
+    "combat_style": "ranged",
+    "attack_speed": 1.8,
+    "description": "A tall elven warbow of layered redwood. Only elven hands know the fletching.",
+    "attack_bonus": 0,
+    "strength_bonus": 0,
+    "defense_bonus": 0,
+    "ranged_attack_bonus": 100,
+    "requirements": {
+      "ranged": 85
+    },
+    "ranged_strength_bonus": 80
+  },
   "magic_longbow": {
     "name": "magic_longbow",
     "display_name": "Magic Longbow",

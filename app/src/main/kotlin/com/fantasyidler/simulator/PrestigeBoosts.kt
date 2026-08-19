@@ -43,6 +43,11 @@ object PrestigeBoosts {
     const val BUILDER_DISCOUNT_PCT = "builder_discount_pct"
     const val SLAYER_POINTS_PCT = "slayer_points_pct"
     const val SELL_PRICE_PCT = "sell_price_pct"
+    const val DOUBLE_HIT_PCT = "double_hit_pct"
+    const val SECOND_CHANCE = "second_chance"
+    const val FORETELL_SLOTS = "foretell_slots"
+    const val SLAYER_MULTI_TASK = "slayer_multi_task"
+    const val UNLOCK_RECIPE = "unlock_recipe"
 
     const val FLOW_BASE_INTERVAL_MIN = 60.0
     const val FLOW_CAP_PCT = 100.0

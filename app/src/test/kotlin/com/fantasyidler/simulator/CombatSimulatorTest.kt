@@ -55,9 +55,53 @@ class CombatSimulatorTest {
         random = Random(seed),
     )
 
+    /** An unkillable wall so every melee swing targets a living enemy. */
+    private fun tankyEnemy(defense: Int) = EnemyData(
+        name = "golem",
+        displayName = "Golem",
+        hp = 1_000_000,
+        combatStats = EnemyCombatStats(
+            attackLevel = 1, strengthLevel = 1, defenseLevel = 1,
+            attackBonus = 0, strengthBonus = 0,
+        ),
+        defensiveStats = EnemyDefensiveStats(
+            attackDefense = defense, strengthDefense = defense, rangedDefense = defense, magicDefense = defense,
+        ),
+        xpDrops = mapOf("combat" to 20),
+    )
+
+    private fun totalMeleeDamage(seed: Int, defense: Int = 0, doubleHitChance: Double = 0.0, secondChance: Boolean = false) =
+        CombatSimulator.simulateDungeon(
+            dungeon = dungeon(listOf(EnemySpawn("golem", 1))),
+            enemies = mapOf("golem" to tankyEnemy(defense)),
+            playerAttack = 99,
+            playerStrength = 99,
+            playerDefence = 99,
+            playerHp = 999,
+            weaponStrengthBonus = 64,
+            doubleHitChance = doubleHitChance,
+            secondChance = secondChance,
+            random = Random(seed),
+        ).frames.sumOf { it.playerHits.sum() }
+
     @Test
     fun `a survivable dungeon run produces 60 frames`() {
         assertEquals(60, runStrongPlayer(seed = 1).frames.size)
+    }
+
+    @Test
+    fun `guaranteed double hit roughly doubles melee damage`() {
+        val base    = totalMeleeDamage(seed = 11)
+        val doubled = totalMeleeDamage(seed = 11, doubleHitChance = 1.0)
+        assertTrue("expected ~2x damage, got base=$base doubled=$doubled", doubled > base * 1.6)
+    }
+
+    @Test
+    fun `second chance raises accuracy against a high-defense enemy`() {
+        // Hit chance clamps to 0.15 here; one reroll lifts it to 1 - 0.85^2 = 0.2775.
+        val base     = totalMeleeDamage(seed = 13, defense = 100_000)
+        val rerolled = totalMeleeDamage(seed = 13, defense = 100_000, secondChance = true)
+        assertTrue("expected ~1.85x damage, got base=$base rerolled=$rerolled", rerolled > base * 1.4)
     }
 
     @Test

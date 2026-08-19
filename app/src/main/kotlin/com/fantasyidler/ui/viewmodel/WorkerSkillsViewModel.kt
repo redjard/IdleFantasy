@@ -17,6 +17,7 @@ import com.fantasyidler.data.model.PlayerFlags
 import com.fantasyidler.data.model.QueuedAction
 import com.fantasyidler.data.model.SkillSession
 import com.fantasyidler.data.model.Skills
+import com.fantasyidler.repository.BoostRepository
 import com.fantasyidler.repository.GameDataRepository
 import com.fantasyidler.repository.PlayerRepository
 import com.fantasyidler.repository.SessionRepository
@@ -67,6 +68,8 @@ data class WorkerSkillsUiState(
     /** Total items this session is assigned to produce (from its single pre-simulated batch frame), keyed by item. */
     val sessionAssignedItems: Map<String, Int> = emptyMap(),
     val sessionAssignedItems2: Map<String, Int> = emptyMap(),
+    /** Recipe keys gated behind prestige unlock nodes the player does not own. */
+    val hiddenRecipeKeys: Set<String> = emptySet(),
 ) {
     val currentSession: SkillSession? get() = if (selectedSlot == 2) activeSession2 else activeSession
     val currentWorker: HiredWorker? get() = if (selectedSlot == 2) hiredWorker2 else hiredWorker
@@ -87,6 +90,7 @@ class WorkerSkillsViewModel @Inject constructor(
     private val sessionRepo: SessionRepository,
     private val gameData: GameDataRepository,
     private val workerStarter: WorkerQueuedSessionStarter,
+    private val boostRepo: BoostRepository,
     private val json: Json,
 ) : ViewModel() {
 
@@ -132,6 +136,7 @@ class WorkerSkillsViewModel @Inject constructor(
                 maxCraftQty           = currentWorker?.tier?.maxCraftQty ?: Int.MAX_VALUE,
                 inventory             = inv,
                 showSessionEndTime    = flags.showSessionEndTime,
+                hiddenRecipeKeys      = boostRepo.gatedRecipeKeys - boostRepo.unlockedRecipeKeys(flags),
                 sessionAssignedItems  = sessionAssignedItems(workerData.s1),
                 sessionAssignedItems2 = sessionAssignedItems(workerData.s2),
             )
@@ -526,6 +531,7 @@ class WorkerSkillsViewModel @Inject constructor(
     fun craft(requestedQty: Int) {
         val state  = uiState.value
         val recipe = state.selectedRecipe ?: return
+        if (recipe.key in state.hiddenRecipeKeys) return
         val max    = state.maxCraftable(recipe).coerceAtLeast(1)
         val qty    = requestedQty.coerceIn(1, max)
 

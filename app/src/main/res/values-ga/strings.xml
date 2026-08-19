@@ -2037,6 +2037,12 @@
     <string name="prestige_effect_input_save">%1$d%% of crafting materials are refunded.</string> <!-- untranslated -->
     <string name="prestige_effect_builder_discount">Town building upgrades cost %1$d%% less.</string> <!-- untranslated -->
     <string name="prestige_effect_sell_price">Shop sell prices +%1$d%%.</string> <!-- untranslated -->
+    <string name="prestige_effect_slayer_points">Slayer task points +%1$d%%.</string> <!-- untranslated -->
+    <string name="prestige_effect_double_hit">%1$d%% chance to strike a second melee hit.</string> <!-- untranslated -->
+    <string name="prestige_effect_second_chance">Missed melee attacks are rerolled once.</string> <!-- untranslated -->
+    <string name="prestige_effect_foretell_slots">+%1$d foretold slayer task slots.</string> <!-- untranslated -->
+    <string name="prestige_effect_multi_task">Dungeon kills also count toward matching foretold tasks.</string> <!-- untranslated -->
+    <string name="prestige_effect_unlock_recipe">Unlocks the %1$s fletching recipe.</string> <!-- untranslated -->
     <string name="prestige_path_fishing_rod">Sturdy Rod</string> <!-- untranslated -->
     <string name="prestige_path_woodcutting_axe">Honed Edge</string> <!-- untranslated -->
     <string name="prestige_path_cooking_hearty">Hearty Meals</string> <!-- untranslated -->
@@ -2052,6 +2058,9 @@
     <string name="prestige_path_ranged_quiver">Quiver Care</string> <!-- untranslated -->
     <string name="prestige_path_defense_laststand">Last Stand</string> <!-- untranslated -->
     <string name="prestige_path_hitpoints_constitution">Constitution</string> <!-- untranslated -->
+    <string name="prestige_path_strength_double_hit">Double Hit</string> <!-- untranslated -->
+    <string name="prestige_path_ranged_bows">Better Bows</string> <!-- untranslated -->
+    <string name="prestige_path_slayer_foresight">Foresight</string> <!-- untranslated -->
     <string name="prestige_path_xp">XP Boost</string> <!-- untranslated -->
     <string name="prestige_path_yield">Yield</string> <!-- untranslated -->
     <string name="prestige_path_flow">Flow-state</string> <!-- untranslated -->

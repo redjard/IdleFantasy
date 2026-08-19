@@ -248,7 +248,7 @@ object GameStrings {
             ?: context.stringByName("prestige_path_${pathKey}")
             ?: pathKey.toTitleCase()
 
-    fun prestigeEffectDesc(context: Context, effect: String, value: Double): String = when (effect) {
+    fun prestigeEffectDesc(context: Context, effect: String, value: Double, unlock: String? = null): String = when (effect) {
         PrestigeBoosts.XP_PCT            -> context.getString(R.string.prestige_effect_xp_pct, value.toInt())
         PrestigeBoosts.YIELD_PCT         -> context.getString(R.string.prestige_effect_yield_pct, value.toInt())
         PrestigeBoosts.FLOW_RATE         -> context.getString(R.string.prestige_effect_flow_rate, value.trimmed())
@@ -273,6 +273,12 @@ object GameStrings {
         PrestigeBoosts.INPUT_SAVE_PCT    -> context.getString(R.string.prestige_effect_input_save, value.toInt())
         PrestigeBoosts.BUILDER_DISCOUNT_PCT -> context.getString(R.string.prestige_effect_builder_discount, value.toInt())
         PrestigeBoosts.SELL_PRICE_PCT    -> context.getString(R.string.prestige_effect_sell_price, value.toInt())
+        PrestigeBoosts.SLAYER_POINTS_PCT -> context.getString(R.string.prestige_effect_slayer_points, value.toInt())
+        PrestigeBoosts.DOUBLE_HIT_PCT    -> context.getString(R.string.prestige_effect_double_hit, value.toInt())
+        PrestigeBoosts.SECOND_CHANCE     -> context.getString(R.string.prestige_effect_second_chance)
+        PrestigeBoosts.FORETELL_SLOTS    -> context.getString(R.string.prestige_effect_foretell_slots, value.toInt())
+        PrestigeBoosts.SLAYER_MULTI_TASK -> context.getString(R.string.prestige_effect_multi_task)
+        PrestigeBoosts.UNLOCK_RECIPE     -> context.getString(R.string.prestige_effect_unlock_recipe, itemName(context, unlock ?: ""))
         else -> ""
     }
 }

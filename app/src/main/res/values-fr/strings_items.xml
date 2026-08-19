@@ -883,6 +883,8 @@
     <string name="item_magic_cape_name">Cape Magique</string>
     <string name="item_magic_longbow_name">Arc Long Magique</string>
     <string name="item_magic_shortbow_name">Arc Court Magique</string>
+    <string name="item_elven_shortbow_name">Elven Shortbow</string> <!-- untranslated -->
+    <string name="item_elven_longbow_name">Elven Longbow</string> <!-- untranslated -->
     <string name="item_maple_shortbow_name">Arc Court en Érable</string>
     <string name="item_mercantile_guild_cape_name">Cape de la Guilde des Marchands</string>
     <string name="item_mining_cape_name">Cape d\'Extraction</string>
@@ -1004,6 +1006,8 @@
     <string name="item_yew_longbow_desc">Un arc long façonné à partir de bûches d\'if.</string>
     <string name="item_magic_shortbow_desc">Un arc court façonné à partir de bûches magiques.</string>
     <string name="item_magic_longbow_desc">Un arc long façonné à partir de bûches magiques.</string>
+    <string name="item_elven_shortbow_desc">A swift bow strung with elven silk. Only elven hands know the fletching.</string> <!-- untranslated -->
+    <string name="item_elven_longbow_desc">A tall elven warbow of layered redwood. Only elven hands know the fletching.</string> <!-- untranslated -->
     <string name="item_tower_crossbow_name">Arbalète de la Tour</string>
     <string name="item_tower_crossbow_desc">Une arbalète de précision façonnée à partir de métal de la Tour.</string>
     <string name="item_arcane_staff_desc">Un bâton récupéré dans les Ruines des Arcanes, vibrant encore de l\'énergie magique contenue issue de la catastrophe qui a détruit la flèche située au-dessus.</string>

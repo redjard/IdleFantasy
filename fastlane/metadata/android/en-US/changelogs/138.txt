@@ -9,3 +9,8 @@
 • Fixed daily, weekly, and guild daily quest claims occasionally being lost when another save landed at the same moment
 • Skill tree paths containing race-locked tiers now show the race next to the path name, so bonuses like the Gnome farming tier are findable in the tree
 • The character edit sheet no longer offers a free race switch; it now shows your current race with its proficiencies and points to the appearance editor, where changes cost a token or coins
+• New Orc strength path Double Hit: up to 15% chance to strike a second melee blow (replaces the flat-stat Orc nodes; those points are refunded)
+• New Attack Precision finisher Second Chance: missed melee attacks are rerolled once
+• New Slayer path Foresight: foretell up to 3 extra tasks, and its final tier lets one dungeon run progress every matching foretold task
+• New Elf ranged path Better Bows: unlocks the Elven Shortbow and Longbow fletching recipes (replaces the Elf arrow-reclaim nodes; those points are refunded). Anyone can equip the bows
+• Slayer task point bonuses now show their description in the upgrade tree

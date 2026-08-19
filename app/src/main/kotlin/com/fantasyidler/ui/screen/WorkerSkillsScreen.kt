@@ -493,7 +493,7 @@ private fun WorkerCraftSkillSheet(
         Skills.HERBLORE      -> viewModel.herbloreRecipes
         Skills.CONSTRUCTION  -> viewModel.constructionRecipes
         else                 -> viewModel.jewelleryRecipes
-    }
+    }.filter { it.key !in state.hiddenRecipeKeys }
 
     var onlyCraftable    by remember { mutableStateOf(false) }
     var selectedCategory by remember { mutableStateOf<String?>(null) }

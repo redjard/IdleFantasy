@@ -1,6 +1,7 @@
 package com.fantasyidler.repository
 
 import com.fantasyidler.data.model.EquipSlot
+import com.fantasyidler.data.model.PlayerFlags
 import com.fantasyidler.data.model.Skills
 import com.fantasyidler.data.model.SlayerTask
 import javax.inject.Inject
@@ -81,13 +82,16 @@ class SlayerRepository @Inject constructor(
 
     /**
      * Bone cost (in units, where 1 unit = 10 bone XP = 1 regular bone) for the next foretell slot.
-     * Slot 0 (first queued) = 10, slot 1 = 25, slot 2 = 50.
+     * Slot 0 (first queued) = 10, slot 1 = 25, slot 2+ = 50.
      */
-    private fun foretelCostUnits(queueSize: Int): Int = when (queueSize) {
+    fun foretelCostUnits(queueSize: Int): Int = when (queueSize) {
         0    -> 10
         1    -> 25
         else -> 50
     }
+
+    /** Foretell queue capacity: base 3, extended by Foresight prestige nodes. */
+    fun maxForetellSlots(flags: PlayerFlags): Int = 3 + boostRepo.foretellSlotBonus(flags)
 
     private val BONE_XP = mapOf("dragon_bone" to 80, "giant_bones" to 40, "big_bones" to 20, "bones" to 10)
     private val BONE_TYPES_ORDERED = listOf("bones", "big_bones", "giant_bones", "dragon_bone")
@@ -101,7 +105,7 @@ class SlayerRepository @Inject constructor(
 
     suspend fun foretelTask(slayerLevel: Int, unlockedDungeons: Set<String> = emptySet()): ForetelResult = playerRepo.withLock {
         val flags = playerRepo.getFlagsUnlocked()
-        if (flags.foretelledTasks.size >= 3) return@withLock ForetelResult.QueueFull
+        if (flags.foretelledTasks.size >= maxForetellSlots(flags)) return@withLock ForetelResult.QueueFull
 
         val eligible = gameData.slayerTasks.filter { (enemyKey, cfg) ->
             if (cfg.slayerLevel > slayerLevel) return@filter false
@@ -163,6 +167,7 @@ class SlayerRepository @Inject constructor(
         if (count <= 0) return 0L
         val flags = playerRepo.getFlags()
         val task  = flags.activeSlayerTask ?: return 0L
+        if (boostRepo.slayerMultiTaskActive(flags)) return recordKillsMultiTask(flags, enemyKey, count)
         if (task.enemyKey != enemyKey) return 0L
 
         val added          = minOf(count, task.targetKills - task.killsCompleted)
@@ -197,6 +202,51 @@ class SlayerRepository @Inject constructor(
             )
         }
         guildRepo.recordGuildSlayer(added, if (taskCompleted) 1 else 0)
+        return xpEarned
+    }
+
+    /**
+     * Foresight final tier: kills flow through the active task and then every matching
+     * foretold task in queue order, so one dungeon can complete several tasks at once.
+     */
+    private suspend fun recordKillsMultiTask(flags: PlayerFlags, enemyKey: String, count: Int): Long {
+        val active = flags.activeSlayerTask ?: return 0L
+        val chain  = (listOf(active) + flags.foretelledTasks).toMutableList()
+
+        val equippedCape = playerRepo.getEquipped()[EquipSlot.CAPE]?.let { gameData.equipment[it] }
+        val capeMult     = resolveCapeMultiplier(
+            Skills.SLAYER, equippedCape, playerRepo.getInventory().keys,
+            flags.townBuildingTiers, boostRepo.capeScalingBySkill(flags), gameData.equipment, flags.ironman,
+        )
+
+        var remaining = count
+        var xpEarned  = 0L
+        for (idx in chain.indices) {
+            if (remaining <= 0) break
+            val t = chain[idx]
+            if (t.enemyKey != enemyKey || t.killsCompleted >= t.targetKills) continue
+            val added = minOf(remaining, t.targetKills - t.killsCompleted)
+            remaining -= added
+            xpEarned  += (added.toLong() * t.xpPerKill * capeMult).toLong()
+            chain[idx] = t.copy(killsCompleted = t.killsCompleted + added)
+        }
+        val killsApplied = count - remaining
+        if (killsApplied <= 0) return 0L
+
+        val completedTasks = chain.filter { it.killsCompleted >= it.targetKills }
+        val openTasks      = chain.filter { it.killsCompleted <  it.targetKills }
+        val pointsGained   = completedTasks.sumOf { (it.taskPoints * boostRepo.slayerPointsMultiplier(flags)).toInt() }
+
+        playerRepo.updateFlags(
+            flags.copy(
+                activeSlayerTask = openTasks.firstOrNull(),
+                foretelledTasks  = openTasks.drop(1),
+                slayerPoints     = flags.slayerPoints + pointsGained,
+            )
+        )
+        repeat(completedTasks.size) { questRepo.recordSlayerTaskCompleted() }
+        if (completedTasks.isNotEmpty()) playerRepo.recordWeeklyProgress("slayer_task", "any", completedTasks.size)
+        guildRepo.recordGuildSlayer(killsApplied, completedTasks.size)
         return xpEarned
     }
 

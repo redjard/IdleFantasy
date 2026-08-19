@@ -18,6 +18,11 @@ import kotlinx.serialization.Serializable
  *  • coin_pct                — +value% coins from this skill's sessions
  *  • crop_rotation_pct       — +value% farming yield when planting a different crop
  *  • crop_rotation_always    — rotation bonus applies even without rotating
+ *  • double_hit_pct          — value% chance for a second melee hit on a living enemy
+ *  • second_chance           — missed melee accuracy rolls are rerolled once
+ *  • foretell_slots          — +value extra slayer foretell queue slots
+ *  • slayer_multi_task       — dungeon kills also count toward matching foretold tasks
+ *  • unlock_recipe           — grants access to the recipe named in [unlock]
  */
 @Serializable
 data class PrestigeNodeData(
@@ -27,6 +32,8 @@ data class PrestigeNodeData(
     val value: Double = 0.0,
     /** Lowercase race keys ("human", "elf", ...) this node is locked to, or null for all races. */
     val races: List<String>? = null,
+    /** Recipe key this node unlocks (unlock_recipe effect only). */
+    val unlock: String? = null,
 )
 
 /** An ordered tier chain: each node requires the previous node in the same path. */

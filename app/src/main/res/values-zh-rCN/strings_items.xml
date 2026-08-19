@@ -883,6 +883,8 @@
     <string name="item_magic_cape_name">魔法披风</string>
     <string name="item_magic_longbow_name">魔法长弓</string>
     <string name="item_magic_shortbow_name">魔法短弓</string>
+    <string name="item_elven_shortbow_name">Elven Shortbow</string> <!-- untranslated -->
+    <string name="item_elven_longbow_name">Elven Longbow</string> <!-- untranslated -->
     <string name="item_maple_shortbow_name">枫木短弓</string>
     <string name="item_mercantile_guild_cape_name">商贸公会披风</string>
     <string name="item_mining_cape_name">采矿披风</string>
@@ -1004,6 +1006,8 @@
     <string name="item_yew_longbow_desc">用紫杉制作的长弓。</string>
     <string name="item_magic_shortbow_desc">用魔法原木制作的短弓。</string>
     <string name="item_magic_longbow_desc">用魔法原木制作的长弓。</string>
+    <string name="item_elven_shortbow_desc">A swift bow strung with elven silk. Only elven hands know the fletching.</string> <!-- untranslated -->
+    <string name="item_elven_longbow_desc">A tall elven warbow of layered redwood. Only elven hands know the fletching.</string> <!-- untranslated -->
     <string name="item_tower_crossbow_name">高塔弩</string>
     <string name="item_tower_crossbow_desc">用高塔金属打造的精密弩。</string>
     <string name="item_arcane_staff_desc">从奥术废墟回收的法杖，仍然嗡嗡作响，蕴含着摧毁上方尖塔的灾难中的魔法能量。</string>

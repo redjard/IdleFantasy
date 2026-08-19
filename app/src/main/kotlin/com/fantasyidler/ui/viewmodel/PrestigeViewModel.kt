@@ -34,6 +34,8 @@ data class PrestigeNodeUi(
     val raceLocked: Boolean,
     val prereqLocked: Boolean,
     val affordable: Boolean,
+    /** Recipe key this node unlocks (unlock_recipe effect only). */
+    val unlock: String? = null,
 )
 
 data class PrestigePathUi(
@@ -106,6 +108,7 @@ class PrestigeDetailViewModel @Inject constructor(
                             raceLocked   = !raceOk,
                             prereqLocked = prereqLocked,
                             affordable   = unspent >= node.cost,
+                            unlock       = node.unlock,
                         )
                         if (raceOk) prevOwnedForRace = node.id in owned
                         ui

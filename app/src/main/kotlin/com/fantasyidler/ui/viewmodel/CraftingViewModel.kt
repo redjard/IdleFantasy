@@ -131,6 +131,8 @@ data class CraftingUiState(
     val isQueueFull: Boolean = false,
     /** Full XP multiplier for [selectedRecipe] (tool efficiency, pet, XP boost, blessing), matching what collection awards. */
     val craftXpMult: Double = 1.0,
+    /** Recipe keys gated behind prestige unlock nodes the player does not own. */
+    val hiddenRecipeKeys: Set<String> = emptySet(),
 ) {
     /** Returns how many times [recipe] can be crafted given [effectiveInventory]. */
     fun maxCraftable(recipe: CraftableRecipe): Int {
@@ -222,6 +224,7 @@ class CraftingViewModel @Inject constructor(
                 craftPerItemMs     = perItemMs,
                 isQueueFull        = flags.sessionQueue.size >= playerRepo.maxQueueSize(flags),
                 craftXpMult        = xpMult,
+                hiddenRecipeKeys   = boostRepo.gatedRecipeKeys - boostRepo.unlockedRecipeKeys(flags),
             )
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), CraftingUiState())
@@ -417,6 +420,7 @@ class CraftingViewModel @Inject constructor(
     /** Starts or enqueues [qty] crafts of [recipe]. */
     fun craft(recipe: CraftableRecipe, qty: Int, ashKey: String? = null) {
         val state = uiState.value
+        if (recipe.key in state.hiddenRecipeKeys) return
 
         viewModelScope.launch {
             val player = playerRepo.getOrCreatePlayer()
