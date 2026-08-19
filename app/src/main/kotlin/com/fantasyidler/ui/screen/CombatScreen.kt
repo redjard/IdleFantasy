@@ -70,6 +70,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fantasyidler.R
+import com.fantasyidler.repository.MercenaryRepository
 import com.fantasyidler.simulator.CombatSimulator
 import com.fantasyidler.data.json.BossData
 import com.fantasyidler.data.json.CookingRecipe
@@ -106,6 +107,7 @@ fun CombatScreen(
     val state            by viewModel.uiState.collectAsState()
     val invState         by inventoryVm.uiState.collectAsState()
     val context           = LocalContext.current
+    var showMercCamp     by remember { mutableStateOf(false) }
     val visibleDungeons   = remember(state.unlockedDungeons) {
         viewModel.dungeonList.filter { !it.loreUnlockOnly || it.name in state.unlockedDungeons }
     }
@@ -226,9 +228,13 @@ fun CombatScreen(
                             towerBestFloor      = state.towerBestFloor,
                             bossKillCounts      = state.bossKillCounts,
                             isQueueFull         = state.isQueueFull,
+                            raidBosses          = viewModel.raidBossList(),
+                            hiredMercCount      = state.hiredMercs.size,
+                            maxParty            = MercenaryRepository.MAX_PARTY,
                             onDungeon           = viewModel::selectDungeon,
                             onBoss              = viewModel::selectBoss,
                             onTower             = onNavigateToTower,
+                            onOpenMercCamp      = { showMercCamp = true },
                         )
                         2 -> CombatGearTab(
                             equipped       = invState.equipped,
@@ -304,9 +310,13 @@ fun CombatScreen(
                             towerBestFloor      = state.towerBestFloor,
                             bossKillCounts      = state.bossKillCounts,
                             isQueueFull         = state.isQueueFull,
+                            raidBosses          = viewModel.raidBossList(),
+                            hiredMercCount      = state.hiredMercs.size,
+                            maxParty            = MercenaryRepository.MAX_PARTY,
                             onDungeon           = viewModel::selectDungeon,
                             onBoss              = viewModel::selectBoss,
                             onTower             = onNavigateToTower,
+                            onOpenMercCamp      = { showMercCamp = true },
                         )
                         1 -> CombatGearTab(
                             equipped       = invState.equipped,
@@ -367,6 +377,27 @@ fun CombatScreen(
     }
 
 
+    // Mercenary camp sheet (raid hiring)
+    if (showMercCamp) {
+        val mercSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+        ModalBottomSheet(
+            onDismissRequest = { showMercCamp = false },
+            sheetState       = mercSheetState,
+            dragHandle       = { BottomSheetDefaults.DragHandle() },
+        ) {
+            ScaledSheetContent {
+                MercenaryCampSheet(
+                    pool           = state.mercPool,
+                    hiredMercs     = state.hiredMercs,
+                    dailyResetHour = state.dailyResetHour,
+                    maxParty       = MercenaryRepository.MAX_PARTY,
+                    onHire         = viewModel::hireMercenary,
+                    onDismissMerc  = viewModel::dismissMercenary,
+                )
+            }
+        }
+    }
+
     // Boss info / confirm sheet
     state.selectedBoss?.let { boss ->
         val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
@@ -390,6 +421,8 @@ fun CombatScreen(
                 isQueueFull          = state.isQueueFull,
                 repeatCount          = state.selectedBossRepeatCount,
                 fullCoinKillsLeft    = state.bossFullCoinKillsLeft,
+                hiredMercs           = state.hiredMercs,
+                onOpenMercCamp       = { showMercCamp = true },
                 onWeaponSlotSelected = viewModel::selectWeaponSlot,
                 onPotionSelected     = viewModel::selectPotion,
                 onRepeatCountChanged = viewModel::selectBossRepeatCount,
@@ -470,10 +503,14 @@ private fun CombatSelectionList(
     towerBestFloor: Int = 0,
     bossKillCounts: Map<String, Int> = emptyMap(),
     isQueueFull: Boolean = false,
+    raidBosses: List<BossData> = emptyList(),
+    hiredMercCount: Int = 0,
+    maxParty: Int = 3,
     modifier: Modifier = Modifier,
     onDungeon: (DungeonData) -> Unit,
     onBoss: (BossData) -> Unit,
     onTower: () -> Unit = {},
+    onOpenMercCamp: () -> Unit = {},
 ) {
     val combatLvl = combatLevel(skillLevels)
 
@@ -507,6 +544,40 @@ private fun CombatSelectionList(
                 onTap    = { onBoss(boss) },
                 isQueueFull = isQueueFull,
             )
+        }
+        if (raidBosses.isNotEmpty()) {
+            item { CombatSectionHeader(stringResource(R.string.raid_section_title)) }
+            item {
+                Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
+                    Text(
+                        text  = stringResource(R.string.raid_section_desc),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            text       = stringResource(R.string.raid_party_status, hiredMercCount, maxParty),
+                            style      = MaterialTheme.typography.labelLarge,
+                            color      = MaterialTheme.colorScheme.primary,
+                            fontWeight = FontWeight.SemiBold,
+                            modifier   = Modifier.weight(1f),
+                        )
+                        TextButton(onClick = onOpenMercCamp) {
+                            Text(stringResource(R.string.merc_camp_open))
+                        }
+                    }
+                }
+            }
+            items(raidBosses) { boss ->
+                BossRow(
+                    boss     = boss,
+                    // Raid levels are flavor, not a gate; hiring mercenaries is the real bar.
+                    unlocked = true,
+                    runCount = bossKillCounts[boss.id] ?: 0,
+                    onTap    = { onBoss(boss) },
+                    isQueueFull = isQueueFull,
+                )
+            }
         }
         item { Spacer(Modifier.height(16.dp)) }
     }

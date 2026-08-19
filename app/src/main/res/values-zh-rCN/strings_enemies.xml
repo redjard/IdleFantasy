@@ -134,6 +134,12 @@
     <string name="boss_the_hollow_king_desc">暗潮收割的无头君主，从枯萎之森骑出，收割活人所种之物。</string>
     <string name="boss_the_vault_guardian_name">宝库守卫</string>
     <string name="boss_the_vault_guardian_desc">由活金铸造的巨像，被永恒之火点燃而苏醒。只有大纪念碑的赞助者才能面对它。</string>
+    <string name="boss_obsidian_colossus_name">Obsidian Colossus</string> <!-- untranslated -->
+    <string name="boss_obsidian_colossus_desc">A mountain given wrath. No lone hero has ever chipped more than a scar into it. Bring a party.</string> <!-- untranslated -->
+    <string name="boss_brood_empress_name">Brood Empress</string> <!-- untranslated -->
+    <string name="boss_brood_empress_desc">Mother of the swarm between the stars. Her brood has ended armies; yours had better be paid well.</string> <!-- untranslated -->
+    <string name="boss_the_world_ender_name">The World Ender</string> <!-- untranslated -->
+    <string name="boss_the_world_ender_desc">When it stirs, kingdoms write their wills. Four names on the contract or none return.</string> <!-- untranslated -->
 
     <!-- ===== Expedition-unlocked dungeon names ===== -->
     <string name="dungeon_collapsed_mine_name">坍塌矿井</string>

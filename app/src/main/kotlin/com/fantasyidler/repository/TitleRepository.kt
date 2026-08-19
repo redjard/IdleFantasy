@@ -51,9 +51,10 @@ class TitleRepository @Inject constructor(
             val chainIds = gameData.quests.values.filter { it.skill == skill }.map { it.id }
             if (chainIds.isNotEmpty() && chainIds.all { it in completedQuestIds }) unlocked += titleId
         }
-        // Only always-available bosses count: seasonal bosses vanish with their event and
-        // monument-gated bosses sit behind a 1B coin wall, so neither can gate Godslayer.
-        val coreBosses = gameData.bosses.values.filter { it.eventKey == null && !it.requiresMonument }
+        // Only always-available bosses count: seasonal bosses vanish with their event,
+        // monument-gated bosses sit behind a 1B coin wall, and raid bosses require a paid
+        // mercenary party, so none of them can gate Godslayer.
+        val coreBosses = gameData.bosses.values.filter { it.eventKey == null && !it.requiresMonument && !it.raid }
         if (coreBosses.isNotEmpty() && coreBosses.all { (flags.enemyKills[it.id] ?: 0) > 0 }) {
             unlocked += "godslayer"
         }

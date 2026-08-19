@@ -1626,6 +1626,42 @@
     <string name="guild_daily_rank_maxed">Guild rank maxed</string>
 
     <!-- ===== Infinite Tower ===== -->
+    <!-- Raids and mercenaries -->
+    <string name="raid_section_title">Raids</string>
+    <string name="raid_section_desc">Bosses no lone hero can fell. Hire a mercenary party first.</string>
+    <string name="raid_party_status">Mercenaries: %1$d/%2$d hired</string>
+    <string name="raid_party_title">Raid Party</string>
+    <string name="raid_solo_warning">Raid bosses cannot be beaten alone, even with the best gear. Hire mercenaries before attempting.</string>
+    <string name="raid_no_mercs">No mercenaries under contract.</string>
+    <string name="merc_camp_open">Hire Mercenaries</string>
+    <string name="merc_camp_title">Mercenary Camp</string>
+    <string name="merc_camp_desc">Contracts last until the daily reset at %1$s. A new pool of mercenaries arrives each day.</string>
+    <string name="merc_hire">Hire</string>
+    <string name="merc_dismiss">Dismiss</string>
+    <string name="merc_hired">%1$s joins your party until the daily reset.</string>
+    <string name="merc_party_full">Your party is full.</string>
+    <string name="merc_already_hired">%1$s is already under contract.</string>
+    <string name="merc_not_enough_coins">Not enough coins to hire %1$s.</string>
+    <string name="merc_not_available">%1$s is not available today.</string>
+    <string name="merc_contract_remaining">Contract: %1$s left</string>
+    <string name="merc_tier_cheap">Sellsword</string>
+    <string name="merc_tier_seasoned">Veteran</string>
+    <string name="merc_tier_elite">Champion</string>
+    <string name="merc_stats">Atk %1$d  Str %2$d  Def %3$d  HP %4$d</string>
+    <string name="merc_cost_per_day">%1$s coins per day</string>
+    <string name="merc_bran_the_sellsword_name">Bran the Sellsword</string>
+    <string name="merc_wren_the_stray_name">Wren the Stray</string>
+    <string name="merc_tam_the_grey_name">Tam the Grey</string>
+    <string name="merc_nix_the_cutpurse_name">Nix the Cutpurse</string>
+    <string name="merc_sera_ironsong_name">Sera Ironsong</string>
+    <string name="merc_kael_emberhand_name">Kael Emberhand</string>
+    <string name="merc_dorn_shieldbreaker_name">Dorn Shieldbreaker</string>
+    <string name="merc_fenna_swiftarrow_name">Fenna Swiftarrow</string>
+    <string name="merc_grimjaw_the_colossus_name">Grimjaw the Colossus</string>
+    <string name="merc_sylvara_trueshot_name">Sylvara Trueshot</string>
+    <string name="merc_vex_the_undying_name">Vex the Undying</string>
+    <string name="merc_thane_dawnbringer_name">Thane Dawnbringer</string>
+
     <string name="tower_title">Infinite Tower</string>
     <string name="tower_floor_label" formatted="false">Floor %d</string>
     <string name="tower_floor_desc">Infinite Tower floor %1$d</string>
@@ -1814,7 +1850,7 @@
     <string name="title_slayer_name">Slayer</string>
     <string name="title_slayer_requirement">Complete all Slayer quests</string>
     <string name="title_godslayer_name">Godslayer</string>
-    <string name="title_godslayer_requirement">Defeat every raid boss at least once</string>
+    <string name="title_godslayer_requirement">Defeat every boss at least once</string>
     <string name="title_warlord_name">Warlord</string>
     <string name="title_warlord_requirement">Reach max level in the Warriors Guild</string>
     <string name="title_marksman_name">Marksman</string>

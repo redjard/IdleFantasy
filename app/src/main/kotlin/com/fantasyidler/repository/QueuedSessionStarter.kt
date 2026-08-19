@@ -48,6 +48,7 @@ class QueuedSessionStarter @Inject constructor(
     private val sessionRepo: SessionRepository,
     private val townRepo: TownRepository,
     private val gameData: GameDataRepository,
+    private val mercRepo: MercenaryRepository,
     private val json: Json,
 ) {
     private val mutex = Mutex()
@@ -660,6 +661,9 @@ class QueuedSessionStarter @Inject constructor(
                     eatThresholdPct    = flags.foodEatThresholdPct,
                     doubleHitChance     = boostRepo.doubleHitChance(flags),
                     secondChance        = boostRepo.secondChanceActive(flags),
+                    // Queued raids use the contracts valid when the session actually starts,
+                    // matching how queued sessions already use the current armor.
+                    mercenaries         = if (boss.raid) mercRepo.combatants(flags) else emptyList(),
                 )
                 val frameMs        = SkillSimulator.sessionDurationMs(agilityLevel, floorReductionMin, chronosMult) / 60L
                 val bossDurationMs = boss.durationMinutes * frameMs

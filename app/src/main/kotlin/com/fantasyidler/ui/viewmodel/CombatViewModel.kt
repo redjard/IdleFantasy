@@ -7,6 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fantasyidler.R
 import com.fantasyidler.data.json.BossData
+import com.fantasyidler.data.json.MercenaryData
+import com.fantasyidler.repository.MercenaryRepository
+import com.fantasyidler.repository.MercHireResult
 import com.fantasyidler.data.json.DungeonData
 import com.fantasyidler.data.json.EnemyData
 import com.fantasyidler.data.json.EquipmentData
@@ -112,7 +115,15 @@ data class CombatUiState(
     /** True once the Grand Monument's Eternal Flame is lit (unlocks monument-gated bosses). */
     val monumentComplete: Boolean = false,
     val isQueueFull: Boolean = false,
+    /** Today's hireable raid mercenaries (rotates at the daily reset). */
+    val mercPool: List<MercenaryData> = emptyList(),
+    /** Mercenaries currently under contract (max 3). */
+    val hiredMercs: List<MercContract> = emptyList(),
+    val dailyResetHour: Int = 6,
 )
+
+/** A hired mercenary resolved for display: roster data plus contract expiry. */
+data class MercContract(val merc: MercenaryData, val expiresAt: Long)
 
 // ---------------------------------------------------------------------------
 // ViewModel
@@ -131,6 +142,7 @@ class CombatViewModel @Inject constructor(
     private val seasonalEventRepo: SeasonalEventRepository,
     private val queuedSessionStarter: QueuedSessionStarter,
     private val townRepo: TownRepository,
+    private val mercRepo: MercenaryRepository,
     private val json: Json,
 ) : ViewModel() {
 
@@ -263,6 +275,9 @@ class CombatViewModel @Inject constructor(
                 bossFullCoinKillsLeft   = playerRepo.bossFullCoinKillsLeft(flags, extra.selectedBoss?.id ?: ""),
                 monumentComplete        = flags.monumentTier >= 5,
                 isQueueFull             = flags.sessionQueue.size >= playerRepo.maxQueueSize(flags),
+                mercPool                = mercRepo.dailyPool(flags),
+                hiredMercs              = mercRepo.activeContracts(flags).map { (m, h) -> MercContract(m, h.expiresAt) },
+                dailyResetHour          = flags.dailyResetHour,
             )
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), CombatUiState())
@@ -278,9 +293,32 @@ class CombatViewModel @Inject constructor(
     fun bossList(monumentComplete: Boolean): List<BossData> {
         val activeEventId = seasonalEventRepo.activeEvent()?.id
         return gameData.bosses.values
+            .filter { !it.raid }
             .filter { it.eventKey == null || it.eventKey == activeEventId }
             .filter { !it.requiresMonument || monumentComplete }
             .sortedBy { it.combatLevelRequired }
+    }
+
+    /** Raid-tier bosses: unbeatable solo, fought with a hired mercenary party. */
+    fun raidBossList(): List<BossData> =
+        gameData.bosses.values.filter { it.raid }.sortedBy { it.combatLevelRequired }
+
+    fun hireMercenary(mercId: String) {
+        viewModelScope.launch {
+            val name = GameStrings.mercName(context.withAppLocale(), mercId)
+            val msgRes = when (mercRepo.hire(mercId)) {
+                MercHireResult.SUCCESS          -> R.string.merc_hired
+                MercHireResult.PARTY_FULL       -> R.string.merc_party_full
+                MercHireResult.ALREADY_HIRED    -> R.string.merc_already_hired
+                MercHireResult.NOT_ENOUGH_COINS -> R.string.merc_not_enough_coins
+                MercHireResult.NOT_IN_POOL      -> R.string.merc_not_available
+            }
+            _extra.update { it.copy(snackbarMessage = context.withAppLocale().getString(msgRes, name)) }
+        }
+    }
+
+    fun dismissMercenary(mercId: String) {
+        viewModelScope.launch { mercRepo.dismiss(mercId) }
     }
 
     val enemyMap: Map<String, EnemyData> by lazy { gameData.enemies }
@@ -776,6 +814,7 @@ class CombatViewModel @Inject constructor(
                     eatThresholdPct    = flags.foodEatThresholdPct,
                     doubleHitChance     = boostRepo.doubleHitChance(flags),
                     secondChance        = boostRepo.secondChanceActive(flags),
+                    mercenaries         = if (boss.raid) mercRepo.combatants(flags) else emptyList(),
                 )
 
                 val framesJson = json.encodeToString(
@@ -1208,6 +1247,7 @@ class CombatViewModel @Inject constructor(
             eatThresholdPct    = flags.foodEatThresholdPct,
             doubleHitChance     = boostRepo.doubleHitChance(flags),
             secondChance        = boostRepo.secondChanceActive(flags),
+            mercenaries         = if (boss.raid) mercRepo.combatants(flags) else emptyList(),
         )
         return bossFrames.sumOf { it.xpGain.toLong() }
     }

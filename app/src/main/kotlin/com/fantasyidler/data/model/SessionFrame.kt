@@ -39,6 +39,10 @@ data class SessionFrame(
     @SerialName("arrows_consumed") val arrowsConsumed: Map<String, Int> = emptyMap(),
     /** Combat only — runes consumed this minute (rune key → quantity cast). */
     @SerialName("runes_consumed") val runesConsumed: Map<String, Int> = emptyMap(),
+    /** Raids only — total mercenary damage dealt per tick this minute. */
+    @SerialName("ally_hits") val allyHits: List<Int> = emptyList(),
+    /** Raids only — mercenaries fallen as of the end of this minute. */
+    @SerialName("allies_down") val alliesDown: Int = 0,
     /** Combat only — the enemy key fought this minute (empty for non-combat frames). */
     @SerialName("enemy_key") val enemyKey: String = "",
     /** Combat only — player HP at the end of this frame (0 = not recorded / non-combat). */

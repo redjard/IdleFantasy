@@ -103,6 +103,8 @@ data class PlayerFlags(
     @SerialName("hired_worker") val hiredWorker: HiredWorker? = null,
     /** Second worker slot (Apprentice / Journeyman / Master), or null if none. */
     @SerialName("hired_worker_2") val hiredWorker2: HiredWorker? = null,
+    /** Raid mercenaries under contract (up to 3); expired entries are pruned lazily. */
+    @SerialName("hired_mercenaries") val hiredMercenaries: List<HiredMercenary> = emptyList(),
     /** Persists the "hide completed quests" toggle across sessions. */
     @SerialName("hide_completed_quests") val hideCompletedQuests: Boolean = false,
     /** Last-visited Carnival tab index (0=Idle, 1=Active, 2=Prize Shop). */
@@ -411,6 +413,13 @@ data class HiredWorker(
     @SerialName("tier") val tier: WorkerTier,
     @SerialName("daily_name") val dailyName: String,
     @SerialName("session_queue") val sessionQueue: List<QueuedAction> = emptyList(),
+)
+
+/** A raid mercenary under contract until [expiresAt] (the next daily reset at hire time). */
+@Serializable
+data class HiredMercenary(
+    @SerialName("merc_id") val mercId: String,
+    @SerialName("expires_at") val expiresAt: Long,
 )
 
 @Serializable

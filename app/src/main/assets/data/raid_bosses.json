@@ -2,7 +2,7 @@
   "king_black_dragon": {
     "id": "king_black_dragon",
     "display_name": "King Black Dragon",
-    "emoji": "\ud83d\udc09",
+    "emoji": "🐉",
     "description": "The legendary three-headed dragon, feared across the realm.",
     "combat_level_required": 50,
     "duration_minutes": 45,
@@ -80,7 +80,7 @@
     "pet": {
       "id": "dragon_whelp",
       "display_name": "Dragon Whelp",
-      "emoji": "\ud83d\udc09",
+      "emoji": "🐉",
       "chance": 0.01,
       "comment": "1/100 per kill"
     },
@@ -91,7 +91,7 @@
   "demon_lord": {
     "id": "demon_lord",
     "display_name": "Demon Lord",
-    "emoji": "\ud83d\ude08",
+    "emoji": "😈",
     "description": "An ancient demon from the abyss, master of dark magic.",
     "combat_level_required": 70,
     "duration_minutes": 60,
@@ -174,7 +174,7 @@
     "pet": {
       "id": "imp_pet",
       "display_name": "Imp Pet",
-      "emoji": "\ud83d\ude08",
+      "emoji": "😈",
       "chance": 0.01,
       "comment": "1/100 per kill"
     },
@@ -185,7 +185,7 @@
   "kraken": {
     "id": "kraken",
     "display_name": "Kraken",
-    "emoji": "\ud83e\udd91",
+    "emoji": "🦑",
     "description": "The terror of the deep seas, a colossal sea monster.",
     "combat_level_required": 90,
     "duration_minutes": 90,
@@ -271,7 +271,7 @@
     "pet": {
       "id": "baby_kraken",
       "display_name": "Baby Kraken",
-      "emoji": "\ud83e\udd91",
+      "emoji": "🦑",
       "chance": 0.01,
       "comment": "1/100 per kill"
     }
@@ -279,7 +279,7 @@
   "balrog": {
     "id": "balrog",
     "display_name": "Gothic Ember, Ancient Flame of the Deep",
-    "emoji": "\ud83d\udd25",
+    "emoji": "🔥",
     "description": "An ancient demon of flame and shadow, awakened from its slumber deep beneath the earth.",
     "combat_level_required": 100,
     "duration_minutes": 120,
@@ -366,7 +366,7 @@
     "pet": {
       "id": "baby_balrog",
       "display_name": "Gothic Emberling",
-      "emoji": "\ud83d\udd25",
+      "emoji": "🔥",
       "chance": 0.005,
       "comment": "1/200 per kill"
     }
@@ -374,7 +374,7 @@
   "void_sovereign": {
     "id": "void_sovereign",
     "display_name": "The Void Sovereign",
-    "emoji": "\ud83c\udf11",
+    "emoji": "🌑",
     "description": "The primordial entity behind the void rifts. Ancient beyond reckoning, it regards mortal challengers with contempt.",
     "combat_level_required": 110,
     "duration_minutes": 150,
@@ -456,7 +456,7 @@
     "pet": {
       "id": "void_wisp",
       "display_name": "Void Wisp",
-      "emoji": "\ud83d\udcab",
+      "emoji": "💫",
       "chance": 0.003,
       "comment": "1/333 per kill"
     }
@@ -464,7 +464,7 @@
   "sol_invictus": {
     "id": "sol_invictus",
     "display_name": "Sol Invictus, the Sundered Flame",
-    "emoji": "\u2600\ufe0f",
+    "emoji": "☀️",
     "description": "A shard of the sun itself, torn loose from the Sunspire ruin. Only the boldest warriors dare approach.",
     "combat_level_required": 65,
     "duration_minutes": 50,
@@ -523,7 +523,7 @@
     "pet": {
       "id": "solstice_sprite",
       "display_name": "Solstice Sprite",
-      "emoji": "\ud83d\udd25",
+      "emoji": "🔥",
       "chance": 0.01,
       "comment": "1/100 per kill"
     },
@@ -532,7 +532,7 @@
   "the_hollow_king": {
     "id": "the_hollow_king",
     "display_name": "The Hollow King",
-    "emoji": "\ud83c\udf83",
+    "emoji": "🎃",
     "description": "The headless sovereign of the Gloomharvest, riding out from the Blightwood to reap what the living have sown.",
     "combat_level_required": 70,
     "duration_minutes": 55,
@@ -591,7 +591,7 @@
     "pet": {
       "id": "lantern_wisp",
       "display_name": "Lantern Wisp",
-      "emoji": "\ud83c\udf83",
+      "emoji": "🎃",
       "chance": 0.01,
       "comment": "1/100 per kill"
     },
@@ -600,7 +600,7 @@
   "the_vault_guardian": {
     "id": "the_vault_guardian",
     "display_name": "The Vault Guardian",
-    "emoji": "\ud83c\udfc6",
+    "emoji": "🏆",
     "description": "A colossus of living gold, woken by the lighting of the Eternal Flame. Only patrons of the Grand Monument may face it.",
     "combat_level_required": 100,
     "duration_minutes": 90,
@@ -663,5 +663,197 @@
       }
     ],
     "requires_monument": true
+  },
+  "obsidian_colossus": {
+    "id": "obsidian_colossus",
+    "display_name": "Obsidian Colossus",
+    "emoji": "🗿",
+    "description": "A mountain given wrath. No lone hero has ever chipped more than a scar into it. Bring a party.",
+    "combat_level_required": 130,
+    "duration_minutes": 60,
+    "hp": 52000,
+    "combat_stats": {
+      "attack_level": 200,
+      "strength_level": 120,
+      "defense_level": 150,
+      "attack_bonus": 40,
+      "strength_bonus": 40
+    },
+    "defensive_stats": {
+      "attack_defense": 250,
+      "strength_defense": 250,
+      "ranged_defense": 240,
+      "magic_defense": 280
+    },
+    "xp_rewards": {
+      "attack": 5000,
+      "strength": 5000,
+      "defense": 5000,
+      "hitpoints": 4000,
+      "magic": 2500,
+      "ranged": 2500
+    },
+    "common_loot": {
+      "coins_min": 40000,
+      "coins_max": 80000,
+      "items": {
+        "runite_bar": {
+          "min": 20,
+          "max": 40
+        },
+        "dragon_bone": {
+          "min": 40,
+          "max": 80
+        },
+        "diamond": {
+          "min": 5,
+          "max": 12
+        }
+      }
+    },
+    "rare_drops": [
+      {
+        "item": "gilded_full_helmet",
+        "chance": 0.015,
+        "comment": "1/67"
+      },
+      {
+        "item": "race_change_token",
+        "chance": 0.005,
+        "comment": "1/200"
+      }
+    ],
+    "raid": true
+  },
+  "brood_empress": {
+    "id": "brood_empress",
+    "display_name": "Brood Empress",
+    "emoji": "👁️",
+    "description": "Mother of the swarm between the stars. Her brood has ended armies; yours had better be paid well.",
+    "combat_level_required": 140,
+    "duration_minutes": 60,
+    "hp": 56000,
+    "combat_stats": {
+      "attack_level": 205,
+      "strength_level": 125,
+      "defense_level": 170,
+      "attack_bonus": 40,
+      "strength_bonus": 40
+    },
+    "defensive_stats": {
+      "attack_defense": 260,
+      "strength_defense": 260,
+      "ranged_defense": 250,
+      "magic_defense": 170
+    },
+    "xp_rewards": {
+      "attack": 7000,
+      "strength": 7000,
+      "defense": 7000,
+      "hitpoints": 5500,
+      "magic": 3500,
+      "ranged": 3500
+    },
+    "common_loot": {
+      "coins_min": 60000,
+      "coins_max": 120000,
+      "items": {
+        "magic_log": {
+          "min": 40,
+          "max": 80
+        },
+        "dragon_bone": {
+          "min": 60,
+          "max": 100
+        },
+        "diamond": {
+          "min": 8,
+          "max": 16
+        }
+      }
+    },
+    "rare_drops": [
+      {
+        "item": "gilded_platebody",
+        "chance": 0.015,
+        "comment": "1/67"
+      },
+      {
+        "item": "race_change_token",
+        "chance": 0.008,
+        "comment": "1/125"
+      }
+    ],
+    "raid": true
+  },
+  "the_world_ender": {
+    "id": "the_world_ender",
+    "display_name": "The World Ender",
+    "emoji": "🌋",
+    "description": "When it stirs, kingdoms write their wills. Four names on the contract or none return.",
+    "combat_level_required": 150,
+    "duration_minutes": 60,
+    "hp": 62000,
+    "combat_stats": {
+      "attack_level": 210,
+      "strength_level": 125,
+      "defense_level": 200,
+      "attack_bonus": 40,
+      "strength_bonus": 40
+    },
+    "defensive_stats": {
+      "attack_defense": 270,
+      "strength_defense": 270,
+      "ranged_defense": 260,
+      "magic_defense": 300
+    },
+    "xp_rewards": {
+      "attack": 10000,
+      "strength": 10000,
+      "defense": 10000,
+      "hitpoints": 8000,
+      "magic": 5000,
+      "ranged": 5000
+    },
+    "common_loot": {
+      "coins_min": 100000,
+      "coins_max": 200000,
+      "items": {
+        "runite_bar": {
+          "min": 40,
+          "max": 70
+        },
+        "magic_log": {
+          "min": 60,
+          "max": 100
+        },
+        "dragon_bone": {
+          "min": 80,
+          "max": 140
+        },
+        "diamond": {
+          "min": 12,
+          "max": 24
+        }
+      }
+    },
+    "rare_drops": [
+      {
+        "item": "gilded_kiteshield",
+        "chance": 0.015,
+        "comment": "1/67"
+      },
+      {
+        "item": "gilded_platebody",
+        "chance": 0.01,
+        "comment": "1/100"
+      },
+      {
+        "item": "race_change_token",
+        "chance": 0.01,
+        "comment": "1/100"
+      }
+    ],
+    "raid": true
   }
 }

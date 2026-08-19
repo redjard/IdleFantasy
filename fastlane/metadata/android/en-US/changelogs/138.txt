@@ -14,3 +14,5 @@
 • New Slayer path Foresight: foretell up to 3 extra tasks, and its final tier lets one dungeon run progress every matching foretold task
 • New Elf ranged path Better Bows: unlocks the Elven Shortbow and Longbow fletching recipes (replaces the Elf arrow-reclaim nodes; those points are refunded). Anyone can equip the bows
 • Slayer task point bonuses now show their description in the upgrade tree
+• New raid tier: three bosses (Obsidian Colossus, Brood Empress, The World Ender) that no lone hero can defeat, even in the best gear
+• Hire up to three mercenaries for raids from a daily rotating pool, from budget sellswords to near-max champions. Contracts last until the daily reset, and the raid boss spreads its attacks across your whole party

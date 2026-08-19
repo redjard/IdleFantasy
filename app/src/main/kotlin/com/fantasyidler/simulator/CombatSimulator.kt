@@ -338,10 +338,27 @@ object CombatSimulator {
     }
 
     /**
+     * A hired mercenary fighting alongside the player in a raid.
+     * [effAttack] is the style level plus attack bonus; [hpLevel] scales x10 like the player's.
+     */
+    data class MercCombatant(
+        val id: String,
+        val style: String,
+        val effAttack: Int,
+        val maxHit: Int,
+        val defense: Int,
+        val hpLevel: Int,
+    )
+
+    /**
      * Tick-by-tick boss simulation. Returns one [SessionFrame] per simulated minute
      * (up to [BossData.durationMinutes] frames). Each frame has [SessionFrame.playerHits]
      * and [SessionFrame.enemyHits] populated for live combat-log animation. Loot and XP
      * are attached to the final frame on a win.
+     *
+     * Raids: [mercenaries] fight as full combatants. They attack on the standard 2.4s
+     * cadence, the boss picks a uniformly random living party member per attack, and a
+     * merc at 0 HP is out for the rest of the fight. Player death still ends the raid.
      */
     fun simulateBoss(
         boss: BossData,
@@ -369,6 +386,7 @@ object CombatSimulator {
         eatThresholdPct: Int = 50,
         doubleHitChance: Double = 0.0,
         secondChance: Boolean = false,
+        mercenaries: List<MercCombatant> = emptyList(),
         random: Random = Random.Default,
     ): List<SessionFrame> {
         val speed = attackSpeedSec.coerceIn(1.2, BASE_ATTACK_SPEED_SEC)
@@ -430,12 +448,33 @@ object CombatSimulator {
             .map { it.key }
         var totalFoodEaten = 0
         var bossClock = 0.0
+        var mercClock = 0.0
+
+        val mercHitChance = mercenaries.map { m ->
+            val def = when (m.style) {
+                "ranged" -> boss.defensiveStats.rangedDefense
+                "magic"  -> boss.defensiveStats.magicDefense
+                else     -> boss.defensiveStats.attackDefense
+            }
+            when {
+                m.effAttack > def -> 1.0 - def / (2.0 * m.effAttack.coerceAtLeast(1))
+                else              -> m.effAttack / (2.0 * def.coerceAtLeast(1))
+            }.coerceIn(0.10, 0.95)
+        }
+        val bossHitChanceVsMerc = mercenaries.map { m ->
+            when {
+                bossEffAtk > m.defense -> 1.0 - m.defense / (2.0 * bossEffAtk.coerceAtLeast(1))
+                else                   -> bossEffAtk / (2.0 * m.defense.coerceAtLeast(1))
+            }.coerceIn(0.10, 0.95)
+        }
+        val mercHp = IntArray(mercenaries.size) { mercenaries[it].hpLevel * 10 }
 
         val rnd = random
 
         outer@ while (frames.size < maxFrames) {
             val pHits       = mutableListOf<Int>()
             val eHits       = mutableListOf<Int>()
+            val aHits       = mutableListOf<Int>()
             val pHeals      = mutableListOf<Int>()
             val frameFood   = mutableMapOf<String, Int>()
             val frameArrows = mutableMapOf<String, Int>()
@@ -477,6 +516,21 @@ object CombatSimulator {
                 currentBossHp -= pDmg
                 pHits.add(pDmg)
 
+                // Mercenaries attack on the standard 2.4s cadence, independent of player speed.
+                if (mercenaries.isNotEmpty()) {
+                    mercClock += speed
+                    var aDmg = 0
+                    while (mercClock >= BASE_ATTACK_SPEED_SEC - 1e-9) {
+                        mercClock -= BASE_ATTACK_SPEED_SEC
+                        for (i in mercenaries.indices) {
+                            if (mercHp[i] <= 0) continue
+                            if (rnd.nextDouble() < mercHitChance[i]) aDmg += rnd.nextInt(0, mercenaries[i].maxHit + 1)
+                        }
+                    }
+                    currentBossHp -= aDmg
+                    aHits.add(aDmg)
+                }
+
                 if (currentBossHp <= 0) {
                     won = true
                     frames.add(SessionFrame(
@@ -489,16 +543,32 @@ object CombatSimulator {
                         runesConsumed  = if (runeKey != null && frameRunesUsed > 0) mapOf(runeKey to frameRunesUsed * runeCostPerAttack) else emptyMap(),
                         maxHp          = maxHp,
                         foodAtStart    = if (frames.isEmpty()) equippedFood else emptyMap(),
+                        allyHits       = aHits,
+                        alliesDown     = mercHp.count { it <= 0 },
                     ))
                     break@outer
                 }
 
-                // Boss attacks on a fixed 2.4s cadence, independent of player speed
+                // Boss attacks on a fixed 2.4s cadence, independent of player speed.
+                // In a raid each attack targets a uniformly random living party member.
                 bossClock += speed
                 var bDmg = 0
                 while (bossClock >= BASE_ATTACK_SPEED_SEC - 1e-9) {
                     bossClock -= BASE_ATTACK_SPEED_SEC
-                    if (rnd.nextDouble() < bossHitChance) bDmg += rnd.nextInt(0, bossMax + 1)
+                    if (mercenaries.isEmpty()) {
+                        if (rnd.nextDouble() < bossHitChance) bDmg += rnd.nextInt(0, bossMax + 1)
+                    } else {
+                        val livingMercs = mercenaries.indices.filter { mercHp[it] > 0 }
+                        val target = rnd.nextInt(1 + livingMercs.size)
+                        if (target == 0) {
+                            if (rnd.nextDouble() < bossHitChance) bDmg += rnd.nextInt(0, bossMax + 1)
+                        } else {
+                            val mi = livingMercs[target - 1]
+                            if (rnd.nextDouble() < bossHitChanceVsMerc[mi]) {
+                                mercHp[mi] = (mercHp[mi] - rnd.nextInt(0, bossMax + 1)).coerceAtLeast(0)
+                            }
+                        }
+                    }
                 }
                 currentHp = (currentHp - bDmg).coerceAtLeast(0)
                 eHits.add(bDmg)
@@ -517,6 +587,8 @@ object CombatSimulator {
                         runesConsumed  = if (runeKey != null && frameRunesUsed > 0) mapOf(runeKey to frameRunesUsed * runeCostPerAttack) else emptyMap(),
                         maxHp          = maxHp,
                         foodAtStart    = if (frames.isEmpty()) equippedFood else emptyMap(),
+                        allyHits       = aHits,
+                        alliesDown     = mercHp.count { it <= 0 },
                     ))
                     break@outer
                 }
@@ -551,16 +623,22 @@ object CombatSimulator {
                     runesConsumed  = if (runeKey != null && frameRunesUsed > 0) mapOf(runeKey to frameRunesUsed * runeCostPerAttack) else emptyMap(),
                     maxHp          = maxHp,
                     foodAtStart    = if (frames.isEmpty()) equippedFood else emptyMap(),
+                    allyHits       = aHits,
+                    alliesDown     = mercHp.count { it <= 0 },
                 ))
             }
         }
 
         // DPS fallback if the frame cap was hit with neither side dead.
         if (frames.isEmpty() || (frames.last().kills == 0 && currentBossHp > 0 && currentHp > 0)) {
-            val playerDps = (playerMax / 2.0) * playerHitChance / speed
+            val mercDps = mercenaries.indices.sumOf { i ->
+                (mercenaries[i].maxHit / 2.0) * mercHitChance[i] / BASE_ATTACK_SPEED_SEC
+            }
+            val partyHp   = maxHp + mercenaries.sumOf { it.hpLevel * 10 }
+            val playerDps = (playerMax / 2.0) * playerHitChance / speed + mercDps
             val bossDps   = (bossMax / 2.0) * bossHitChance / BASE_ATTACK_SPEED_SEC
             won = if (playerDps > 0 && bossDps > 0) {
-                (boss.hp / playerDps) <= (maxHp / bossDps)
+                (boss.hp / playerDps) <= (partyHp / bossDps)
             } else playerDps >= bossDps
             val stub = SessionFrame(
                 minute = frames.size, xpGain = 0, xpBefore = 0L, xpAfter = 0L,

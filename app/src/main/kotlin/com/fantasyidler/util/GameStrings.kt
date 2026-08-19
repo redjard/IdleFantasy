@@ -240,6 +240,9 @@ object GameStrings {
     fun raceName(context: Context, race: String): String =
         context.stringByName("character_race_${race}") ?: race.toTitleCase()
 
+    fun mercName(context: Context, key: String): String =
+        context.stringByName("merc_${key}_name") ?: key.toTitleCase()
+
     fun raceNames(context: Context, races: List<String>): String =
         races.joinToString(" & ") { raceName(context, it) }
 

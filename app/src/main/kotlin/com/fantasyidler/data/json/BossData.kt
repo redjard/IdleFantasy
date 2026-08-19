@@ -23,6 +23,8 @@ data class BossData(
     @SerialName("event_key") val eventKey: String? = null,
     /** True for bosses only unlocked by completing the Grand Monument (Eternal Flame lit). */
     @SerialName("requires_monument") val requiresMonument: Boolean = false,
+    /** Raid-tier boss: tuned to be unbeatable solo, fought with hired mercenaries. */
+    val raid: Boolean = false,
 )
 
 @Serializable

@@ -1,5 +1,9 @@
 package com.fantasyidler.simulator
 
+import com.fantasyidler.data.json.BossCombatStats
+import com.fantasyidler.data.json.BossCommonLoot
+import com.fantasyidler.data.json.BossData
+import com.fantasyidler.data.json.BossDefensiveStats
 import com.fantasyidler.data.json.DungeonData
 import com.fantasyidler.data.json.EnemyCombatStats
 import com.fantasyidler.data.json.EnemyData
@@ -186,5 +190,72 @@ class CombatSimulatorTest {
         )
         assertTrue(result.frames.isEmpty())
         assertEquals(SkillSimulator.sessionDurationMs(1), result.durationMs)
+    }
+
+    // ------------------------------------------------------------------
+    // Raids: mercenary parties vs raid-tier bosses
+    // ------------------------------------------------------------------
+
+    /** The real raid bosses from the shipped data file, so tuning and tests cannot drift apart. */
+    private val raidBosses: List<BossData> by lazy {
+        val json = kotlinx.serialization.json.Json { ignoreUnknownKeys = true }
+        val text = java.io.File("src/main/assets/data/raid_bosses.json").readText()
+        json.decodeFromString<Map<String, BossData>>(text).values.filter { it.raid }
+    }
+
+    /** Stats mirroring the elite roster tier in mercenaries.json (99+100 atk, effStr 209 with +110 gear, hp 380). */
+    private fun eliteMerc(i: Int) = CombatSimulator.MercCombatant(
+        id = "elite_$i", style = "melee", effAttack = 199, maxHit = 57, defense = 95, hpLevel = 380,
+    )
+
+    /** BIS-league solo player: level 99s plus prestige stat nodes, strong gear bonuses, best food supply. */
+    private fun runRaid(
+        boss: BossData,
+        seed: Int,
+        mercs: List<CombatSimulator.MercCombatant>,
+        maxedOut: Boolean = false,
+    ) = CombatSimulator.simulateBoss(
+        boss = boss, bossKey = boss.id,
+        // maxedOut adds combat potions on top and enables the prestige combat specials.
+        playerAttack = if (maxedOut) 132 else 122,
+        playerStrength = if (maxedOut) 132 else 122,
+        playerDefence = if (maxedOut) 132 else 122,
+        playerHp = 99,
+        weaponAttackBonus = 85, weaponStrBonus = 85,
+        equippedFood = mapOf("cooked_shark" to 300),
+        foodHealValues = mapOf("cooked_shark" to 20),
+        attackSpeedSec = 1.5,
+        doubleHitChance = if (maxedOut) 0.15 else 0.0,
+        secondChance = maxedOut,
+        mercenaries = mercs,
+        random = Random(seed),
+    )
+
+    @Test
+    fun `no raid boss can be beaten solo even fully maxed with prestige specials`() {
+        assertTrue("expected raid bosses in data", raidBosses.isNotEmpty())
+        for (boss in raidBosses) for (seed in listOf(1, 7, 42, 99, 1234)) {
+            val frames = runRaid(boss, seed, mercs = emptyList(), maxedOut = true)
+            assertEquals("${boss.id} seed $seed: maxed solo player must not win", 0, frames.last().kills)
+        }
+    }
+
+    @Test
+    fun `every raid boss falls to a player with three elite mercenaries`() {
+        for (boss in raidBosses) for (seed in listOf(1, 7, 42, 99, 1234)) {
+            val frames = runRaid(boss, seed, mercs = (1..3).map { eliteMerc(it) })
+            assertEquals("${boss.id} seed $seed: full elite party must win", 1, frames.last().kills)
+            val allyDamage = frames.sumOf { it.allyHits.sum() }
+            assertTrue("${boss.id} seed $seed: mercs must contribute damage", allyDamage > 0)
+        }
+    }
+
+    @Test
+    fun `the boss spreads its attacks across the party`() {
+        // Deterministic per seed: with 3 extra targets the player soaks far fewer hits.
+        val boss = raidBosses.first()
+        val soloTaken  = runRaid(boss, seed = 5, mercs = emptyList()).sumOf { it.enemyHits.sum() }
+        val partyTaken = runRaid(boss, seed = 5, mercs = (1..3).map { eliteMerc(it) }).sumOf { it.enemyHits.sum() }
+        assertTrue("expected party player to take less damage (solo=$soloTaken party=$partyTaken)", partyTaken < soloTaken)
     }
 }

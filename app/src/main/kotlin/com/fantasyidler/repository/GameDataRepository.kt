@@ -5,6 +5,7 @@ import com.fantasyidler.data.json.BoneData
 import com.fantasyidler.data.json.SlayerTaskData
 import com.fantasyidler.data.json.CropData
 import com.fantasyidler.data.json.BossData
+import com.fantasyidler.data.json.MercenaryData
 import com.fantasyidler.data.json.CookingRecipe
 import com.fantasyidler.data.json.CraftingRecipe
 import com.fantasyidler.data.json.DungeonData
@@ -171,6 +172,10 @@ class GameDataRepository @Inject constructor(
 
     val bosses: Map<String, BossData> by lazy {
         asset("data/raid_bosses.json")
+    }
+
+    val mercenaries: List<MercenaryData> by lazy {
+        asset("data/mercenaries.json")
     }
 
     // ------------------------------------------------------------------ bones (prayer)

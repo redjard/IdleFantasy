@@ -1177,17 +1177,23 @@ def gen_combat_footer() -> str:
 def gen_bosses() -> str:
     bosses = load("raid_bosses.json")
     assert isinstance(bosses, dict)
-    rows = [
-        [
-            boss_icon(boss_id, boss.get("emoji", ""), 48),
-            link(boss_id),
-            boss.get("combat_level_required", "—"),
-            boss_desc(boss_id),
+
+    def rows_for(raid: bool) -> list[list]:
+        return [
+            [
+                boss_icon(boss_id, boss.get("emoji", ""), 48),
+                link(boss_id),
+                boss.get("combat_level_required", "—"),
+                boss_desc(boss_id),
+            ]
+            for boss_id, boss in sorted(bosses.items(), key=lambda x: x[1].get("combat_level_required", 0))
+            if bool(boss.get("raid", False)) == raid
         ]
-        for boss_id, boss in sorted(bosses.items(), key=lambda x: x[1].get("combat_level_required", 0))
-    ]
+
+    header = ["", "Boss", "Combat Level", "Description"]
     return get_template("combat/bosses").format(
-        boss_table=table(["", "Boss", "Combat Level", "Description"], rows),
+        boss_table=table(header, rows_for(raid=False)),
+        raid_table=table(header, rows_for(raid=True)),
         combat_footer=gen_combat_footer(),
     )
 
@@ -1741,7 +1747,7 @@ def gen_titles() -> str:
     guild_table = table(["Title", "Requirement"], guild_rows)
 
     other_rows = [
-        ["Godslayer", "Defeat every raid boss at least once"],
+        ["Godslayer", "Defeat every boss at least once"],
         ["Patron of the Realm", "Complete the Grand Monument"],
     ]
     other_table = table(["Title", "Requirement"], other_rows)
