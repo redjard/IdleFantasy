@@ -11,7 +11,7 @@
         }
       },
       "versions": {
-        "98059affbcbc71361fce7e5d08c7d2e5b249c788b548d83dc307e2702281a61a": null,
+        "49a31174aeeb60d67191dcef9da2010dfba2f4926ca66767538cdf4ed7585bd7": null,
         "9c340121b28dc6fd413304f2382f8bf2d443387660acf2844e841b691f909a06": {
           "added": 1787233834850,
           "file": {
@@ -60,106 +60,6 @@
           },
           "whatsNew": {
             "en-US": "• Void Staff is now the strongest staff in the game, above the Trident of the Seas, as befits the final tower milestone reward\n• Laborer crafting sheets now list material tiers by rank (bronze, iron, ...) instead of alphabetically, matching the regular skill screens\n• Coin amounts over 1M now floor instead of round, so the display never overstates what you have (99.96M no longer shows as 100.0M when you can't yet afford a 100M purchase) (thanks Michaelomh!)\n• Crop-ready notifications are now cha"
-          }
-        },
-        "371c1ada4d8c8f18ad0c9ab2b343cd40259b649db4a43f195d188f1f5daa4a08": {
-          "added": 1786882413309,
-          "file": {
-            "name": "/com.tristinbaker.idlefantasy_135.apk",
-            "sha256": "371c1ada4d8c8f18ad0c9ab2b343cd40259b649db4a43f195d188f1f5daa4a08",
-            "size": 9289606
-          },
-          "manifest": {
-            "nativecode": [
-              "arm64-v8a",
-              "armeabi-v7a",
-              "x86",
-              "x86_64"
-            ],
-            "versionName": "1.13.8",
-            "versionCode": 135,
-            "usesSdk": {
-              "minSdkVersion": 26,
-              "targetSdkVersion": 35
-            },
-            "signer": {
-              "sha256": [
-                "99a980a934cb0149bfbdd5f4358471ffe69302e0467bae4d8574d4feeda34010"
-              ]
-            },
-            "usesPermission": [
-              {
-                "name": "android.permission.POST_NOTIFICATIONS"
-              },
-              {
-                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
-              },
-              {
-                "name": "android.permission.WAKE_LOCK"
-              },
-              {
-                "name": "android.permission.USE_EXACT_ALARM"
-              },
-              {
-                "name": "android.permission.SCHEDULE_EXACT_ALARM"
-              },
-              {
-                "name": "com.tristinbaker.idlefantasy.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-              }
-            ]
-          },
-          "whatsNew": {
-            "en-US": "• Fixed the Skills tab quest counter counting bury-any-bones guild quests once per bone type, making 4 remaining quests show as 20\n• Fixed the Golden Goose pet showing +10% XP in the pet collection; it now correctly shows +10% Coins\n• Made 166 item names translatable that were previously locked to English (thanks MarcMush!)\n• Many more texts now follow your language: session collect dialog titles, loot and reward names, queue and notification labels, quest chips in skill sheets, bestiary headers"
-          }
-        },
-        "e469bce76a570f8db31aad8d7bdbe25a2240fbe29ed7b972258424a956de5832": {
-          "added": 1786803542850,
-          "file": {
-            "name": "/com.tristinbaker.idlefantasy_134.apk",
-            "sha256": "e469bce76a570f8db31aad8d7bdbe25a2240fbe29ed7b972258424a956de5832",
-            "size": 9204322
-          },
-          "manifest": {
-            "nativecode": [
-              "arm64-v8a",
-              "armeabi-v7a",
-              "x86",
-              "x86_64"
-            ],
-            "versionName": "1.13.7",
-            "versionCode": 134,
-            "usesSdk": {
-              "minSdkVersion": 26,
-              "targetSdkVersion": 35
-            },
-            "signer": {
-              "sha256": [
-                "99a980a934cb0149bfbdd5f4358471ffe69302e0467bae4d8574d4feeda34010"
-              ]
-            },
-            "usesPermission": [
-              {
-                "name": "android.permission.POST_NOTIFICATIONS"
-              },
-              {
-                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
-              },
-              {
-                "name": "android.permission.WAKE_LOCK"
-              },
-              {
-                "name": "android.permission.USE_EXACT_ALARM"
-              },
-              {
-                "name": "android.permission.SCHEDULE_EXACT_ALARM"
-              },
-              {
-                "name": "com.tristinbaker.idlefantasy.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-              }
-            ]
-          },
-          "whatsNew": {
-            "en-US": "• Clearing a farm patch now names the crop in the confirmation dialog, and clearing a Magic Bean patch shows a message that the bean was returned to your inventory\n• Fixed Church XP blessings showing a raw formatting code instead of the actual XP multiplier\n• Added Polish and Lithuanian to the language picker\n• Fixed Spanish (Spain) translations never loading; selecting it silently fell back to generic Spanish\n• Czech, Irish, Chinese, Polish, and Lithuanian can now also be set from Android per-a"
           }
         }
       }
