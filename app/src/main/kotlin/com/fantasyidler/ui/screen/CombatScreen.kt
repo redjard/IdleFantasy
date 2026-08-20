@@ -201,7 +201,10 @@ fun CombatScreen(
                         0 -> CombatSessionBanner(
                             session        = combatSession,
                             dungeons       = visibleDungeons,
-                            bosses         = viewModel.bossList(state.monumentComplete),
+                            // Raid bosses included: the banner resolves the boss's name,
+                            // emoji, and HP panel from this list.
+                            bosses         = viewModel.bossList(state.monumentComplete) + viewModel.raidBossList(),
+                            hiredMercs     = state.hiredMercs,
                             enemies        = viewModel.enemyMap,
                             skillLevels    = state.skillLevels,
                             hpPrestigeBonus = state.hpPrestigeBonus,

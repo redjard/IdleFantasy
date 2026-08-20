@@ -1642,6 +1642,8 @@
     <string name="merc_not_enough_coins">Not enough coins to hire %1$s.</string> <!-- untranslated -->
     <string name="merc_not_available">%1$s is not available today.</string> <!-- untranslated -->
     <string name="merc_contract_remaining">Contract: %1$s left</string> <!-- untranslated -->
+    <string name="combat_log_ally_hit">Your mercenaries hit %1$s for %2$d</string> <!-- untranslated -->
+    <string name="raid_allies_down">Mercenaries down: %1$d</string> <!-- untranslated -->
     <string name="merc_tier_cheap">Sellsword</string> <!-- untranslated -->
     <string name="merc_tier_seasoned">Veteran</string> <!-- untranslated -->
     <string name="merc_tier_elite">Champion</string> <!-- untranslated -->

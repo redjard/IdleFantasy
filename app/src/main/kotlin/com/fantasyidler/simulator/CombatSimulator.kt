@@ -545,6 +545,7 @@ object CombatSimulator {
                         foodAtStart    = if (frames.isEmpty()) equippedFood else emptyMap(),
                         allyHits       = aHits,
                         alliesDown     = mercHp.count { it <= 0 },
+                        allyHpAfter    = mercHp.toList(),
                     ))
                     break@outer
                 }
@@ -589,6 +590,7 @@ object CombatSimulator {
                         foodAtStart    = if (frames.isEmpty()) equippedFood else emptyMap(),
                         allyHits       = aHits,
                         alliesDown     = mercHp.count { it <= 0 },
+                        allyHpAfter    = mercHp.toList(),
                     ))
                     break@outer
                 }
@@ -625,6 +627,7 @@ object CombatSimulator {
                     foodAtStart    = if (frames.isEmpty()) equippedFood else emptyMap(),
                     allyHits       = aHits,
                     alliesDown     = mercHp.count { it <= 0 },
+                    allyHpAfter    = mercHp.toList(),
                 ))
             }
         }

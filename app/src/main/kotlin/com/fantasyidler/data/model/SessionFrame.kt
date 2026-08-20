@@ -43,6 +43,8 @@ data class SessionFrame(
     @SerialName("ally_hits") val allyHits: List<Int> = emptyList(),
     /** Raids only — mercenaries fallen as of the end of this minute. */
     @SerialName("allies_down") val alliesDown: Int = 0,
+    /** Raids only — each mercenary's HP at the end of this minute, in party order. */
+    @SerialName("ally_hp_after") val allyHpAfter: List<Int> = emptyList(),
     /** Combat only — the enemy key fought this minute (empty for non-combat frames). */
     @SerialName("enemy_key") val enemyKey: String = "",
     /** Combat only — player HP at the end of this frame (0 = not recorded / non-combat). */
