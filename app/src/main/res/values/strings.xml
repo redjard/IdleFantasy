@@ -552,6 +552,7 @@
     <string name="combat_log_player_miss">→ You missed %1$s</string>
     <string name="combat_log_enemy_hit">← %1$s hit you: %2$d dmg</string>
     <string name="combat_log_enemy_miss">← %1$s missed</string>
+    <string name="combat_log_ally_hit">→ Your mercenaries hit %1$s: %2$d dmg</string>
     <string name="combat_log_heal">✚ You eat: +%1$d HP</string>
     <string name="combat_eat_threshold_warning">Risky: at a low threshold a hard hit can drop you to 0 HP before your character eats.</string>
     <string name="combat_rec_level">Recommended combat level</string>
@@ -1644,13 +1645,12 @@
     <string name="merc_not_enough_coins">Not enough coins to hire %1$s.</string>
     <string name="merc_not_available">%1$s is not available today.</string>
     <string name="merc_contract_remaining">Contract: %1$s left</string>
-    <string name="combat_log_ally_hit">Your mercenaries hit %1$s for %2$d</string>
     <string name="raid_allies_down">Mercenaries down: %1$d</string>
     <string name="merc_tier_cheap">Sellsword</string>
     <string name="merc_tier_seasoned">Veteran</string>
     <string name="merc_tier_elite">Champion</string>
     <string name="merc_stats">Atk %1$d  Str %2$d  Def %3$d  HP %4$d</string>
-    <string name="merc_cost_per_day">%1$s coins per day</string>
+    <string name="merc_cost_per_day">%1$s coins</string>
     <string name="merc_bran_the_sellsword_name">Bran the Sellsword</string>
     <string name="merc_wren_the_stray_name">Wren the Stray</string>
     <string name="merc_tam_the_grey_name">Tam the Grey</string>

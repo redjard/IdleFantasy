@@ -69,7 +69,7 @@ internal fun MercenaryCampSheet(
             fontWeight = FontWeight.SemiBold,
         )
         Spacer(Modifier.height(8.dp))
-        pool.forEach { merc ->
+        pool.sortedBy { it.hireCost }.forEach { merc ->
             val hired = merc.id in hiredIds
             Row(
                 modifier              = Modifier.fillMaxWidth().padding(vertical = 6.dp),

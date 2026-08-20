@@ -83,6 +83,7 @@ import com.fantasyidler.data.model.SkillSession
 import com.fantasyidler.data.model.Skills
 import com.fantasyidler.ui.viewmodel.CombatViewModel
 import com.fantasyidler.ui.viewmodel.InventoryViewModel
+import com.fantasyidler.ui.viewmodel.MercContract
 import com.fantasyidler.ui.viewmodel.combatLevelFrom
 import com.fantasyidler.ui.viewmodel.slotDisplayName
 import com.fantasyidler.ui.viewmodel.xpProgressFraction
@@ -94,6 +95,7 @@ import com.fantasyidler.util.toTitleCase
 import kotlinx.coroutines.delay
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import kotlin.time.Duration.Companion.milliseconds
 
 internal fun combatXpBreakdownText(total: Long, bonus: Long, boostWasActive: Boolean): String? {
     if (bonus <= 0L) return null
@@ -139,7 +141,7 @@ internal fun CombatSessionBanner(
     showEndTime: Boolean = true,
     repeatIndex: Int = 0,
     repeatTotal: Int = 0,
-    hiredMercs: List<com.fantasyidler.ui.viewmodel.MercContract> = emptyList(),
+    hiredMercs: List<MercContract> = emptyList(),
     onAbandon: () -> Unit,
     onDebugFinish: () -> Unit,
 ) {
@@ -161,7 +163,7 @@ internal fun CombatSessionBanner(
     LaunchedEffect(endsAt) {
         while (System.currentTimeMillis() < endsAt) {
             now = System.currentTimeMillis()
-            delay(500L)
+            delay(500.milliseconds)
         }
         now = System.currentTimeMillis()
     }
