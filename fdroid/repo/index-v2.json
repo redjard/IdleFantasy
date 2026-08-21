@@ -14,7 +14,7 @@
       }
     },
     "address": "https://idlefantasy.tristinbaker.xyz/fdroid/repo",
-    "timestamp": 1787233868752,
+    "timestamp": 1787344522415,
     "categories": {
       "Games": {
         "name": {
@@ -31,7 +31,7 @@
           "Games"
         ],
         "issueTracker": "https://github.com/tristinbaker/IdleFantasy/issues",
-        "lastUpdated": 1787233834850,
+        "lastUpdated": 1787344487731,
         "license": "GPL-3.0-only",
         "sourceCode": "https://github.com/tristinbaker/IdleFantasy",
         "screenshots": {
@@ -140,12 +140,12 @@
         "preferredSigner": "99a980a934cb0149bfbdd5f4358471ffe69302e0467bae4d8574d4feeda34010"
       },
       "versions": {
-        "9c340121b28dc6fd413304f2382f8bf2d443387660acf2844e841b691f909a06": {
-          "added": 1787233834850,
+        "48dfc0d59f4ad0e884090bcdecf060296a51883adff163d6e69cc24335dd1c9f": {
+          "added": 1787344487731,
           "file": {
-            "name": "/com.tristinbaker.idlefantasy_138.apk",
-            "sha256": "9c340121b28dc6fd413304f2382f8bf2d443387660acf2844e841b691f909a06",
-            "size": 9532250
+            "name": "/com.tristinbaker.idlefantasy_139.apk",
+            "sha256": "48dfc0d59f4ad0e884090bcdecf060296a51883adff163d6e69cc24335dd1c9f",
+            "size": 9897835
           },
           "manifest": {
             "nativecode": [
@@ -154,8 +154,8 @@
               "x86",
               "x86_64"
             ],
-            "versionName": "1.13.11",
-            "versionCode": 138,
+            "versionName": "1.14.0",
+            "versionCode": 139,
             "usesSdk": {
               "minSdkVersion": 26,
               "targetSdkVersion": 35
@@ -187,7 +187,7 @@
             ]
           },
           "whatsNew": {
-            "en-US": "• Void Staff is now the strongest staff in the game, above the Trident of the Seas, as befits the final tower milestone reward\n• Laborer crafting sheets now list material tiers by rank (bronze, iron, ...) instead of alphabetically, matching the regular skill screens\n• Coin amounts over 1M now floor instead of round, so the display never overstates what you have (99.96M no longer shows as 100.0M when you can't yet afford a 100M purchase) (thanks Michaelomh!)\n• Crop-ready notifications are now cha"
+            "en-US": "New Features:\n\nPrestige Overhaul\n• Prestiging a level 99 skill now awards points to spend in that skill's upgrade tree, with race-specific branches, hidden tiers to discover, a point respec, and a one-time conversion of your existing prestige stars\n• New paths to unlock across the skills, including Double Hit, Second Chance, Foresight, and Better Bows, plus a 48 hour 2x XP boost in a skill after prestiging it\n• Prestige achievements now follow the tree: buy your first upgrade, complete a full pa"
           }
         },
         "371c1ada4d8c8f18ad0c9ab2b343cd40259b649db4a43f195d188f1f5daa4a08": {

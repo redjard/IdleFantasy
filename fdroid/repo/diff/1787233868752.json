@@ -1,0 +1,65 @@
+{
+  "repo": {
+    "timestamp": 1787344522415
+  },
+  "packages": {
+    "com.tristinbaker.idlefantasy": {
+      "metadata": {
+        "lastUpdated": 1787344487731
+      },
+      "versions": {
+        "9c340121b28dc6fd413304f2382f8bf2d443387660acf2844e841b691f909a06": null,
+        "48dfc0d59f4ad0e884090bcdecf060296a51883adff163d6e69cc24335dd1c9f": {
+          "added": 1787344487731,
+          "file": {
+            "name": "/com.tristinbaker.idlefantasy_139.apk",
+            "sha256": "48dfc0d59f4ad0e884090bcdecf060296a51883adff163d6e69cc24335dd1c9f",
+            "size": 9897835
+          },
+          "manifest": {
+            "nativecode": [
+              "arm64-v8a",
+              "armeabi-v7a",
+              "x86",
+              "x86_64"
+            ],
+            "versionName": "1.14.0",
+            "versionCode": 139,
+            "usesSdk": {
+              "minSdkVersion": 26,
+              "targetSdkVersion": 35
+            },
+            "signer": {
+              "sha256": [
+                "99a980a934cb0149bfbdd5f4358471ffe69302e0467bae4d8574d4feeda34010"
+              ]
+            },
+            "usesPermission": [
+              {
+                "name": "android.permission.POST_NOTIFICATIONS"
+              },
+              {
+                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
+              },
+              {
+                "name": "android.permission.WAKE_LOCK"
+              },
+              {
+                "name": "android.permission.USE_EXACT_ALARM"
+              },
+              {
+                "name": "android.permission.SCHEDULE_EXACT_ALARM"
+              },
+              {
+                "name": "com.tristinbaker.idlefantasy.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+              }
+            ]
+          },
+          "whatsNew": {
+            "en-US": "New Features:\n\nPrestige Overhaul\n• Prestiging a level 99 skill now awards points to spend in that skill's upgrade tree, with race-specific branches, hidden tiers to discover, a point respec, and a one-time conversion of your existing prestige stars\n• New paths to unlock across the skills, including Double Hit, Second Chance, Foresight, and Better Bows, plus a 48 hour 2x XP boost in a skill after prestiging it\n• Prestige achievements now follow the tree: buy your first upgrade, complete a full pa"
+          }
+        }
+      }
+    }
+  }
+}
