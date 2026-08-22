@@ -14,7 +14,7 @@
       }
     },
     "address": "https://idlefantasy.tristinbaker.xyz/fdroid/repo",
-    "timestamp": 1787344522415,
+    "timestamp": 1787399615458,
     "categories": {
       "Games": {
         "name": {
@@ -31,7 +31,7 @@
           "Games"
         ],
         "issueTracker": "https://github.com/tristinbaker/IdleFantasy/issues",
-        "lastUpdated": 1787344487731,
+        "lastUpdated": 1787399580157,
         "license": "GPL-3.0-only",
         "sourceCode": "https://github.com/tristinbaker/IdleFantasy",
         "screenshots": {
@@ -140,12 +140,12 @@
         "preferredSigner": "99a980a934cb0149bfbdd5f4358471ffe69302e0467bae4d8574d4feeda34010"
       },
       "versions": {
-        "48dfc0d59f4ad0e884090bcdecf060296a51883adff163d6e69cc24335dd1c9f": {
-          "added": 1787344487731,
+        "2d5ca27f794675b4b0e32388825fb3f777360dda717f936e2a8ff4d26d0983b6": {
+          "added": 1787399580157,
           "file": {
-            "name": "/com.tristinbaker.idlefantasy_139.apk",
-            "sha256": "48dfc0d59f4ad0e884090bcdecf060296a51883adff163d6e69cc24335dd1c9f",
-            "size": 9897835
+            "name": "/com.tristinbaker.idlefantasy_140.apk",
+            "sha256": "2d5ca27f794675b4b0e32388825fb3f777360dda717f936e2a8ff4d26d0983b6",
+            "size": 9944591
           },
           "manifest": {
             "nativecode": [
@@ -154,8 +154,8 @@
               "x86",
               "x86_64"
             ],
-            "versionName": "1.14.0",
-            "versionCode": 139,
+            "versionName": "1.14.1",
+            "versionCode": 140,
             "usesSdk": {
               "minSdkVersion": 26,
               "targetSdkVersion": 35
@@ -187,7 +187,7 @@
             ]
           },
           "whatsNew": {
-            "en-US": "New Features:\n\nPrestige Overhaul\n• Prestiging a level 99 skill now awards points to spend in that skill's upgrade tree, with race-specific branches, hidden tiers to discover, a point respec, and a one-time conversion of your existing prestige stars\n• New paths to unlock across the skills, including Double Hit, Second Chance, Foresight, and Better Bows, plus a 48 hour 2x XP boost in a skill after prestiging it\n• Prestige achievements now follow the tree: buy your first upgrade, complete a full pa"
+            "en-US": "• Fixed the Profile button landing in the combat gear screen instead of the profile view after editing gear from the profile\n• Fixed the prestige-ready dot disappearing after 3 prestiges and never showing for ironman characters; it now shows whenever a skill can still earn prestige points\n• New characters no longer open the What's New panel and now keep your settings (theme, font size, home screen layout, compact numbers, and more) instead of resetting them\n• Reverted the 1.14.0 fling change tha"
           }
         },
         "371c1ada4d8c8f18ad0c9ab2b343cd40259b649db4a43f195d188f1f5daa4a08": {
