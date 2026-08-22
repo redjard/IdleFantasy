@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Housing — Idle Fantasy Wiki</title>
+  <link rel="stylesheet" href="assets/style.css?v=3">
+  <link rel="icon" type="image/x-icon" href="assets/images/default_icon.png">
+  <script data-goatcounter="https://idlefantasy.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+  <script>
+    (function() {
+      var stored = localStorage.getItem('theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', stored || (prefersDark ? 'dark' : 'light'));
+    })();
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <button id="nav-toggle" class="nav-toggle" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
+    <a class="site-title" href="index.html">
+      <span class="site-icon">&#9876;&#65039;</span>
+      Idle Fantasy Wiki
+    </a>
+    <span class="site-tagline">Community reference for all skills, combat, and crafting</span>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"></button>
+  </header>
+
+  <div id="nav-backdrop" class="nav-backdrop"></div>
+
+  <div class="layout">
+    <nav id="sidebar" class="sidebar" aria-label="Wiki navigation">
+      <ul>
+<li><a href="Home.html">Home</a></li>
+<li class="nav-section"><span class="nav-label">Contributing</span><ul>
+<li><a href="getting_started_game.html">Getting Started - Game Contributions</a></li>
+<li><a href="getting_started_wiki.html">Getting Started - Wiki Contributions</a></li>
+<li><a href="wiki_page_types.html">Types of Wiki Pages</a></li>
+</ul></li>
+<li class="nav-section"><span class="nav-label">Skills</span><ul>
+<li><a href="Skills.html">Skills</a></li>
+<li class="nav-section"><span class="nav-label">Gathering</span><ul>
+<li><a href="Mining.html">Mining</a></li>
+<li><a href="Fishing.html">Fishing</a></li>
+<li><a href="Woodcutting.html">Woodcutting</a></li>
+<li><a href="Farming.html">Farming</a></li>
+<li><a href="Thieving.html">Thieving</a></li>
+</ul></li>
+<li class="nav-section"><span class="nav-label">Crafting</span><ul>
+<li><a href="Smithing.html">Smithing</a></li>
+<li><a href="Cooking.html">Cooking</a></li>
+<li><a href="Fletching.html">Fletching</a></li>
+<li><a href="Crafting.html">Crafting</a></li>
+<li><a href="Firemaking.html">Firemaking</a></li>
+<li><a href="Runecrafting.html">Runecrafting</a></li>
+<li><a href="Herblore.html">Herblore</a></li>
+<li><a href="Construction.html">Construction</a></li>
+</ul></li>
+<li class="nav-section"><span class="nav-label">Support</span><ul>
+<li><a href="Prayer.html">Prayer</a></li>
+<li><a href="Mercantile.html">Mercantile</a></li>
+<li><a href="Agility.html">Agility</a></li>
+</ul></li>
+<li class="nav-section"><span class="nav-label">Combat</span><ul>
+<li><a href="Slayer.html">Slayer</a></li>
+</ul></li>
+</ul></li>
+<li class="nav-section"><span class="nav-label">Inventory</span><ul>
+<li><a href="Equipment.html">Equipment</a></li>
+</ul></li>
+<li class="nav-section"><span class="nav-label">Combat</span><ul>
+<li><a href="Combat.html">Combat</a></li>
+<li><a href="Bosses.html">Bosses</a></li>
+<li><a href="Dungeons.html">Dungeons</a></li>
+<li><a href="Enemies.html">Enemies</a></li>
+<li><a href="Spells.html">Spells</a></li>
+<li><a href="Mercenaries.html">Mercenary Camp</a></li>
+</ul></li>
+<li class="nav-section"><span class="nav-label">Town</span><ul>
+<li><a href="Shop.html">Shop</a></li>
+<li><a href="Workers.html">Workers</a></li>
+<li><a href="Guilds.html">Guilds</a></li>
+<li><a href="Buildings.html">Buildings</a></li>
+<li><a href="Carnival.html">Carnival</a></li>
+<li><a href="Housing.html" class="active">Housing</a></li>
+</ul></li>
+<li class="nav-section"><span class="nav-label">Miscellaneous</span><ul>
+<li><a href="Expeditions.html">Expeditions</a></li>
+<li><a href="Pets.html">Pets</a></li>
+<li><a href="Quests.html">Quests</a></li>
+<li><a href="Titles.html">Titles</a></li>
+<li><a href="SeasonalEvents.html">Seasonal Events</a></li>
+</ul></li>
+</ul>
+    </nav>
+
+    <main class="content">
+      <h1 id="housing">Housing</h1>
+<p>Your house is a personal plot off the Town screen where you buy rooms, expand them cell by cell, and furnish the result. Rooms and furniture carry a coin and materials price, usually gated by your <strong>Construction</strong> level. Prices throughout are base rates, before any Builder's Workshop discount.</p>
+<p>The first visit hands you a free 4×4 starter room on an 18×18 plot. From there the house is yours to shape: pan and zoom around the grid, drag rooms to new positions, and place furniture wherever it fits.</p>
+<h2 id="rooms">Rooms</h2>
+<p>You can own up to six rooms. New rooms arrive as 3×3 plots that must touch an existing room's edge, and each one costs more than the last:</p>
+<table>
+<thead>
+<tr>
+<th>Room</th>
+<th>Construction Level</th>
+<th>Coins</th>
+<th>Materials</th>
+<th>XP</th>
+</tr>
+</thead>
+<tbody>
+<tr id="room_2">
+<td>Room 2</td>
+<td>15</td>
+<td>25,000</td>
+<td>150× <a href="Fletching.html#plank">Plank</a>, 200× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>1,000</td>
+</tr>
+<tr id="room_3">
+<td>Room 3</td>
+<td>30</td>
+<td>75,000</td>
+<td>200× <a href="Fletching.html#oak_plank">Oak Plank</a>, 100× Carved Stone</td>
+<td>2,500</td>
+</tr>
+<tr id="room_4">
+<td>Room 4</td>
+<td>50</td>
+<td>200,000</td>
+<td>300× <a href="Fletching.html#willow_plank">Willow Plank</a>, 300× Stone Block</td>
+<td>5,000</td>
+</tr>
+<tr id="room_5">
+<td>Room 5</td>
+<td>70</td>
+<td>500,000</td>
+<td>400× <a href="Fletching.html#maple_plank">Maple Plank</a>, 500× Stone Block</td>
+<td>9,000</td>
+</tr>
+<tr id="room_6">
+<td>Room 6</td>
+<td>90</td>
+<td>1,500,000</td>
+<td>500× <a href="Fletching.html#yew_plank">Yew Plank</a>, 800× Stone Block</td>
+<td>15,000</td>
+</tr>
+</tbody>
+</table>
+<h2 id="expanding-and-reshaping">Expanding and reshaping</h2>
+<p>Expand a room one row or column at a time. Each new cell costs the expansion price for that room's tier — the free starter room bills at the Room 1 rate:</p>
+<table>
+<thead>
+<tr>
+<th>Room Tier</th>
+<th>Coins per Cell</th>
+<th>Materials per Cell</th>
+<th>XP per Cell</th>
+</tr>
+</thead>
+<tbody>
+<tr id="room_1">
+<td>Room 1</td>
+<td>2,000</td>
+<td>10× <a href="Fletching.html#plank">Plank</a></td>
+<td>100</td>
+</tr>
+<tr id="room_2">
+<td>Room 2</td>
+<td>4,000</td>
+<td>15× <a href="Fletching.html#oak_plank">Oak Plank</a></td>
+<td>150</td>
+</tr>
+<tr id="room_3">
+<td>Room 3</td>
+<td>8,000</td>
+<td>20× <a href="Fletching.html#willow_plank">Willow Plank</a></td>
+<td>220</td>
+</tr>
+<tr id="room_4">
+<td>Room 4</td>
+<td>15,000</td>
+<td>30× <a href="Fletching.html#maple_plank">Maple Plank</a></td>
+<td>320</td>
+</tr>
+<tr id="room_5">
+<td>Room 5</td>
+<td>25,000</td>
+<td>40× <a href="Fletching.html#yew_plank">Yew Plank</a></td>
+<td>420</td>
+</tr>
+<tr id="room_6">
+<td>Room 6</td>
+<td>40,000</td>
+<td>50× <a href="Fletching.html#yew_plank">Yew Plank</a></td>
+<td>500</td>
+</tr>
+</tbody>
+</table>
+<p>Shrinking a room refunds today's per-cell price for the cells you give up. Moving a room — contents included — is free. Demolishing refunds nothing but returns every furnishing to storage, and your last room can never be demolished.</p>
+<h2 id="furniture">Furniture</h2>
+<p>The catalogue holds 96 pieces across furniture, wall decor, and pure wealth display:</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Category</th>
+<th>Level</th>
+<th>Coins</th>
+<th>Materials</th>
+<th>XP</th>
+</tr>
+</thead>
+<tbody>
+<tr id="bed_default">
+<td>Bed Default</td>
+<td>Furniture</td>
+<td>1</td>
+<td>0</td>
+<td>40× <a href="Fletching.html#plank">Plank</a>, 20× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>200</td>
+</tr>
+<tr id="bed_default_alt">
+<td>Bed Default Alt</td>
+<td>Furniture</td>
+<td>1</td>
+<td>0</td>
+<td>40× <a href="Fletching.html#plank">Plank</a>, 20× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>200</td>
+</tr>
+<tr id="chair_default_n">
+<td>Chair Default N</td>
+<td>Furniture</td>
+<td>1</td>
+<td>0</td>
+<td>20× <a href="Fletching.html#plank">Plank</a>, 10× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>100</td>
+</tr>
+<tr id="nightstand_default">
+<td>Nightstand Default</td>
+<td>Furniture</td>
+<td>3</td>
+<td>0</td>
+<td>25× <a href="Fletching.html#plank">Plank</a>, 10× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>120</td>
+</tr>
+<tr id="nightstand_default_1">
+<td>Nightstand Default 1</td>
+<td>Furniture</td>
+<td>3</td>
+<td>0</td>
+<td>25× <a href="Fletching.html#plank">Plank</a>, 10× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>120</td>
+</tr>
+<tr id="nightstand_default_2">
+<td>Nightstand Default 2</td>
+<td>Furniture</td>
+<td>3</td>
+<td>0</td>
+<td>25× <a href="Fletching.html#plank">Plank</a>, 10× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>120</td>
+</tr>
+<tr id="table_default_small">
+<td>Table Default Small</td>
+<td>Furniture</td>
+<td>3</td>
+<td>0</td>
+<td>30× <a href="Fletching.html#plank">Plank</a>, 10× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>150</td>
+</tr>
+<tr id="lamp">
+<td>Lamp</td>
+<td>Wall</td>
+<td>5</td>
+<td>0</td>
+<td>15× <a href="Fletching.html#plank">Plank</a></td>
+<td>100</td>
+</tr>
+<tr id="table_default_long_v">
+<td>Table Default Long V</td>
+<td>Furniture</td>
+<td>5</td>
+<td>0</td>
+<td>50× <a href="Fletching.html#plank">Plank</a>, 20× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>250</td>
+</tr>
+<tr id="wall_h">
+<td>Wall H</td>
+<td>Walls</td>
+<td>5</td>
+<td>0</td>
+<td>30× <a href="Fletching.html#plank">Plank</a>, 10× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>150</td>
+</tr>
+<tr id="wall_v">
+<td>Wall V</td>
+<td>Walls</td>
+<td>5</td>
+<td>0</td>
+<td>30× <a href="Fletching.html#plank">Plank</a>, 10× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>150</td>
+</tr>
+<tr id="barrel_default">
+<td>Barrel Default</td>
+<td>Furniture</td>
+<td>8</td>
+<td>0</td>
+<td>30× <a href="Fletching.html#plank">Plank</a>, 10× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>180</td>
+</tr>
+<tr id="table_default_large">
+<td>Table Default Large</td>
+<td>Furniture</td>
+<td>8</td>
+<td>0</td>
+<td>70× <a href="Fletching.html#plank">Plank</a>, 30× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>350</td>
+</tr>
+<tr id="wallshelf_1">
+<td>Wallshelf 1</td>
+<td>Wall</td>
+<td>8</td>
+<td>0</td>
+<td>25× <a href="Fletching.html#plank">Plank</a>, 10× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>150</td>
+</tr>
+<tr id="wallshelf_2">
+<td>Wallshelf 2</td>
+<td>Wall</td>
+<td>8</td>
+<td>0</td>
+<td>25× <a href="Fletching.html#plank">Plank</a>, 10× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>150</td>
+</tr>
+<tr id="wallshelf_3">
+<td>Wallshelf 3</td>
+<td>Wall</td>
+<td>8</td>
+<td>0</td>
+<td>25× <a href="Fletching.html#plank">Plank</a>, 10× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>150</td>
+</tr>
+<tr id="wallshelf_4">
+<td>Wallshelf 4</td>
+<td>Wall</td>
+<td>8</td>
+<td>0</td>
+<td>25× <a href="Fletching.html#plank">Plank</a>, 10× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>150</td>
+</tr>
+<tr id="wallshelf_5">
+<td>Wallshelf 5</td>
+<td>Wall</td>
+<td>8</td>
+<td>0</td>
+<td>25× <a href="Fletching.html#plank">Plank</a>, 10× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>150</td>
+</tr>
+<tr id="wallshelf_6">
+<td>Wallshelf 6</td>
+<td>Wall</td>
+<td>8</td>
+<td>0</td>
+<td>25× <a href="Fletching.html#plank">Plank</a>, 10× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>150</td>
+</tr>
+<tr id="wallshelf_7">
+<td>Wallshelf 7</td>
+<td>Wall</td>
+<td>8</td>
+<td>0</td>
+<td>25× <a href="Fletching.html#plank">Plank</a>, 10× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>150</td>
+</tr>
+<tr id="wallshelf_8">
+<td>Wallshelf 8</td>
+<td>Wall</td>
+<td>8</td>
+<td>0</td>
+<td>25× <a href="Fletching.html#plank">Plank</a>, 10× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>150</td>
+</tr>
+<tr id="tabledecor_silver_cup">
+<td>Tabledecor Silver Cup</td>
+<td>Furniture</td>
+<td>10</td>
+<td>2,500</td>
+<td></td>
+<td>100</td>
+</tr>
+<tr id="tabledecor_silver_cups">
+<td>Tabledecor Silver Cups</td>
+<td>Furniture</td>
+<td>10</td>
+<td>2,500</td>
+<td></td>
+<td>100</td>
+</tr>
+<tr id="tabledecor_silver_jug">
+<td>Tabledecor Silver Jug</td>
+<td>Furniture</td>
+<td>10</td>
+<td>2,500</td>
+<td></td>
+<td>100</td>
+</tr>
+<tr id="tabledecor_silver_narrow_pitcher">
+<td>Tabledecor Silver Narrow Pitcher</td>
+<td>Furniture</td>
+<td>10</td>
+<td>2,500</td>
+<td></td>
+<td>100</td>
+</tr>
+<tr id="tabledecor_silver_plate">
+<td>Tabledecor Silver Plate</td>
+<td>Furniture</td>
+<td>10</td>
+<td>2,500</td>
+<td></td>
+<td>100</td>
+</tr>
+<tr id="tabledecor_silver_plates">
+<td>Tabledecor Silver Plates</td>
+<td>Furniture</td>
+<td>10</td>
+<td>2,500</td>
+<td></td>
+<td>100</td>
+</tr>
+<tr id="tabledecor_silver_tall_pitcher">
+<td>Tabledecor Silver Tall Pitcher</td>
+<td>Furniture</td>
+<td>10</td>
+<td>2,500</td>
+<td></td>
+<td>100</td>
+</tr>
+<tr id="tabledecor_silver_wide_pitcher">
+<td>Tabledecor Silver Wide Pitcher</td>
+<td>Furniture</td>
+<td>10</td>
+<td>2,500</td>
+<td></td>
+<td>100</td>
+</tr>
+<tr id="table_default_cloth">
+<td>Table Default Cloth</td>
+<td>Furniture</td>
+<td>12</td>
+<td>500</td>
+<td>60× <a href="Fletching.html#plank">Plank</a>, 20× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>400</td>
+</tr>
+<tr id="table_default_cloth_long_v">
+<td>Table Default Cloth Long V</td>
+<td>Furniture</td>
+<td>12</td>
+<td>500</td>
+<td>50× <a href="Fletching.html#plank">Plank</a>, 20× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>350</td>
+</tr>
+<tr id="wardrobe_default">
+<td>Wardrobe Default</td>
+<td>Furniture</td>
+<td>12</td>
+<td>0</td>
+<td>70× <a href="Fletching.html#plank">Plank</a>, 30× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>450</td>
+</tr>
+<tr id="bookshelf_default_1">
+<td>Bookshelf Default 1</td>
+<td>Furniture</td>
+<td>15</td>
+<td>0</td>
+<td>50× <a href="Fletching.html#oak_plank">Oak Plank</a>, 20× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>350</td>
+</tr>
+<tr id="bookshelf_default_2">
+<td>Bookshelf Default 2</td>
+<td>Furniture</td>
+<td>15</td>
+<td>0</td>
+<td>50× <a href="Fletching.html#oak_plank">Oak Plank</a>, 20× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>350</td>
+</tr>
+<tr id="bookshelf_default_3">
+<td>Bookshelf Default 3</td>
+<td>Furniture</td>
+<td>15</td>
+<td>0</td>
+<td>50× <a href="Fletching.html#oak_plank">Oak Plank</a>, 20× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>350</td>
+</tr>
+<tr id="bookshelf_default_4">
+<td>Bookshelf Default 4</td>
+<td>Furniture</td>
+<td>15</td>
+<td>0</td>
+<td>50× <a href="Fletching.html#oak_plank">Oak Plank</a>, 20× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>350</td>
+</tr>
+<tr id="barrel_storage_default">
+<td>Barrel Storage Default</td>
+<td>Furniture</td>
+<td>16</td>
+<td>0</td>
+<td>60× <a href="Fletching.html#plank">Plank</a>, 20× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>360</td>
+</tr>
+<tr id="wall_art_default_starry_night_grass">
+<td>Wall Art Default Starry Night Grass</td>
+<td>Wall</td>
+<td>18</td>
+<td>500</td>
+<td>25× <a href="Fletching.html#oak_plank">Oak Plank</a></td>
+<td>200</td>
+</tr>
+<tr id="wall_art_default_starry_night_ocean">
+<td>Wall Art Default Starry Night Ocean</td>
+<td>Wall</td>
+<td>18</td>
+<td>500</td>
+<td>25× <a href="Fletching.html#oak_plank">Oak Plank</a></td>
+<td>200</td>
+</tr>
+<tr id="wall_art_default_sunshine_grass">
+<td>Wall Art Default Sunshine Grass</td>
+<td>Wall</td>
+<td>18</td>
+<td>500</td>
+<td>25× <a href="Fletching.html#oak_plank">Oak Plank</a></td>
+<td>200</td>
+</tr>
+<tr id="wall_art_default_sunshine_ocean">
+<td>Wall Art Default Sunshine Ocean</td>
+<td>Wall</td>
+<td>18</td>
+<td>500</td>
+<td>25× <a href="Fletching.html#oak_plank">Oak Plank</a></td>
+<td>200</td>
+</tr>
+<tr id="chair_light_n">
+<td>Chair Light N</td>
+<td>Furniture</td>
+<td>19</td>
+<td>0</td>
+<td>20× <a href="Fletching.html#oak_plank">Oak Plank</a>, 10× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>150</td>
+</tr>
+<tr id="bed_light">
+<td>Bed Light</td>
+<td>Furniture</td>
+<td>20</td>
+<td>0</td>
+<td>60× <a href="Fletching.html#oak_plank">Oak Plank</a>, 30× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>450</td>
+</tr>
+<tr id="bed_light_alt">
+<td>Bed Light Alt</td>
+<td>Furniture</td>
+<td>20</td>
+<td>0</td>
+<td>60× <a href="Fletching.html#oak_plank">Oak Plank</a>, 30× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>450</td>
+</tr>
+<tr id="questboard_1">
+<td>Questboard 1</td>
+<td>Wall</td>
+<td>20</td>
+<td>0</td>
+<td>40× <a href="Fletching.html#plank">Plank</a>, 15× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>300</td>
+</tr>
+<tr id="questboard_2">
+<td>Questboard 2</td>
+<td>Wall</td>
+<td>20</td>
+<td>0</td>
+<td>40× <a href="Fletching.html#plank">Plank</a>, 15× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>300</td>
+</tr>
+<tr id="questboard_3">
+<td>Questboard 3</td>
+<td>Wall</td>
+<td>20</td>
+<td>0</td>
+<td>40× <a href="Fletching.html#plank">Plank</a>, 15× <a href="Smithing.html#iron_nail">Iron Nail</a></td>
+<td>300</td>
+</tr>
+<tr id="nightstand_light">
+<td>Nightstand Light</td>
+<td>Furniture</td>
+<td>21</td>
+<td>0</td>
+<td>25× <a href="Fletching.html#oak_plank">Oak Plank</a>, 10× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>180</td>
+</tr>
+<tr id="nightstand_light_1">
+<td>Nightstand Light 1</td>
+<td>Furniture</td>
+<td>21</td>
+<td>0</td>
+<td>25× <a href="Fletching.html#oak_plank">Oak Plank</a>, 10× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>180</td>
+</tr>
+<tr id="nightstand_light_2">
+<td>Nightstand Light 2</td>
+<td>Furniture</td>
+<td>21</td>
+<td>0</td>
+<td>25× <a href="Fletching.html#oak_plank">Oak Plank</a>, 10× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>180</td>
+</tr>
+<tr id="table_light_small">
+<td>Table Light Small</td>
+<td>Furniture</td>
+<td>21</td>
+<td>0</td>
+<td>30× <a href="Fletching.html#oak_plank">Oak Plank</a>, 10× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>225</td>
+</tr>
+<tr id="table_light_long_v">
+<td>Table Light Long V</td>
+<td>Furniture</td>
+<td>23</td>
+<td>0</td>
+<td>50× <a href="Fletching.html#oak_plank">Oak Plank</a>, 20× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>375</td>
+</tr>
+<tr id="bookshelf_light_1">
+<td>Bookshelf Light 1</td>
+<td>Furniture</td>
+<td>25</td>
+<td>0</td>
+<td>60× <a href="Fletching.html#oak_plank">Oak Plank</a>, 25× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>450</td>
+</tr>
+<tr id="bookshelf_light_2">
+<td>Bookshelf Light 2</td>
+<td>Furniture</td>
+<td>25</td>
+<td>0</td>
+<td>60× <a href="Fletching.html#oak_plank">Oak Plank</a>, 25× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>450</td>
+</tr>
+<tr id="bookshelf_light_3">
+<td>Bookshelf Light 3</td>
+<td>Furniture</td>
+<td>25</td>
+<td>0</td>
+<td>60× <a href="Fletching.html#oak_plank">Oak Plank</a>, 25× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>450</td>
+</tr>
+<tr id="bookshelf_light_4">
+<td>Bookshelf Light 4</td>
+<td>Furniture</td>
+<td>25</td>
+<td>0</td>
+<td>60× <a href="Fletching.html#oak_plank">Oak Plank</a>, 25× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>450</td>
+</tr>
+<tr id="helmet_trophy">
+<td>Helmet Trophy</td>
+<td>Wall</td>
+<td>25</td>
+<td>0</td>
+<td>3× <a href="Smithing.html#steel_bar">Steel Bar</a></td>
+<td>300</td>
+</tr>
+<tr id="wall_art_light_starry_night_grass">
+<td>Wall Art Light Starry Night Grass</td>
+<td>Wall</td>
+<td>25</td>
+<td>500</td>
+<td>25× <a href="Fletching.html#oak_plank">Oak Plank</a></td>
+<td>200</td>
+</tr>
+<tr id="wall_art_light_starry_night_ocean">
+<td>Wall Art Light Starry Night Ocean</td>
+<td>Wall</td>
+<td>25</td>
+<td>500</td>
+<td>25× <a href="Fletching.html#oak_plank">Oak Plank</a></td>
+<td>200</td>
+</tr>
+<tr id="wall_art_light_sunshine_grass">
+<td>Wall Art Light Sunshine Grass</td>
+<td>Wall</td>
+<td>25</td>
+<td>500</td>
+<td>25× <a href="Fletching.html#oak_plank">Oak Plank</a></td>
+<td>200</td>
+</tr>
+<tr id="wall_art_light_sunshine_ocean">
+<td>Wall Art Light Sunshine Ocean</td>
+<td>Wall</td>
+<td>25</td>
+<td>500</td>
+<td>25× <a href="Fletching.html#oak_plank">Oak Plank</a></td>
+<td>200</td>
+</tr>
+<tr id="barrel_light">
+<td>Barrel Light</td>
+<td>Furniture</td>
+<td>26</td>
+<td>0</td>
+<td>30× <a href="Fletching.html#oak_plank">Oak Plank</a>, 10× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>270</td>
+</tr>
+<tr id="table_light_large">
+<td>Table Light Large</td>
+<td>Furniture</td>
+<td>26</td>
+<td>0</td>
+<td>70× <a href="Fletching.html#oak_plank">Oak Plank</a>, 30× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>525</td>
+</tr>
+<tr id="shield_round">
+<td>Shield Round</td>
+<td>Wall</td>
+<td>28</td>
+<td>0</td>
+<td>3× <a href="Smithing.html#steel_bar">Steel Bar</a></td>
+<td>320</td>
+</tr>
+<tr id="gold_nugget">
+<td>Gold Nugget</td>
+<td>Wealth</td>
+<td>30</td>
+<td>2,000,000</td>
+<td></td>
+<td>250</td>
+</tr>
+<tr id="table_light_cloth">
+<td>Table Light Cloth</td>
+<td>Furniture</td>
+<td>30</td>
+<td>500</td>
+<td>60× <a href="Fletching.html#oak_plank">Oak Plank</a>, 20× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>600</td>
+</tr>
+<tr id="table_light_cloth_long_v">
+<td>Table Light Cloth Long V</td>
+<td>Furniture</td>
+<td>30</td>
+<td>500</td>
+<td>50× <a href="Fletching.html#oak_plank">Oak Plank</a>, 20× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>525</td>
+</tr>
+<tr id="wardrobe_light">
+<td>Wardrobe Light</td>
+<td>Furniture</td>
+<td>30</td>
+<td>0</td>
+<td>70× <a href="Fletching.html#oak_plank">Oak Plank</a>, 30× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>675</td>
+</tr>
+<tr id="shield_kite">
+<td>Shield Kite</td>
+<td>Wall</td>
+<td>32</td>
+<td>0</td>
+<td>2× <a href="Smithing.html#mithril_bar">Mithril Bar</a></td>
+<td>380</td>
+</tr>
+<tr id="wall_art_dark_starry_night_grass">
+<td>Wall Art Dark Starry Night Grass</td>
+<td>Wall</td>
+<td>32</td>
+<td>500</td>
+<td>25× <a href="Fletching.html#oak_plank">Oak Plank</a></td>
+<td>200</td>
+</tr>
+<tr id="wall_art_dark_starry_night_ocean">
+<td>Wall Art Dark Starry Night Ocean</td>
+<td>Wall</td>
+<td>32</td>
+<td>500</td>
+<td>25× <a href="Fletching.html#oak_plank">Oak Plank</a></td>
+<td>200</td>
+</tr>
+<tr id="wall_art_dark_sunshine_grass">
+<td>Wall Art Dark Sunshine Grass</td>
+<td>Wall</td>
+<td>32</td>
+<td>500</td>
+<td>25× <a href="Fletching.html#oak_plank">Oak Plank</a></td>
+<td>200</td>
+</tr>
+<tr id="wall_art_dark_sunshine_ocean">
+<td>Wall Art Dark Sunshine Ocean</td>
+<td>Wall</td>
+<td>32</td>
+<td>500</td>
+<td>25× <a href="Fletching.html#oak_plank">Oak Plank</a></td>
+<td>200</td>
+</tr>
+<tr id="chair_dark_n">
+<td>Chair Dark N</td>
+<td>Furniture</td>
+<td>33</td>
+<td>0</td>
+<td>20× <a href="Fletching.html#willow_plank">Willow Plank</a>, 10× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>200</td>
+</tr>
+<tr id="barrel_storage_light">
+<td>Barrel Storage Light</td>
+<td>Furniture</td>
+<td>34</td>
+<td>0</td>
+<td>60× <a href="Fletching.html#oak_plank">Oak Plank</a>, 20× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>540</td>
+</tr>
+<tr id="bed_dark">
+<td>Bed Dark</td>
+<td>Furniture</td>
+<td>35</td>
+<td>0</td>
+<td>60× <a href="Fletching.html#willow_plank">Willow Plank</a>, 30× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>600</td>
+</tr>
+<tr id="bed_dark_alt">
+<td>Bed Dark Alt</td>
+<td>Furniture</td>
+<td>35</td>
+<td>0</td>
+<td>60× <a href="Fletching.html#willow_plank">Willow Plank</a>, 30× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>600</td>
+</tr>
+<tr id="nightstand_dark">
+<td>Nightstand Dark</td>
+<td>Furniture</td>
+<td>35</td>
+<td>0</td>
+<td>25× <a href="Fletching.html#willow_plank">Willow Plank</a>, 10× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>240</td>
+</tr>
+<tr id="nightstand_dark_1">
+<td>Nightstand Dark 1</td>
+<td>Furniture</td>
+<td>35</td>
+<td>0</td>
+<td>25× <a href="Fletching.html#willow_plank">Willow Plank</a>, 10× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>240</td>
+</tr>
+<tr id="nightstand_dark_2">
+<td>Nightstand Dark 2</td>
+<td>Furniture</td>
+<td>35</td>
+<td>0</td>
+<td>25× <a href="Fletching.html#willow_plank">Willow Plank</a>, 10× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>240</td>
+</tr>
+<tr id="swords_crossed">
+<td>Swords Crossed</td>
+<td>Wall</td>
+<td>35</td>
+<td>0</td>
+<td>3× <a href="Smithing.html#mithril_bar">Mithril Bar</a></td>
+<td>420</td>
+</tr>
+<tr id="table_dark_small">
+<td>Table Dark Small</td>
+<td>Furniture</td>
+<td>35</td>
+<td>0</td>
+<td>30× <a href="Fletching.html#willow_plank">Willow Plank</a>, 10× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>300</td>
+</tr>
+<tr id="table_dark_long_v">
+<td>Table Dark Long V</td>
+<td>Furniture</td>
+<td>37</td>
+<td>0</td>
+<td>50× <a href="Fletching.html#willow_plank">Willow Plank</a>, 20× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>500</td>
+</tr>
+<tr id="bookshelf_dark_1">
+<td>Bookshelf Dark 1</td>
+<td>Furniture</td>
+<td>38</td>
+<td>0</td>
+<td>60× <a href="Fletching.html#willow_plank">Willow Plank</a>, 30× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>600</td>
+</tr>
+<tr id="bookshelf_dark_2">
+<td>Bookshelf Dark 2</td>
+<td>Furniture</td>
+<td>38</td>
+<td>0</td>
+<td>60× <a href="Fletching.html#willow_plank">Willow Plank</a>, 30× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>600</td>
+</tr>
+<tr id="bookshelf_dark_3">
+<td>Bookshelf Dark 3</td>
+<td>Furniture</td>
+<td>38</td>
+<td>0</td>
+<td>60× <a href="Fletching.html#willow_plank">Willow Plank</a>, 30× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>600</td>
+</tr>
+<tr id="bookshelf_dark_4">
+<td>Bookshelf Dark 4</td>
+<td>Furniture</td>
+<td>38</td>
+<td>0</td>
+<td>60× <a href="Fletching.html#willow_plank">Willow Plank</a>, 30× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>600</td>
+</tr>
+<tr id="barrel_dark">
+<td>Barrel Dark</td>
+<td>Furniture</td>
+<td>40</td>
+<td>0</td>
+<td>30× <a href="Fletching.html#willow_plank">Willow Plank</a>, 10× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>360</td>
+</tr>
+<tr id="gold_chest">
+<td>Gold Chest</td>
+<td>Wealth</td>
+<td>40</td>
+<td>5,000,000</td>
+<td>20× <a href="Fletching.html#oak_plank">Oak Plank</a></td>
+<td>400</td>
+</tr>
+<tr id="table_dark_large">
+<td>Table Dark Large</td>
+<td>Furniture</td>
+<td>40</td>
+<td>0</td>
+<td>70× <a href="Fletching.html#willow_plank">Willow Plank</a>, 30× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>700</td>
+</tr>
+<tr id="table_dark_cloth">
+<td>Table Dark Cloth</td>
+<td>Furniture</td>
+<td>44</td>
+<td>500</td>
+<td>60× <a href="Fletching.html#willow_plank">Willow Plank</a>, 20× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>800</td>
+</tr>
+<tr id="table_dark_cloth_long_v">
+<td>Table Dark Cloth Long V</td>
+<td>Furniture</td>
+<td>44</td>
+<td>500</td>
+<td>50× <a href="Fletching.html#willow_plank">Willow Plank</a>, 20× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>700</td>
+</tr>
+<tr id="wardrobe_dark">
+<td>Wardrobe Dark</td>
+<td>Furniture</td>
+<td>44</td>
+<td>0</td>
+<td>70× <a href="Fletching.html#willow_plank">Willow Plank</a>, 30× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>900</td>
+</tr>
+<tr id="barrel_storage_dark">
+<td>Barrel Storage Dark</td>
+<td>Furniture</td>
+<td>48</td>
+<td>0</td>
+<td>60× <a href="Fletching.html#willow_plank">Willow Plank</a>, 20× <a href="Smithing.html#steel_nail">Steel Nail</a></td>
+<td>720</td>
+</tr>
+<tr id="gold_pile">
+<td>Gold Pile</td>
+<td>Wealth</td>
+<td>50</td>
+<td>20,000,000</td>
+<td></td>
+<td>500</td>
+</tr>
+<tr id="gold_pile_gems">
+<td>Gold Pile Gems</td>
+<td>Wealth</td>
+<td>65</td>
+<td>50,000,000</td>
+<td>3× Sapphire, 3× Emerald, 3× Ruby</td>
+<td>800</td>
+</tr>
+</tbody>
+</table>
+<p>Placing a piece from the catalogue pays its coins and materials once; after that, taking it out of storage again is free, and removing a placed piece always sends it back to storage with its materials intact. Paying for a placement also grants Construction XP for every cell it covers.</p>
+<p>A few placement rules worth knowing:</p>
+<ul>
+<li>Wall decor hangs on the northernmost wall of its column.</li>
+<li>Table-only items need full table coverage underneath them.</li>
+<li>Pieces may straddle two adjacent rooms, or overhang half a cell above a room's north wall.</li>
+<li>Only pieces sharing a collision layer block each other: floor furniture, wall decor, and the two divider orientations are separate layers.</li>
+<li>The brick floor style requires Construction level 10; the 12 outdoor ground styles are free cosmetics.</li>
+</ul>
+<p>Seasonal events award exclusive banners that hang as wall trophies, one of each, at no cost.</p>
+<h2 id="showing-off">Showing off</h2>
+<p>The share button renders your house to an image you can send anywhere you like.</p>
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <span>All data is auto-generated from game files and stays up to date with the latest release.</span>
+    <span>·</span>
+    <a href="https://github.com/tristinbaker/IdleFantasy/issues" target="_blank" rel="noopener">Report an issue</a>
+    <span>·</span>
+    <a href="https://github.com/tristinbaker/IdleFantasy" target="_blank" rel="noopener">GitHub</a>
+  </footer>
+
+  <script>
+    (function() {
+      // ---- Dark mode ----
+      var themeBtn = document.getElementById('theme-toggle');
+      function updateThemeIcon() {
+        themeBtn.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+      }
+      updateThemeIcon();
+      themeBtn.addEventListener('click', function() {
+        var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        updateThemeIcon();
+      });
+
+      // ---- Hamburger nav ----
+      var navToggle = document.getElementById('nav-toggle');
+      var sidebar   = document.getElementById('sidebar');
+      var backdrop  = document.getElementById('nav-backdrop');
+      function openNav() {
+        sidebar.classList.add('open');
+        backdrop.classList.add('visible');
+        navToggle.setAttribute('aria-expanded', 'true');
+      }
+      function closeNav() {
+        sidebar.classList.remove('open');
+        backdrop.classList.remove('visible');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
+      navToggle.addEventListener('click', function() {
+        sidebar.classList.contains('open') ? closeNav() : openNav();
+      });
+      backdrop.addEventListener('click', closeNav);
+      sidebar.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A') closeNav();
+      });
+    })();
+  </script>
+</body>
+</html>
