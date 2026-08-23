@@ -1,6 +1,6 @@
 {
   "repo": {
-    "timestamp": 1787399615458,
+    "timestamp": 1787515913231,
     "version": 30000,
     "name": "Idle Fantasy",
     "icon": "icon.png",
@@ -20,15 +20,15 @@
       "categories": [
         "Games"
       ],
-      "suggestedVersionName": "1.14.1",
-      "suggestedVersionCode": "140",
+      "suggestedVersionName": "1.14.2",
+      "suggestedVersionCode": "142000",
       "issueTracker": "https://github.com/tristinbaker/IdleFantasy/issues",
       "liberapay": "tristinbaker_",
       "license": "GPL-3.0-only",
       "sourceCode": "https://github.com/tristinbaker/IdleFantasy",
       "added": 1781744235667,
       "packageName": "com.tristinbaker.idlefantasy",
-      "lastUpdated": 1787399580157,
+      "lastUpdated": 1787515875333,
       "localized": {
         "en-US": {
           "description": "Idle Fantasy is a free and open source offline idle RPG inspired by classic MMORPGs. Train skills, fight in dungeons, craft gear, and complete quests. No internet connection, account, or ads required.\n\n<b>Features</b>\n\n\u2022 <b>23 trainable skills</b>: Mining, Fishing, Woodcutting, Farming, Thieving, Smithing, Cooking, Fletching, Crafting, Firemaking, Runecrafting, Herblore, Construction, Prayer, Mercantile, Agility, Slayer, Attack, Strength, Defense, Ranged, Magic, and Hitpoints\n\n\u2022 <b>Session-based training</b>: Start a session and close the app. Come back up to an hour later to collect your loot and XP. Agility reduces session time.\n\n\u2022 <b>29 dungeons</b>: Fight solo bosses and enemies to earn combat XP, coins, and rare drops. Equip weapons and armour to deal more damage.\n\n\u2022 <b>Crafting system</b>: Smelt bars, cook fish, fletch bows and arrows, craft jewellery. Consume gathered materials and earn XP and items.\n\n\u2022 <b>Prayer</b>: Bury bones collected from combat to earn Prayer XP.\n\n\u2022 <b>Equipment system</b>: Equip weapons, armour, tools, and jewellery to boost stats and skill efficiency.\n\n\u2022 <b>Quest system</b>: 189 quests spanning all skills. Earn XP rewards on completion.\n\n\u2022 <b>Pet system</b>: Rare pets can drop while training skills. Each pet provides a permanent XP boost to their linked skill.\n\n\u2022 <b>Achievements</b>: Track milestones across levelling, combat, quests, and collections.\n\n\u2022 <b>NPC Shop</b>: Buy supplies and sell your gathered resources for coins.\n\n\u2022 <b>No ads. No accounts. No internet required.</b> Your save data stays on your device.\n\n\u2022 <b>Translations</b>: Partial and full translations available for 18 languages.\n\nIdle Fantasy is free software released under the GPL-3.0 licence. Source code is available on the project repository.\n\n<b>Get updates faster</b>\n\nAdd the official Idle Fantasy repository to F-Droid to receive updates as soon as they are released, instead of waiting for the main F-Droid index to catch up.\n\n1. Open F-Droid and go to Settings \u2192 Repositories\n2. Tap + and paste: https://idlefantasy.tristinbaker.xyz/fdroid/repo\n3. Search for Idle Fantasy, open the app page, and under Repositories set Idle Fantasy as the preferred source.\n",
@@ -53,7 +53,7 @@
             "9.png"
           ],
           "summary": "Idle RPG: train skills, fight dungeons, craft gear. No ads, no accounts.",
-          "whatsNew": "\u2022 Fixed the Profile button landing in the combat gear screen instead of the profile view after editing gear from the profile\n\u2022 Fixed the prestige-ready dot disappearing after 3 prestiges and never showing for ironman characters; it now shows whenever a skill can still earn prestige points\n\u2022 New characters no longer open the What's New panel and now keep your settings (theme, font size, home screen layout, compact numbers, and more) instead of resetting them\n\u2022 Reverted the 1.14.0 fling change tha"
+          "whatsNew": "\u2022 House editor now shows the full cost of a new room (coins and materials) while placing it, and the Add room button labels its price as coins\n\u2022 New opt-in nightly build channel for playtesters, served from a separate repository\n\u2022 House editor palette cards no longer cut off long item and material names; they now wrap to two lines\n\u2022 The post-prestige 2x XP boost now stacks with the purchased 2x boost (4x on prestiged skills while both run), session dialogs show the correct per-skill multiplier, "
         }
       }
     }
@@ -61,9 +61,9 @@
   "packages": {
     "com.tristinbaker.idlefantasy": [
       {
-        "added": 1787399580157,
-        "apkName": "com.tristinbaker.idlefantasy_140.apk",
-        "hash": "2d5ca27f794675b4b0e32388825fb3f777360dda717f936e2a8ff4d26d0983b6",
+        "added": 1787515875333,
+        "apkName": "com.tristinbaker.idlefantasy_142000.apk",
+        "hash": "bf78011662dba8f8ae7db3f01366b467b542cd534ecfc0ad13a9ffcc9785eebc",
         "hashType": "sha256",
         "minSdkVersion": 26,
         "nativecode": [
@@ -75,7 +75,7 @@
         "packageName": "com.tristinbaker.idlefantasy",
         "sig": "e83cc5b410f2aca2b487e5af7883d581",
         "signer": "99a980a934cb0149bfbdd5f4358471ffe69302e0467bae4d8574d4feeda34010",
-        "size": 9944591,
+        "size": 10018007,
         "targetSdkVersion": 35,
         "uses-permission": [
           [
@@ -103,8 +103,8 @@
             null
           ]
         ],
-        "versionCode": 140,
-        "versionName": "1.14.1"
+        "versionCode": 142000,
+        "versionName": "1.14.2"
       },
       {
         "added": 1786882413309,

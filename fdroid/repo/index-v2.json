@@ -14,7 +14,7 @@
       }
     },
     "address": "https://idlefantasy.tristinbaker.xyz/fdroid/repo",
-    "timestamp": 1787399615458,
+    "timestamp": 1787515913231,
     "categories": {
       "Games": {
         "name": {
@@ -31,7 +31,7 @@
           "Games"
         ],
         "issueTracker": "https://github.com/tristinbaker/IdleFantasy/issues",
-        "lastUpdated": 1787399580157,
+        "lastUpdated": 1787515875333,
         "license": "GPL-3.0-only",
         "sourceCode": "https://github.com/tristinbaker/IdleFantasy",
         "screenshots": {
@@ -140,12 +140,12 @@
         "preferredSigner": "99a980a934cb0149bfbdd5f4358471ffe69302e0467bae4d8574d4feeda34010"
       },
       "versions": {
-        "2d5ca27f794675b4b0e32388825fb3f777360dda717f936e2a8ff4d26d0983b6": {
-          "added": 1787399580157,
+        "bf78011662dba8f8ae7db3f01366b467b542cd534ecfc0ad13a9ffcc9785eebc": {
+          "added": 1787515875333,
           "file": {
-            "name": "/com.tristinbaker.idlefantasy_140.apk",
-            "sha256": "2d5ca27f794675b4b0e32388825fb3f777360dda717f936e2a8ff4d26d0983b6",
-            "size": 9944591
+            "name": "/com.tristinbaker.idlefantasy_142000.apk",
+            "sha256": "bf78011662dba8f8ae7db3f01366b467b542cd534ecfc0ad13a9ffcc9785eebc",
+            "size": 10018007
           },
           "manifest": {
             "nativecode": [
@@ -154,8 +154,8 @@
               "x86",
               "x86_64"
             ],
-            "versionName": "1.14.1",
-            "versionCode": 140,
+            "versionName": "1.14.2",
+            "versionCode": 142000,
             "usesSdk": {
               "minSdkVersion": 26,
               "targetSdkVersion": 35
@@ -187,7 +187,7 @@
             ]
           },
           "whatsNew": {
-            "en-US": "• Fixed the Profile button landing in the combat gear screen instead of the profile view after editing gear from the profile\n• Fixed the prestige-ready dot disappearing after 3 prestiges and never showing for ironman characters; it now shows whenever a skill can still earn prestige points\n• New characters no longer open the What's New panel and now keep your settings (theme, font size, home screen layout, compact numbers, and more) instead of resetting them\n• Reverted the 1.14.0 fling change tha"
+            "en-US": "• House editor now shows the full cost of a new room (coins and materials) while placing it, and the Add room button labels its price as coins\n• New opt-in nightly build channel for playtesters, served from a separate repository\n• House editor palette cards no longer cut off long item and material names; they now wrap to two lines\n• The post-prestige 2x XP boost now stacks with the purchased 2x boost (4x on prestiged skills while both run), session dialogs show the correct per-skill multiplier, "
           }
         },
         "371c1ada4d8c8f18ad0c9ab2b343cd40259b649db4a43f195d188f1f5daa4a08": {
