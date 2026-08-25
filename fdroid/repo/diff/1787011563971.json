@@ -1,23 +1,23 @@
 {
   "repo": {
-    "timestamp": 1787515913231
+    "timestamp": 1787655286430
   },
   "packages": {
     "com.tristinbaker.idlefantasy": {
       "metadata": {
-        "lastUpdated": 1787515875333,
+        "lastUpdated": 1787655252558,
         "description": {
           "en-US": "Idle Fantasy is a free and open source offline idle RPG inspired by classic MMORPGs. Train skills, fight in dungeons, craft gear, and complete quests. No internet connection, account, or ads required.\n\n<b>Features</b>\n\n• <b>23 trainable skills</b>: Mining, Fishing, Woodcutting, Farming, Thieving, Smithing, Cooking, Fletching, Crafting, Firemaking, Runecrafting, Herblore, Construction, Prayer, Mercantile, Agility, Slayer, Attack, Strength, Defense, Ranged, Magic, and Hitpoints\n\n• <b>Session-based training</b>: Start a session and close the app. Come back up to an hour later to collect your loot and XP. Agility reduces session time.\n\n• <b>29 dungeons</b>: Fight solo bosses and enemies to earn combat XP, coins, and rare drops. Equip weapons and armour to deal more damage.\n\n• <b>Crafting system</b>: Smelt bars, cook fish, fletch bows and arrows, craft jewellery. Consume gathered materials and earn XP and items.\n\n• <b>Prayer</b>: Bury bones collected from combat to earn Prayer XP.\n\n• <b>Equipment system</b>: Equip weapons, armour, tools, and jewellery to boost stats and skill efficiency.\n\n• <b>Quest system</b>: 189 quests spanning all skills. Earn XP rewards on completion.\n\n• <b>Pet system</b>: Rare pets can drop while training skills. Each pet provides a permanent XP boost to their linked skill.\n\n• <b>Achievements</b>: Track milestones across levelling, combat, quests, and collections.\n\n• <b>NPC Shop</b>: Buy supplies and sell your gathered resources for coins.\n\n• <b>No ads. No accounts. No internet required.</b> Your save data stays on your device.\n\n• <b>Translations</b>: Partial and full translations available for 18 languages.\n\nIdle Fantasy is free software released under the GPL-3.0 licence. Source code is available on the project repository.\n\n<b>Get updates faster</b>\n\nAdd the official Idle Fantasy repository to F-Droid to receive updates as soon as they are released, instead of waiting for the main F-Droid index to catch up.\n\n1. Open F-Droid and go to Settings → Repositories\n2. Tap + and paste: https://idlefantasy.tristinbaker.xyz/fdroid/repo\n3. Search for Idle Fantasy, open the app page, and under Repositories set Idle Fantasy as the preferred source.\n"
         }
       },
       "versions": {
         "49a31174aeeb60d67191dcef9da2010dfba2f4926ca66767538cdf4ed7585bd7": null,
-        "bf78011662dba8f8ae7db3f01366b467b542cd534ecfc0ad13a9ffcc9785eebc": {
-          "added": 1787515875333,
+        "aa16800229de26aa05dc126298291291754a8ede605a5b636830841a16dec44b": {
+          "added": 1787655252558,
           "file": {
-            "name": "/com.tristinbaker.idlefantasy_142000.apk",
-            "sha256": "bf78011662dba8f8ae7db3f01366b467b542cd534ecfc0ad13a9ffcc9785eebc",
-            "size": 10018007
+            "name": "/com.tristinbaker.idlefantasy_143000.apk",
+            "sha256": "aa16800229de26aa05dc126298291291754a8ede605a5b636830841a16dec44b",
+            "size": 10072139
           },
           "manifest": {
             "nativecode": [
@@ -26,8 +26,8 @@
               "x86",
               "x86_64"
             ],
-            "versionName": "1.14.2",
-            "versionCode": 142000,
+            "versionName": "1.14.3",
+            "versionCode": 143000,
             "usesSdk": {
               "minSdkVersion": 26,
               "targetSdkVersion": 35
@@ -59,7 +59,7 @@
             ]
           },
           "whatsNew": {
-            "en-US": "• House editor now shows the full cost of a new room (coins and materials) while placing it, and the Add room button labels its price as coins\n• New opt-in nightly build channel for playtesters, served from a separate repository\n• House editor palette cards no longer cut off long item and material names; they now wrap to two lines\n• The post-prestige 2x XP boost now stacks with the purchased 2x boost (4x on prestiged skills while both run), session dialogs show the correct per-skill multiplier, "
+            "en-US": "• Added heirloom items: unique rare drops from the three raid bosses, one for every gathering and artisan tool plus attack, strength, ranged, and magic weapons\n• Heirlooms start at iron quality and permanently level up to 99 as you earn XP with them equipped, reaching stats 50% beyond the current best gear at max level\n• Prestiging a skill temporarily weakens its heirloom; full power returns at level 85, and the heirloom's own level is never lost\n• Heirlooms cannot be sold, and a raid boss never"
           }
         }
       }

@@ -1,20 +1,20 @@
 {
   "repo": {
-    "timestamp": 1787515913231
+    "timestamp": 1787655286430
   },
   "packages": {
     "com.tristinbaker.idlefantasy": {
       "metadata": {
-        "lastUpdated": 1787515875333
+        "lastUpdated": 1787655252558
       },
       "versions": {
         "48dfc0d59f4ad0e884090bcdecf060296a51883adff163d6e69cc24335dd1c9f": null,
-        "bf78011662dba8f8ae7db3f01366b467b542cd534ecfc0ad13a9ffcc9785eebc": {
-          "added": 1787515875333,
+        "aa16800229de26aa05dc126298291291754a8ede605a5b636830841a16dec44b": {
+          "added": 1787655252558,
           "file": {
-            "name": "/com.tristinbaker.idlefantasy_142000.apk",
-            "sha256": "bf78011662dba8f8ae7db3f01366b467b542cd534ecfc0ad13a9ffcc9785eebc",
-            "size": 10018007
+            "name": "/com.tristinbaker.idlefantasy_143000.apk",
+            "sha256": "aa16800229de26aa05dc126298291291754a8ede605a5b636830841a16dec44b",
+            "size": 10072139
           },
           "manifest": {
             "nativecode": [
@@ -23,8 +23,8 @@
               "x86",
               "x86_64"
             ],
-            "versionName": "1.14.2",
-            "versionCode": 142000,
+            "versionName": "1.14.3",
+            "versionCode": 143000,
             "usesSdk": {
               "minSdkVersion": 26,
               "targetSdkVersion": 35
@@ -56,7 +56,7 @@
             ]
           },
           "whatsNew": {
-            "en-US": "• House editor now shows the full cost of a new room (coins and materials) while placing it, and the Add room button labels its price as coins\n• New opt-in nightly build channel for playtesters, served from a separate repository\n• House editor palette cards no longer cut off long item and material names; they now wrap to two lines\n• The post-prestige 2x XP boost now stacks with the purchased 2x boost (4x on prestiged skills while both run), session dialogs show the correct per-skill multiplier, "
+            "en-US": "• Added heirloom items: unique rare drops from the three raid bosses, one for every gathering and artisan tool plus attack, strength, ranged, and magic weapons\n• Heirlooms start at iron quality and permanently level up to 99 as you earn XP with them equipped, reaching stats 50% beyond the current best gear at max level\n• Prestiging a skill temporarily weakens its heirloom; full power returns at level 85, and the heirloom's own level is never lost\n• Heirlooms cannot be sold, and a raid boss never"
           }
         }
       }
