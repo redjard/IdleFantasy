@@ -102,7 +102,22 @@
     </nav>
 
     <main class="content">
-      <h1 id="cooking"><img src='assets/images/image_7.png' alt='' class='text'> Cooking</h1>
+      <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css"
+  integrity="sha384-R4558gYOUz8mP9YWpZJjofhk+zx0AS11p36HnD2ZKj/6JR5z27gSSULCNHIRReVs"
+  crossorigin="anonymous" />
+
+<style type="text/css">
+    .katex img {
+      object-fit: fill;
+      padding: unset;
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: inherit;
+    }
+</style>
+<h1 id="cooking"><img src='assets/images/image_7.png' alt='' class='text'> Cooking</h1>
 <p>Cook raw ingredients into food that restores HP in combat.</p>
 <table>
 <thead>
@@ -136,15 +151,15 @@
 <td>15</td>
 <td>6</td>
 </tr>
-<tr id="shrimp">
-<td>Shrimp</td>
+<tr id="cooked_shrimp">
+<td>Cooked Shrimp</td>
 <td>1</td>
 <td><a href="Fishing.html#raw_shrimp">Raw Shrimp</a></td>
 <td>30</td>
 <td>3</td>
 </tr>
-<tr id="sardine">
-<td>Sardine</td>
+<tr id="cooked_sardine">
+<td>Cooked Sardine</td>
 <td>1</td>
 <td><a href="Fishing.html#raw_sardine">Raw Sardine</a></td>
 <td>40</td>
@@ -157,78 +172,78 @@
 <td>25</td>
 <td>8</td>
 </tr>
-<tr id="herring">
-<td>Herring</td>
+<tr id="cooked_herring">
+<td>Cooked Herring</td>
 <td>5</td>
 <td><a href="Fishing.html#raw_herring">Raw Herring</a></td>
 <td>50</td>
 <td>5</td>
 </tr>
-<tr id="mackerel">
-<td>Mackerel</td>
+<tr id="cooked_mackerel">
+<td>Cooked Mackerel</td>
 <td>10</td>
 <td><a href="Fishing.html#raw_mackerel">Raw Mackerel</a></td>
 <td>60</td>
 <td>6</td>
 </tr>
-<tr id="trout">
-<td>Trout</td>
+<tr id="cooked_trout">
+<td>Cooked Trout</td>
 <td>15</td>
 <td><a href="Fishing.html#raw_trout">Raw Trout</a></td>
 <td>70</td>
 <td>7</td>
 </tr>
-<tr id="salmon">
-<td>Salmon</td>
+<tr id="cooked_salmon">
+<td>Cooked Salmon</td>
 <td>25</td>
 <td><a href="Fishing.html#raw_salmon">Raw Salmon</a></td>
 <td>90</td>
 <td>9</td>
 </tr>
-<tr id="tuna">
-<td>Tuna</td>
+<tr id="cooked_tuna">
+<td>Cooked Tuna</td>
 <td>30</td>
 <td><a href="Fishing.html#raw_tuna">Raw Tuna</a></td>
 <td>100</td>
 <td>10</td>
 </tr>
-<tr id="lobster">
-<td>Lobster</td>
+<tr id="cooked_lobster">
+<td>Cooked Lobster</td>
 <td>40</td>
 <td><a href="Fishing.html#raw_lobster">Raw Lobster</a></td>
 <td>120</td>
 <td>12</td>
 </tr>
-<tr id="swordfish">
-<td>Swordfish</td>
+<tr id="cooked_swordfish">
+<td>Cooked Swordfish</td>
 <td>50</td>
 <td><a href="Fishing.html#raw_swordfish">Raw Swordfish</a></td>
 <td>140</td>
 <td>14</td>
 </tr>
-<tr id="monkfish">
-<td>Monkfish</td>
+<tr id="cooked_monkfish">
+<td>Cooked Monkfish</td>
 <td>62</td>
 <td><a href="Fishing.html#raw_monkfish">Raw Monkfish</a></td>
 <td>150</td>
 <td>16</td>
 </tr>
-<tr id="shark">
-<td>Shark</td>
+<tr id="cooked_shark">
+<td>Cooked Shark</td>
 <td>80</td>
 <td><a href="Fishing.html#raw_shark">Raw Shark</a></td>
 <td>210</td>
 <td>20</td>
 </tr>
-<tr id="sea_turtle">
-<td>Sea Turtle</td>
+<tr id="cooked_sea_turtle">
+<td>Cooked Sea Turtle</td>
 <td>82</td>
 <td><a href="Fishing.html#raw_sea_turtle">Raw Sea Turtle</a></td>
 <td>212</td>
 <td>21</td>
 </tr>
-<tr id="manta_ray">
-<td>Manta Ray</td>
+<tr id="cooked_manta_ray">
+<td>Cooked Manta Ray</td>
 <td>91</td>
 <td><a href="Fishing.html#raw_manta_ray">Raw Manta Ray</a></td>
 <td>216</td>
@@ -295,6 +310,129 @@
 </tr>
 </tbody>
 </table>
+<h3 id="frying-pan-tier-efficiency-multiplier">Frying pan tier efficiency multiplier</h3>
+<p>Depending on the difference in tier between the tool used for cooking and the item you are cooking, you can receive an additional mult to your standard tool efficiency. The effect of this is that you can craft items with lower tiers potentially much faster than items with higher tiers if you have higher-tiered tools.</p>
+<p>For normal tools, their tier is determined by their minimum level required to equip. For the <a href="Equipment.html#heirloom_frying_pan">Heirloom Frying Pan</a>, its tier is defined by your current cooking level. The heirloom's tool efficiency itself is calculated separately as described in <a href="Heirlooms.html#how-heirlooms-grow">Heirlooms</a>.</p>
+<p>For items, their tier depends on the minimum required level for cooking.</p>
+<p>The level ranges for each tier and the associated tools are defined as below:</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Level Range</th>
+<th>Tools</th>
+</tr>
+</thead>
+<tbody>
+<tr id="1">
+<td>1</td>
+<td>1-14</td>
+<td><a href="Equipment.html#bronze_frying_pan">Bronze Frying Pan</a></td>
+</tr>
+<tr id="2">
+<td>2</td>
+<td>15-29</td>
+<td><a href="Equipment.html#iron_frying_pan">Iron Frying Pan</a></td>
+</tr>
+<tr id="3">
+<td>3</td>
+<td>30-54</td>
+<td><a href="Equipment.html#steel_frying_pan">Steel Frying Pan</a></td>
+</tr>
+<tr id="4">
+<td>4</td>
+<td>55-69</td>
+<td><a href="Equipment.html#mithril_frying_pan">Mithril Frying Pan</a>, <a href="Equipment.html#dwarven_frying_pan">Dwarven Frying Pan</a></td>
+</tr>
+<tr id="5">
+<td>5</td>
+<td>70-84</td>
+<td><a href="Equipment.html#adamantite_frying_pan">Adamantite Frying Pan</a></td>
+</tr>
+<tr id="6">
+<td>6</td>
+<td>≥85</td>
+<td><a href="Equipment.html#runite_frying_pan">Runite Frying Pan</a>, <a href="Equipment.html#divine_frying_pan">Divine Frying Pan</a></td>
+</tr>
+</tbody>
+</table>
+<p>The exact multiplier you get applied to your tool efficiency depends on the tier difference as calculated using the formula: <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mi>i</mi><mi>e</mi><mi>r</mi><mtext> </mtext><mi>d</mi><mi>i</mi><mi>f</mi><mi>f</mi><mi>e</mi><mi>r</mi><mi>e</mi><mi>n</mi><mi>c</mi><mi>e</mi><mo>=</mo><mi>t</mi><mi>o</mi><mi>o</mi><mi>l</mi><mtext> </mtext><mi>t</mi><mi>i</mi><mi>e</mi><mi>r</mi><mo>−</mo><mi>i</mi><mi>t</mi><mi>e</mi><mi>m</mi><mtext> </mtext><mi>t</mi><mi>i</mi><mi>e</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">Tier\ difference = tool\ tier - item\ tier</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.1389em;">T</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.0278em;">er</span><span class="mspace"> </span><span class="mord mathnormal">d</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.1076em;">ff</span><span class="mord mathnormal">ere</span><span class="mord mathnormal">n</span><span class="mord mathnormal">ce</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">t</span><span class="mord mathnormal">oo</span><span class="mord mathnormal" style="margin-right:0.0197em;">l</span><span class="mspace"> </span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.0278em;">er</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span><span class="mord mathnormal">t</span><span class="mord mathnormal">e</span><span class="mord mathnormal">m</span><span class="mspace"> </span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.0278em;">er</span></span></span></span>. The tool efficiency is multiplied as per the table below (— indicates no mult applied)</p>
+<table class="small">
+        <thead>
+            <tr>
+                <th colspan="2"></th>
+                <th colspan="6" style="text-align: center">Tool tier</th>
+            </tr>
+            <tr>
+                <th colspan="2"></th>
+                <th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th rowspan="6" style="vertical-align: middle">
+                        <span style="writing-mode: vertical-lr; transform: rotate(180deg)">Item Tier</span>
+                    </th>
+<th>1</th>
+                <td>—</td>
+<td>×1.25</td>
+<td>×1.5</td>
+<td>×1.75</td>
+<td>×2.0</td>
+<td>×2.25</td>
+            </tr>
+<tr>
+                <th>2</th>
+                <td>—</td>
+<td>—</td>
+<td>×1.25</td>
+<td>×1.5</td>
+<td>×1.75</td>
+<td>×2.0</td>
+            </tr>
+<tr>
+                <th>3</th>
+                <td>—</td>
+<td>—</td>
+<td>—</td>
+<td>×1.25</td>
+<td>×1.5</td>
+<td>×1.75</td>
+            </tr>
+<tr>
+                <th>4</th>
+                <td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>×1.25</td>
+<td>×1.5</td>
+            </tr>
+<tr>
+                <th>5</th>
+                <td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>×1.25</td>
+            </tr>
+<tr>
+                <th>6</th>
+                <td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+            </tr>
+        </tbody>
+    </table>
     </main>
   </div>
 

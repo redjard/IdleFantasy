@@ -102,8 +102,23 @@
     </nav>
 
     <main class="content">
-      <h1 id="firemaking"><img src='assets/images/image_10.png' alt='' class='text'> Firemaking</h1>
-<p>Burn logs from your inventory to gain Firemaking XP. Each log burned produces <strong>ashes</strong> which can be scattered for bonus Prayer XP.</p>
+      <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css"
+  integrity="sha384-R4558gYOUz8mP9YWpZJjofhk+zx0AS11p36HnD2ZKj/6JR5z27gSSULCNHIRReVs"
+  crossorigin="anonymous" />
+
+<style type="text/css">
+    .katex img {
+      object-fit: fill;
+      padding: unset;
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: inherit;
+    }
+</style>
+<h1 id="firemaking"><img src='assets/images/image_10.png' alt='' class='text'> Firemaking</h1>
+<p>Burn logs from your inventory to gain Firemaking XP. Each log burned produces <strong>ashes</strong> which can be scattered for bonus Prayer XP and can also be used for bonuses in <a href="Farming.html#ashes">farming</a>, <a href="Herblore.html#">herblore</a>, and <a href="Runecrafting.html#bonus-crafted-runes">runecrafting</a>.</p>
 <table>
 <thead>
 <tr>
@@ -113,38 +128,38 @@
 </tr>
 </thead>
 <tbody>
-<tr id="log">
-<td>Log</td>
+<tr id="logs">
+<td>Logs</td>
 <td>1</td>
 <td>40</td>
 </tr>
-<tr id="oak_log">
-<td>Oak Log</td>
+<tr id="oak_logs">
+<td>Oak Logs</td>
 <td>15</td>
 <td>60</td>
 </tr>
-<tr id="willow_log">
-<td>Willow Log</td>
+<tr id="willow_logs">
+<td>Willow Logs</td>
 <td>30</td>
 <td>90</td>
 </tr>
-<tr id="maple_log">
-<td>Maple Log</td>
+<tr id="maple_logs">
+<td>Maple Logs</td>
 <td>45</td>
 <td>135</td>
 </tr>
-<tr id="yew_log">
-<td>Yew Log</td>
+<tr id="yew_logs">
+<td>Yew Logs</td>
 <td>60</td>
 <td>203</td>
 </tr>
-<tr id="magic_log">
-<td>Magic Log</td>
+<tr id="magic_logs">
+<td>Magic Logs</td>
 <td>75</td>
 <td>303</td>
 </tr>
-<tr id="redwood_log">
-<td>Redwood Log</td>
+<tr id="redwood_logs">
+<td>Redwood Logs</td>
 <td>90</td>
 <td>455</td>
 </tr>
@@ -208,6 +223,129 @@
 </tr>
 </tbody>
 </table>
+<h3 id="tinderbox-tier-efficiency-multiplier">Tinderbox tier efficiency multiplier</h3>
+<p>Depending on the difference in tier between the tool used for burning and the item you are burning, you can receive an additional mult to your standard tool efficiency. The effect of this is that you can craft items with lower tiers potentially much faster than items with higher tiers if you have higher-tiered tools.</p>
+<p>For normal tools, their tier is determined by their minimum level required to equip. For the <a href="Equipment.html#heirloom_tinderbox">Heirloom Tinderbox</a>, its tier is defined by your current firemaking level. The heirloom's tool efficiency itself is calculated separately as described in <a href="Heirlooms.html#how-heirlooms-grow">Heirlooms</a>.</p>
+<p>For items, their tier depends on the minimum required level for burning.</p>
+<p>The level ranges for each tier and the associated tools are defined as below:</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Level Range</th>
+<th>Tools</th>
+</tr>
+</thead>
+<tbody>
+<tr id="1">
+<td>1</td>
+<td>1-14</td>
+<td><a href="Equipment.html#bronze_tinderbox">Bronze Tinderbox</a></td>
+</tr>
+<tr id="2">
+<td>2</td>
+<td>15-29</td>
+<td><a href="Equipment.html#iron_tinderbox">Iron Tinderbox</a></td>
+</tr>
+<tr id="3">
+<td>3</td>
+<td>30-54</td>
+<td><a href="Equipment.html#steel_tinderbox">Steel Tinderbox</a></td>
+</tr>
+<tr id="4">
+<td>4</td>
+<td>55-69</td>
+<td><a href="Equipment.html#mithril_tinderbox">Mithril Tinderbox</a>, <a href="Equipment.html#dwarven_tinderbox">Dwarven Tinderbox</a></td>
+</tr>
+<tr id="5">
+<td>5</td>
+<td>70-84</td>
+<td><a href="Equipment.html#adamantite_tinderbox">Adamantite Tinderbox</a></td>
+</tr>
+<tr id="6">
+<td>6</td>
+<td>≥85</td>
+<td><a href="Equipment.html#runite_tinderbox">Runite Tinderbox</a>, <a href="Equipment.html#divine_tinderbox">Divine Tinderbox</a></td>
+</tr>
+</tbody>
+</table>
+<p>The exact multiplier you get applied to your tool efficiency depends on the tier difference as calculated using the formula: <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mi>i</mi><mi>e</mi><mi>r</mi><mtext> </mtext><mi>d</mi><mi>i</mi><mi>f</mi><mi>f</mi><mi>e</mi><mi>r</mi><mi>e</mi><mi>n</mi><mi>c</mi><mi>e</mi><mo>=</mo><mi>t</mi><mi>o</mi><mi>o</mi><mi>l</mi><mtext> </mtext><mi>t</mi><mi>i</mi><mi>e</mi><mi>r</mi><mo>−</mo><mi>i</mi><mi>t</mi><mi>e</mi><mi>m</mi><mtext> </mtext><mi>t</mi><mi>i</mi><mi>e</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">Tier\ difference = tool\ tier - item\ tier</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.1389em;">T</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.0278em;">er</span><span class="mspace"> </span><span class="mord mathnormal">d</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.1076em;">ff</span><span class="mord mathnormal">ere</span><span class="mord mathnormal">n</span><span class="mord mathnormal">ce</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="vertical-align:-0.0833em;height:0.7778em;"></span><span class="mord mathnormal">t</span><span class="mord mathnormal">oo</span><span class="mord mathnormal" style="margin-right:0.0197em;">l</span><span class="mspace"> </span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.0278em;">er</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span><span class="mord mathnormal">t</span><span class="mord mathnormal">e</span><span class="mord mathnormal">m</span><span class="mspace"> </span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.0278em;">er</span></span></span></span>. The tool efficiency is multiplied as per the table below (— indicates no mult applied)</p>
+<table class="small">
+        <thead>
+            <tr>
+                <th colspan="2"></th>
+                <th colspan="6" style="text-align: center">Tool tier</th>
+            </tr>
+            <tr>
+                <th colspan="2"></th>
+                <th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th rowspan="6" style="vertical-align: middle">
+                        <span style="writing-mode: vertical-lr; transform: rotate(180deg)">Item Tier</span>
+                    </th>
+<th>1</th>
+                <td>—</td>
+<td>×1.25</td>
+<td>×1.5</td>
+<td>×1.75</td>
+<td>×2.0</td>
+<td>×2.25</td>
+            </tr>
+<tr>
+                <th>2</th>
+                <td>—</td>
+<td>—</td>
+<td>×1.25</td>
+<td>×1.5</td>
+<td>×1.75</td>
+<td>×2.0</td>
+            </tr>
+<tr>
+                <th>3</th>
+                <td>—</td>
+<td>—</td>
+<td>—</td>
+<td>×1.25</td>
+<td>×1.5</td>
+<td>×1.75</td>
+            </tr>
+<tr>
+                <th>4</th>
+                <td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>×1.25</td>
+<td>×1.5</td>
+            </tr>
+<tr>
+                <th>5</th>
+                <td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>×1.25</td>
+            </tr>
+<tr>
+                <th>6</th>
+                <td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+            </tr>
+        </tbody>
+    </table>
     </main>
   </div>
 

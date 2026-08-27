@@ -450,11 +450,16 @@ tr:target {
   .content { padding: 1.25rem 1rem 2rem; }
 }
 
+table.small {
+  width: inherit;
+}
+
 /* Summary table for pages */
 table.summary {
   width: inherit;
   float: right;
 }
+
 
 .content .summary thead tr {
   border-bottom: 1px solid var(--table-border);;
@@ -479,6 +484,7 @@ table.summary {
 .content .footer-links .footer-image-link img {
   height: 1.5em;
   margin-right: 0.5ex;
+  width: inherit;
 }
 
 /* Images */
