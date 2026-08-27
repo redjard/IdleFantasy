@@ -102,7 +102,22 @@
     </nav>
 
     <main class="content">
-      <h1 id="mining"><img src='assets/images/image_1.png' alt='' class='text'> Mining</h1>
+      <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css"
+  integrity="sha384-R4558gYOUz8mP9YWpZJjofhk+zx0AS11p36HnD2ZKj/6JR5z27gSSULCNHIRReVs"
+  crossorigin="anonymous" />
+
+<style type="text/css">
+    .katex img {
+      object-fit: fill;
+      padding: unset;
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: inherit;
+    }
+</style>
+<h1 id="mining"><img src='assets/images/image_1.png' alt='' class='text'> Mining</h1>
 <p>Mine ores from the earth. Gems have a small chance to drop alongside any ore.</p>
 <table>
 <thead>
@@ -110,6 +125,7 @@
 <th>Ore</th>
 <th>Level Required</th>
 <th>XP / Ore</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -117,61 +133,106 @@
 <td>Rune Essence</td>
 <td>1</td>
 <td>15</td>
+<td>Raw magical stone used to craft all types of runes.</td>
 </tr>
 <tr id="copper_ore">
 <td>Copper Ore</td>
 <td>1</td>
 <td>18</td>
+<td>Common ore. Combine with tin ore to smelt bronze bars.</td>
 </tr>
 <tr id="tin_ore">
 <td>Tin Ore</td>
 <td>1</td>
 <td>18</td>
+<td>Common ore. Combine with copper ore to smelt bronze bars.</td>
 </tr>
 <tr id="stone">
 <td>Stone</td>
 <td>10</td>
 <td>12</td>
+<td>A block of stone. Used for construction.</td>
 </tr>
 <tr id="iron_ore">
 <td>Iron Ore</td>
 <td>15</td>
 <td>35</td>
+<td>Versatile ore used to smelt iron and steel bars.</td>
 </tr>
 <tr id="silver_ore">
 <td>Silver Ore</td>
 <td>20</td>
 <td>40</td>
+<td>Precious ore used to craft silver bars and jewellery.</td>
 </tr>
 <tr id="coal">
 <td>Coal</td>
 <td>30</td>
 <td>50</td>
+<td>Used as a fuel component when smelting steel and higher-tier bars.</td>
 </tr>
 <tr id="gold_ore">
 <td>Gold Ore</td>
 <td>40</td>
 <td>65</td>
+<td>Precious ore used to craft gold bars and jewellery.</td>
 </tr>
 <tr id="mithril_ore">
 <td>Mithril Ore</td>
 <td>55</td>
 <td>80</td>
+<td>A rare ore with magical properties.</td>
 </tr>
 <tr id="adamantite_ore">
 <td>Adamantite Ore</td>
 <td>70</td>
 <td>95</td>
+<td>Extremely hard and very rare ore.</td>
 </tr>
 <tr id="platinum_ore">
 <td>Platinum Ore</td>
 <td>80</td>
 <td>100</td>
+<td>A rare platinum ore used for platinum bars.</td>
 </tr>
 <tr id="runite_ore">
 <td>Runite Ore</td>
 <td>85</td>
 <td>125</td>
+<td>The rarest mineable ore, used for the strongest equipment.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="gems">Gems</h2>
+<p>Each time you mine an ore (with higher pickaxe efficiencies rolling more often), you have a chance to receive each of the associated gems in the table below:</p>
+<table>
+<thead>
+<tr>
+<th>Gems</th>
+<th>Drop Rate</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="sapphire">
+<td>Sapphire</td>
+<td>2%</td>
+<td>A blue gemstone used in jewellery crafting.</td>
+</tr>
+<tr id="emerald">
+<td>Emerald</td>
+<td>1%</td>
+<td>A green gemstone of moderate rarity.</td>
+</tr>
+<tr id="ruby">
+<td>Ruby</td>
+<td>0.5%</td>
+<td>A red gemstone. Rare and valuable.</td>
+</tr>
+<tr id="diamond">
+<td>Diamond</td>
+<td>0.2%</td>
+<td>The rarest and most valuable gemstone.</td>
 </tr>
 </tbody>
 </table>
@@ -243,6 +304,136 @@
 </tr>
 </tbody>
 </table>
+<h3 id="pickaxe-tier-efficiency-multiplier">Pickaxe tier efficiency multiplier</h3>
+<p>Depending on the difference in tier between the pickaxe used for mining, and the level required for mining ores, you can receive an additional mult to your standard tool efficiency. The effect of this is that when you're mining lower tier ores your tool has a much higher efficiency with all the bonuses that entails.</p>
+<p>For normal tools, their tier is determined by their minimum level required to equip. For the <a href="Equipment.html#heirloom_pickaxe">Heirloom Pickaxe</a>, its tier is defined by your current mining level. The heirloom's tool efficiency itself is calculated separately as described in <a href="Heirlooms.html#how-heirlooms-grow">Heirlooms</a>.</p>
+<p>For ores, the tier depends on the minimum required level for mining the relevant ores.</p>
+<p>The level ranges for each tier are shown below:</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Level Range</th>
+<th>Tools</th>
+<th>Ores</th>
+</tr>
+</thead>
+<tbody>
+<tr id="1">
+<td>1</td>
+<td>1-14</td>
+<td><a href="Equipment.html#bronze_pickaxe">Bronze Pickaxe</a></td>
+<td>Rune Essence, Copper Ore, Tin Ore, Stone</td>
+</tr>
+<tr id="2">
+<td>2</td>
+<td>15-29</td>
+<td><a href="Equipment.html#iron_pickaxe">Iron Pickaxe</a></td>
+<td>Iron Ore, Silver Ore</td>
+</tr>
+<tr id="3">
+<td>3</td>
+<td>30-54</td>
+<td><a href="Equipment.html#steel_pickaxe">Steel Pickaxe</a>, <a href="Equipment.html#deep_iron_pickaxe">Deep Iron Pickaxe</a></td>
+<td>Coal, Gold Ore</td>
+</tr>
+<tr id="4">
+<td>4</td>
+<td>55-69</td>
+<td><a href="Equipment.html#mithril_pickaxe">Mithril Pickaxe</a>, <a href="Equipment.html#dwarven_pickaxe">Dwarven Pickaxe</a></td>
+<td>Mithril Ore</td>
+</tr>
+<tr id="5">
+<td>5</td>
+<td>70-84</td>
+<td><a href="Equipment.html#adamantite_pickaxe">Adamantite Pickaxe</a>, <a href="Equipment.html#forge_pickaxe">Forge Pickaxe</a></td>
+<td>Adamantite Ore, Platinum Ore</td>
+</tr>
+<tr id="6">
+<td>6</td>
+<td>≥85</td>
+<td><a href="Equipment.html#runite_pickaxe">Runite Pickaxe</a>, <a href="Equipment.html#divine_pickaxe">Divine Pickaxe</a></td>
+<td>Runite Ore</td>
+</tr>
+</tbody>
+</table>
+<p>The exact multiplier you get applied to your tool efficiency depends on the tier difference as calculated using the formula: <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mi>i</mi><mi>e</mi><mi>r</mi><mtext> </mtext><mi>d</mi><mi>i</mi><mi>f</mi><mi>f</mi><mi>e</mi><mi>r</mi><mi>e</mi><mi>n</mi><mi>c</mi><mi>e</mi><mo>=</mo><mi>t</mi><mi>o</mi><mi>o</mi><mi>l</mi><mtext> </mtext><mi>t</mi><mi>i</mi><mi>e</mi><mi>r</mi><mo>−</mo><mi>o</mi><mi>r</mi><mi>e</mi><mi>s</mi><mtext> </mtext><mi>t</mi><mi>i</mi><mi>e</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">Tier\ difference = tool\ tier - ores\ tier</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="vertical-align:-0.1944em;height:0.8889em;"></span><span class="mord mathnormal" style="margin-right:0.1389em;">T</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.0278em;">er</span><span class="mspace"> </span><span class="mord mathnormal">d</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.1076em;">ff</span><span class="mord mathnormal">ere</span><span class="mord mathnormal">n</span><span class="mord mathnormal">ce</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">t</span><span class="mord mathnormal">oo</span><span class="mord mathnormal" style="margin-right:0.0197em;">l</span><span class="mspace"> </span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.0278em;">er</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">ores</span><span class="mspace"> </span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.0278em;">er</span></span></span></span>. The tool efficiency is multiplied as per the table below (— indicates no mult applied)</p>
+<table class="small">
+        <thead>
+            <tr>
+                <th colspan="2"></th>
+                <th colspan="6" style="text-align: center">Tool tier</th>
+            </tr>
+            <tr>
+                <th colspan="2"></th>
+                <th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th rowspan="6" style="vertical-align: middle">
+                        <span style="writing-mode: vertical-lr; transform: rotate(180deg)">Ores Tier</span>
+                    </th>
+<th>1</th>
+                <td>—</td>
+<td>×1.25</td>
+<td>×1.5</td>
+<td>×1.75</td>
+<td>×2.0</td>
+<td>×2.25</td>
+            </tr>
+<tr>
+                <th>2</th>
+                <td>—</td>
+<td>—</td>
+<td>×1.25</td>
+<td>×1.5</td>
+<td>×1.75</td>
+<td>×2.0</td>
+            </tr>
+<tr>
+                <th>3</th>
+                <td>—</td>
+<td>—</td>
+<td>—</td>
+<td>×1.25</td>
+<td>×1.5</td>
+<td>×1.75</td>
+            </tr>
+<tr>
+                <th>4</th>
+                <td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>×1.25</td>
+<td>×1.5</td>
+            </tr>
+<tr>
+                <th>5</th>
+                <td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>×1.25</td>
+            </tr>
+<tr>
+                <th>6</th>
+                <td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+            </tr>
+        </tbody>
+    </table>
     </main>
   </div>
 
