@@ -1,6 +1,6 @@
 {
   "repo": {
-    "timestamp": 1787655286430,
+    "timestamp": 1787917507408,
     "version": 30000,
     "name": "Idle Fantasy",
     "icon": "icon.png",
@@ -20,18 +20,18 @@
       "categories": [
         "Games"
       ],
-      "suggestedVersionName": "1.14.3",
-      "suggestedVersionCode": "143000",
+      "suggestedVersionName": "1.14.4",
+      "suggestedVersionCode": "144000",
       "issueTracker": "https://github.com/tristinbaker/IdleFantasy/issues",
       "liberapay": "tristinbaker_",
       "license": "GPL-3.0-only",
       "sourceCode": "https://github.com/tristinbaker/IdleFantasy",
       "added": 1781744235667,
       "packageName": "com.tristinbaker.idlefantasy",
-      "lastUpdated": 1787655252558,
+      "lastUpdated": 1787917473279,
       "localized": {
         "en-US": {
-          "description": "Idle Fantasy is a free and open source offline idle RPG inspired by classic MMORPGs. Train skills, fight in dungeons, craft gear, and complete quests. No internet connection, account, or ads required.\n\n<b>Features</b>\n\n\u2022 <b>23 trainable skills</b>: Mining, Fishing, Woodcutting, Farming, Thieving, Smithing, Cooking, Fletching, Crafting, Firemaking, Runecrafting, Herblore, Construction, Prayer, Mercantile, Agility, Slayer, Attack, Strength, Defense, Ranged, Magic, and Hitpoints\n\n\u2022 <b>Session-based training</b>: Start a session and close the app. Come back up to an hour later to collect your loot and XP. Agility reduces session time.\n\n\u2022 <b>29 dungeons</b>: Fight solo bosses and enemies to earn combat XP, coins, and rare drops. Equip weapons and armour to deal more damage.\n\n\u2022 <b>Crafting system</b>: Smelt bars, cook fish, fletch bows and arrows, craft jewellery. Consume gathered materials and earn XP and items.\n\n\u2022 <b>Prayer</b>: Bury bones collected from combat to earn Prayer XP.\n\n\u2022 <b>Equipment system</b>: Equip weapons, armour, tools, and jewellery to boost stats and skill efficiency.\n\n\u2022 <b>Quest system</b>: 189 quests spanning all skills. Earn XP rewards on completion.\n\n\u2022 <b>Pet system</b>: Rare pets can drop while training skills. Each pet provides a permanent XP boost to their linked skill.\n\n\u2022 <b>Achievements</b>: Track milestones across levelling, combat, quests, and collections.\n\n\u2022 <b>NPC Shop</b>: Buy supplies and sell your gathered resources for coins.\n\n\u2022 <b>No ads. No accounts. No internet required.</b> Your save data stays on your device.\n\n\u2022 <b>Translations</b>: Partial and full translations available for 18 languages.\n\nIdle Fantasy is free software released under the GPL-3.0 licence. Source code is available on the project repository.\n\n<b>Get updates faster</b>\n\nAdd the official Idle Fantasy repository to F-Droid to receive updates as soon as they are released, instead of waiting for the main F-Droid index to catch up.\n\n1. Open F-Droid and go to Settings \u2192 Repositories\n2. Tap + and paste: https://idlefantasy.tristinbaker.xyz/fdroid/repo\n3. Search for Idle Fantasy, open the app page, and under Repositories set Idle Fantasy as the preferred source.\n",
+          "description": "Idle Fantasy is a free and open source offline idle RPG inspired by classic MMORPGs. Train skills, fight in dungeons, craft gear, and complete quests. No internet connection, account, or ads required.\n\n<b>Features</b>\n\n\u2022 <b>23 trainable skills</b>: Mining, Fishing, Woodcutting, Farming, Thieving, Smithing, Cooking, Fletching, Crafting, Firemaking, Runecrafting, Herblore, Construction, Prayer, Mercantile, Agility, Slayer, Attack, Strength, Defense, Ranged, Magic, and Hitpoints\n\n\u2022 <b>Session-based training</b>: Start a session and close the app. Come back up to an hour later to collect your loot and XP. Agility reduces session time.\n\n\u2022 <b>29 dungeons</b>: Fight solo bosses and enemies to earn combat XP, coins, and rare drops. Equip weapons and armour to deal more damage.\n\n\u2022 <b>Crafting system</b>: Smelt bars, cook fish, fletch bows and arrows, craft jewellery. Consume gathered materials and earn XP and items.\n\n\u2022 <b>Prayer</b>: Bury bones collected from combat to earn Prayer XP.\n\n\u2022 <b>Equipment system</b>: Equip weapons, armour, tools, and jewellery to boost stats and skill efficiency.\n\n\u2022 <b>Quest system</b>: 189 quests spanning all skills. Earn XP rewards on completion.\n\n\u2022 <b>Pet system</b>: Rare pets can drop while training skills. Each pet provides a permanent XP boost to their linked skill.\n\n\u2022 <b>Achievements</b>: Track milestones across levelling, combat, quests, and collections.\n\n\u2022 <b>NPC Shop</b>: Buy supplies and sell your gathered resources for coins.\n\n\u2022 <b>No ads. No accounts. No internet required.</b> Your save data stays on your device.\n\n\u2022 <b>Translations</b>: Partial and full translations available for 19 languages.\n\nIdle Fantasy is free software released under the GPL-3.0 licence. Source code is available on the project repository.\n\n<b>Get updates faster</b>\n\nAdd the official Idle Fantasy repository to F-Droid to receive updates as soon as they are released, instead of waiting for the main F-Droid index to catch up.\n\n1. Open F-Droid and go to Settings \u2192 Repositories\n2. Tap + and paste: https://idlefantasy.tristinbaker.xyz/fdroid/repo\n3. Search for Idle Fantasy, open the app page, and under Repositories set Idle Fantasy as the preferred source.\n",
           "icon": "icon_9h1hkNc21_zKDjvAQz13qne2EbIN25vw98yOSUsY0dE=.png",
           "name": "Idle Fantasy",
           "phoneScreenshots": [
@@ -53,7 +53,7 @@
             "9.png"
           ],
           "summary": "Idle RPG: train skills, fight dungeons, craft gear. No ads, no accounts.",
-          "whatsNew": "\u2022 Added heirloom items: unique rare drops from the three raid bosses, one for every gathering and artisan tool plus attack, strength, ranged, and magic weapons\n\u2022 Heirlooms start at iron quality and permanently level up to 99 as you earn XP with them equipped, reaching stats 50% beyond the current best gear at max level\n\u2022 Prestiging a skill temporarily weakens its heirloom; full power returns at level 85, and the heirloom's own level is never lost\n\u2022 Heirlooms cannot be sold, and a raid boss never"
+          "whatsNew": "\u2022 Sell Old Gear no longer sells equipment saved in another combat style's loadout; gear remembered by any loadout now counts as equipped when selling (thanks for the report)\n\u2022 The Heirloom Greathammer and Heirloom Blade now show their attack, strength, and defense stats in the gear list like the bow and staff already did (thanks for the report)\n\u2022 Equip Best Gear now rates heirloom weapons and tools by their current stats instead of their max potential, so a fresh heirloom no longer replaces stro"
         }
       }
     }
@@ -61,9 +61,9 @@
   "packages": {
     "com.tristinbaker.idlefantasy": [
       {
-        "added": 1787655252558,
-        "apkName": "com.tristinbaker.idlefantasy_143000.apk",
-        "hash": "aa16800229de26aa05dc126298291291754a8ede605a5b636830841a16dec44b",
+        "added": 1787917473279,
+        "apkName": "com.tristinbaker.idlefantasy_144000.apk",
+        "hash": "f47705c515f08dda724c655ec88080e3002af2bcef875e0d29a8d730eb3eba1c",
         "hashType": "sha256",
         "minSdkVersion": 26,
         "nativecode": [
@@ -75,7 +75,7 @@
         "packageName": "com.tristinbaker.idlefantasy",
         "sig": "e83cc5b410f2aca2b487e5af7883d581",
         "signer": "99a980a934cb0149bfbdd5f4358471ffe69302e0467bae4d8574d4feeda34010",
-        "size": 10072139,
+        "size": 10215031,
         "targetSdkVersion": 35,
         "uses-permission": [
           [
@@ -103,8 +103,8 @@
             null
           ]
         ],
-        "versionCode": 143000,
-        "versionName": "1.14.3"
+        "versionCode": 144000,
+        "versionName": "1.14.4"
       },
       {
         "added": 1786882413309,

@@ -1,22 +1,22 @@
 {
   "repo": {
-    "timestamp": 1787655286430
+    "timestamp": 1787917507408
   },
   "packages": {
     "com.tristinbaker.idlefantasy": {
       "metadata": {
-        "lastUpdated": 1787655252558,
+        "lastUpdated": 1787917473279,
         "description": {
-          "en-US": "Idle Fantasy is a free and open source offline idle RPG inspired by classic MMORPGs. Train skills, fight in dungeons, craft gear, and complete quests. No internet connection, account, or ads required.\n\n<b>Features</b>\n\n• <b>23 trainable skills</b>: Mining, Fishing, Woodcutting, Farming, Thieving, Smithing, Cooking, Fletching, Crafting, Firemaking, Runecrafting, Herblore, Construction, Prayer, Mercantile, Agility, Slayer, Attack, Strength, Defense, Ranged, Magic, and Hitpoints\n\n• <b>Session-based training</b>: Start a session and close the app. Come back up to an hour later to collect your loot and XP. Agility reduces session time.\n\n• <b>29 dungeons</b>: Fight solo bosses and enemies to earn combat XP, coins, and rare drops. Equip weapons and armour to deal more damage.\n\n• <b>Crafting system</b>: Smelt bars, cook fish, fletch bows and arrows, craft jewellery. Consume gathered materials and earn XP and items.\n\n• <b>Prayer</b>: Bury bones collected from combat to earn Prayer XP.\n\n• <b>Equipment system</b>: Equip weapons, armour, tools, and jewellery to boost stats and skill efficiency.\n\n• <b>Quest system</b>: 189 quests spanning all skills. Earn XP rewards on completion.\n\n• <b>Pet system</b>: Rare pets can drop while training skills. Each pet provides a permanent XP boost to their linked skill.\n\n• <b>Achievements</b>: Track milestones across levelling, combat, quests, and collections.\n\n• <b>NPC Shop</b>: Buy supplies and sell your gathered resources for coins.\n\n• <b>No ads. No accounts. No internet required.</b> Your save data stays on your device.\n\n• <b>Translations</b>: Partial and full translations available for 18 languages.\n\nIdle Fantasy is free software released under the GPL-3.0 licence. Source code is available on the project repository.\n\n<b>Get updates faster</b>\n\nAdd the official Idle Fantasy repository to F-Droid to receive updates as soon as they are released, instead of waiting for the main F-Droid index to catch up.\n\n1. Open F-Droid and go to Settings → Repositories\n2. Tap + and paste: https://idlefantasy.tristinbaker.xyz/fdroid/repo\n3. Search for Idle Fantasy, open the app page, and under Repositories set Idle Fantasy as the preferred source.\n"
+          "en-US": "Idle Fantasy is a free and open source offline idle RPG inspired by classic MMORPGs. Train skills, fight in dungeons, craft gear, and complete quests. No internet connection, account, or ads required.\n\n<b>Features</b>\n\n• <b>23 trainable skills</b>: Mining, Fishing, Woodcutting, Farming, Thieving, Smithing, Cooking, Fletching, Crafting, Firemaking, Runecrafting, Herblore, Construction, Prayer, Mercantile, Agility, Slayer, Attack, Strength, Defense, Ranged, Magic, and Hitpoints\n\n• <b>Session-based training</b>: Start a session and close the app. Come back up to an hour later to collect your loot and XP. Agility reduces session time.\n\n• <b>29 dungeons</b>: Fight solo bosses and enemies to earn combat XP, coins, and rare drops. Equip weapons and armour to deal more damage.\n\n• <b>Crafting system</b>: Smelt bars, cook fish, fletch bows and arrows, craft jewellery. Consume gathered materials and earn XP and items.\n\n• <b>Prayer</b>: Bury bones collected from combat to earn Prayer XP.\n\n• <b>Equipment system</b>: Equip weapons, armour, tools, and jewellery to boost stats and skill efficiency.\n\n• <b>Quest system</b>: 189 quests spanning all skills. Earn XP rewards on completion.\n\n• <b>Pet system</b>: Rare pets can drop while training skills. Each pet provides a permanent XP boost to their linked skill.\n\n• <b>Achievements</b>: Track milestones across levelling, combat, quests, and collections.\n\n• <b>NPC Shop</b>: Buy supplies and sell your gathered resources for coins.\n\n• <b>No ads. No accounts. No internet required.</b> Your save data stays on your device.\n\n• <b>Translations</b>: Partial and full translations available for 19 languages.\n\nIdle Fantasy is free software released under the GPL-3.0 licence. Source code is available on the project repository.\n\n<b>Get updates faster</b>\n\nAdd the official Idle Fantasy repository to F-Droid to receive updates as soon as they are released, instead of waiting for the main F-Droid index to catch up.\n\n1. Open F-Droid and go to Settings → Repositories\n2. Tap + and paste: https://idlefantasy.tristinbaker.xyz/fdroid/repo\n3. Search for Idle Fantasy, open the app page, and under Repositories set Idle Fantasy as the preferred source.\n"
         }
       },
       "versions": {
-        "aa16800229de26aa05dc126298291291754a8ede605a5b636830841a16dec44b": {
-          "added": 1787655252558,
+        "f47705c515f08dda724c655ec88080e3002af2bcef875e0d29a8d730eb3eba1c": {
+          "added": 1787917473279,
           "file": {
-            "name": "/com.tristinbaker.idlefantasy_143000.apk",
-            "sha256": "aa16800229de26aa05dc126298291291754a8ede605a5b636830841a16dec44b",
-            "size": 10072139
+            "name": "/com.tristinbaker.idlefantasy_144000.apk",
+            "sha256": "f47705c515f08dda724c655ec88080e3002af2bcef875e0d29a8d730eb3eba1c",
+            "size": 10215031
           },
           "manifest": {
             "nativecode": [
@@ -25,8 +25,8 @@
               "x86",
               "x86_64"
             ],
-            "versionName": "1.14.3",
-            "versionCode": 143000,
+            "versionName": "1.14.4",
+            "versionCode": 144000,
             "usesSdk": {
               "minSdkVersion": 26,
               "targetSdkVersion": 35
@@ -58,7 +58,7 @@
             ]
           },
           "whatsNew": {
-            "en-US": "• Added heirloom items: unique rare drops from the three raid bosses, one for every gathering and artisan tool plus attack, strength, ranged, and magic weapons\n• Heirlooms start at iron quality and permanently level up to 99 as you earn XP with them equipped, reaching stats 50% beyond the current best gear at max level\n• Prestiging a skill temporarily weakens its heirloom; full power returns at level 85, and the heirloom's own level is never lost\n• Heirlooms cannot be sold, and a raid boss never"
+            "en-US": "• Sell Old Gear no longer sells equipment saved in another combat style's loadout; gear remembered by any loadout now counts as equipped when selling (thanks for the report)\n• The Heirloom Greathammer and Heirloom Blade now show their attack, strength, and defense stats in the gear list like the bow and staff already did (thanks for the report)\n• Equip Best Gear now rates heirloom weapons and tools by their current stats instead of their max potential, so a fresh heirloom no longer replaces stro"
           }
         }
       }
